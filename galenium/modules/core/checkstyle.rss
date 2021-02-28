@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>Galenium Core - Checkstyle report</title>
+    <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core/</link>
+    <description>Galenium Core - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2017 - 2021 wcm.io QA</copyright>
+    <item>
+      <title>File: 43,
+             Errors: 0,
+             Warnings: 2,
+             Infos: 0
+      </title>
+            <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CartesianProduct.java">io/wcm/qa/glnm/junit/combinatorial/CartesianProduct.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.configuration.TextFileUtil.java">io/wcm/qa/glnm/configuration/TextFileUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinableProvider.java">io/wcm/qa/glnm/junit/combinatorial/CombinableProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#org.junit.jupiter.params.CombinatorialTestInvocationContext.java">org/junit/jupiter/params/CombinatorialTestInvocationContext.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.configuration.PropertiesUtil.java">io/wcm/qa/glnm/configuration/PropertiesUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.pairwise.DomainDefinition.java">io/wcm/qa/glnm/pairwise/DomainDefinition.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.Combination.java">io/wcm/qa/glnm/junit/combinatorial/Combination.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CartesianProductProvider.java">io/wcm/qa/glnm/junit/combinatorial/CartesianProductProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.pairwise.Value.java">io/wcm/qa/glnm/pairwise/Value.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.logging.util.GaleniumLoggingUtil.java">io/wcm/qa/glnm/logging/util/GaleniumLoggingUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.webdriver.WebDriverManagement.java">io/wcm/qa/glnm/webdriver/WebDriverManagement.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.exceptions.GaleniumException.java">io/wcm/qa/glnm/exceptions/GaleniumException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.aem.AemComponentUrlBuilder.java">io/wcm/qa/glnm/aem/AemComponentUrlBuilder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.aspectj.MatcherAspect.java">io/wcm/qa/glnm/aspectj/MatcherAspect.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.pairwise.Requirement.java">io/wcm/qa/glnm/pairwise/Requirement.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.PairwiseProvider.java">io/wcm/qa/glnm/junit/combinatorial/PairwiseProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#org.junit.jupiter.params.CombinatorialTestNameFormatter.java">org/junit/jupiter/params/CombinatorialTestNameFormatter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinableSource.java">io/wcm/qa/glnm/junit/combinatorial/CombinableSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinatorialUtil.java">io/wcm/qa/glnm/junit/combinatorial/CombinatorialUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.aem.AemComponentUtil.java">io/wcm/qa/glnm/aem/AemComponentUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.ReAnnotationUtils.java">io/wcm/qa/glnm/junit/combinatorial/ReAnnotationUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.format.NameUtil.java">io/wcm/qa/glnm/format/NameUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.pairwise.PairwiseDefinition.java">io/wcm/qa/glnm/pairwise/PairwiseDefinition.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.Combinable.java">io/wcm/qa/glnm/junit/combinatorial/Combinable.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.context.GaleniumContext.java">io/wcm/qa/glnm/context/GaleniumContext.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinableSources.java">io/wcm/qa/glnm/junit/combinatorial/CombinableSources.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#org.junit.jupiter.params.CombinatorialTestMethodContext.java">org/junit/jupiter/params/CombinatorialTestMethodContext.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.pairwise.TupelDefinition.java">io/wcm/qa/glnm/pairwise/TupelDefinition.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.configuration.GaleniumConfiguration.java">io/wcm/qa/glnm/configuration/GaleniumConfiguration.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.configuration.ConfigurationUtil.java">io/wcm/qa/glnm/configuration/ConfigurationUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinatorialTestExtension.java">io/wcm/qa/glnm/junit/combinatorial/CombinatorialTestExtension.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.util.FileHandlingUtil.java">io/wcm/qa/glnm/util/FileHandlingUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.mediaquery.MediaQuery.java">io/wcm/qa/glnm/mediaquery/MediaQuery.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.format.Md5Util.java">io/wcm/qa/glnm/format/Md5Util.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.aspectj.AssertAspect.java">io/wcm/qa/glnm/aspectj/AssertAspect.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.reporting.AllureNestedStepping.java">io/wcm/qa/glnm/reporting/AllureNestedStepping.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.configuration.CsvUtil.java">io/wcm/qa/glnm/configuration/CsvUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.pairwise.Tupel.java">io/wcm/qa/glnm/pairwise/Tupel.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.logging.logback.MarkedLogger.java">io/wcm/qa/glnm/logging/logback/MarkedLogger.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.mediaquery.MediaQueryUtil.java">io/wcm/qa/glnm/mediaquery/MediaQueryUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.Pairwise.java">io/wcm/qa/glnm/junit/combinatorial/Pairwise.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.reporting.GaleniumReportUtil.java">io/wcm/qa/glnm/reporting/GaleniumReportUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.ChromeOptionsUtil.java">io/wcm/qa/glnm/junit/ChromeOptionsUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+

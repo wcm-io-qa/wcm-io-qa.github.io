@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>Galenium Differences - Checkstyle report</title>
+    <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences/</link>
+    <description>Galenium Differences - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2017 - 2021 wcm.io QA</copyright>
+    <item>
+      <title>File: 20,
+             Errors: 0,
+             Warnings: 0,
+             Infos: 0
+      </title>
+            <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.base.DifferenceBase.java">io/wcm/qa/glnm/differences/base/DifferenceBase.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.util.DifferenceUtil.java">io/wcm/qa/glnm/differences/util/DifferenceUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.base.Difference.java">io/wcm/qa/glnm/differences/base/Difference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.SystemPropertyDifference.java">io/wcm/qa/glnm/differences/difference/SystemPropertyDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.sut.SelectorDifference.java">io/wcm/qa/glnm/differences/difference/sut/SelectorDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.sut.UrlDifference.java">io/wcm/qa/glnm/differences/difference/sut/UrlDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.specialized.ClassDifferences.java">io/wcm/qa/glnm/differences/specialized/ClassDifferences.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.sut.RelativePathDifference.java">io/wcm/qa/glnm/differences/difference/sut/RelativePathDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.driver.OsFamilyDifference.java">io/wcm/qa/glnm/differences/difference/driver/OsFamilyDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.EnumDifference.java">io/wcm/qa/glnm/differences/difference/EnumDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.generic.DifferenceNameAndValueComparator.java">io/wcm/qa/glnm/differences/generic/DifferenceNameAndValueComparator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.sut.RelativeUrlWithQueryDifference.java">io/wcm/qa/glnm/differences/difference/sut/RelativeUrlWithQueryDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.generic.DifferenceNameComparator.java">io/wcm/qa/glnm/differences/generic/DifferenceNameComparator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.specialized.ClassNameDifference.java">io/wcm/qa/glnm/differences/specialized/ClassNameDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.IntegerDifference.java">io/wcm/qa/glnm/differences/difference/IntegerDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.generic.MutableDifferences.java">io/wcm/qa/glnm/differences/generic/MutableDifferences.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.base.Differences.java">io/wcm/qa/glnm/differences/base/Differences.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.sut.UrlQueryDifference.java">io/wcm/qa/glnm/differences/difference/sut/UrlQueryDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.StringDifference.java">io/wcm/qa/glnm/differences/difference/StringDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.specialized.PackageDifferences.java">io/wcm/qa/glnm/differences/specialized/PackageDifferences.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+

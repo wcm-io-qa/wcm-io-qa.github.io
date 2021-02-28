@@ -1,0 +1,7 @@
+io.wcm.qa.glnm.differences.base
+io.wcm.qa.glnm.differences.difference
+io.wcm.qa.glnm.differences.difference.driver
+io.wcm.qa.glnm.differences.difference.sut
+io.wcm.qa.glnm.differences.generic
+io.wcm.qa.glnm.differences.specialized
+io.wcm.qa.glnm.differences.util

@@ -1,0 +1,16 @@
+io.wcm.qa.glnm.aem
+io.wcm.qa.glnm.aspectj
+io.wcm.qa.glnm.configuration
+io.wcm.qa.glnm.context
+io.wcm.qa.glnm.exceptions
+io.wcm.qa.glnm.format
+io.wcm.qa.glnm.junit
+io.wcm.qa.glnm.junit.combinatorial
+io.wcm.qa.glnm.logging.logback
+io.wcm.qa.glnm.logging.util
+io.wcm.qa.glnm.mediaquery
+io.wcm.qa.glnm.pairwise
+io.wcm.qa.glnm.reporting
+io.wcm.qa.glnm.util
+io.wcm.qa.glnm.webdriver
+org.junit.jupiter.params
