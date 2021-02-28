@@ -1,0 +1,12 @@
+io.wcm.qa.glnm.hamcrest
+io.wcm.qa.glnm.hamcrest.baseline
+io.wcm.qa.glnm.hamcrest.browser
+io.wcm.qa.glnm.hamcrest.element
+io.wcm.qa.glnm.hamcrest.galen
+io.wcm.qa.glnm.hamcrest.selector
+io.wcm.qa.glnm.interaction
+io.wcm.qa.glnm.interaction.aem.author
+io.wcm.qa.glnm.interaction.logs
+io.wcm.qa.glnm.junit.seljup
+io.wcm.qa.glnm.persistence
+org.junit.jupiter.engine.execution

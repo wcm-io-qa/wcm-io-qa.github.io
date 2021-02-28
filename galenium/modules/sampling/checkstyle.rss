@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>Galenium Sampling - Checkstyle report</title>
+    <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling/</link>
+    <description>Galenium Sampling - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2017 - 2021 wcm.io QA</copyright>
+    <item>
+      <title>File: 48,
+             Errors: 0,
+             Warnings: 0,
+             Infos: 0
+      </title>
+            <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.ElementCountSampler.java">io/wcm/qa/glnm/sampling/element/ElementCountSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.AttributeSampler.java">io/wcm/qa/glnm/sampling/element/AttributeSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.TextSampler.java">io/wcm/qa/glnm/sampling/element/TextSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.regex.RegexSampler.java">io/wcm/qa/glnm/sampling/transform/regex/RegexSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.base.TransformationBasedSampler.java">io/wcm/qa/glnm/sampling/transform/base/TransformationBasedSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.aem.AemComponentHtmlSampler.java">io/wcm/qa/glnm/sampling/aem/AemComponentHtmlSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.CssValueSampler.java">io/wcm/qa/glnm/sampling/element/CssValueSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.base.CachingBasedSampler.java">io/wcm/qa/glnm/sampling/base/CachingBasedSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.htmlcleaner.visitors.CssClassSorter.java">io/wcm/qa/glnm/sampling/htmlcleaner/visitors/CssClassSorter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.aem.AemAuthorLoginSampler.java">io/wcm/qa/glnm/sampling/aem/AemAuthorLoginSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.htmlcleaner.HtmlCleanerSampler.java">io/wcm/qa/glnm/sampling/htmlcleaner/HtmlCleanerSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.VisibilitySampler.java">io/wcm/qa/glnm/sampling/element/VisibilitySampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.JsonSampler.java">io/wcm/qa/glnm/sampling/transform/JsonSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.StringToListSampler.java">io/wcm/qa/glnm/sampling/transform/StringToListSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.jsoup.JsoupDocumentSampler.java">io/wcm/qa/glnm/sampling/jsoup/JsoupDocumentSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.aem.AllPagesForTemplateSampler.java">io/wcm/qa/glnm/sampling/aem/AllPagesForTemplateSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.SizeSampler.java">io/wcm/qa/glnm/sampling/element/SizeSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.jsoup.base.JsoupConnectionProvider.java">io/wcm/qa/glnm/sampling/jsoup/base/JsoupConnectionProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.base.SplittingSampler.java">io/wcm/qa/glnm/sampling/transform/base/SplittingSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.jsoup.JsoupResponseCodeSampler.java">io/wcm/qa/glnm/sampling/jsoup/JsoupResponseCodeSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.jsoup.base.JsoupBasedSampler.java">io/wcm/qa/glnm/sampling/jsoup/base/JsoupBasedSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.base.WebElementSampler.java">io/wcm/qa/glnm/sampling/element/base/WebElementSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.base.RegexBasedSampler.java">io/wcm/qa/glnm/sampling/transform/base/RegexBasedSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.CachingSampler.java">io/wcm/qa/glnm/sampling/CachingSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.driver.PageSourceSampler.java">io/wcm/qa/glnm/sampling/driver/PageSourceSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.driver.PageTitleSampler.java">io/wcm/qa/glnm/sampling/driver/PageTitleSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.base.MultiElementSampler.java">io/wcm/qa/glnm/sampling/element/base/MultiElementSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.jsoup.base.JsoupElementBasedSampler.java">io/wcm/qa/glnm/sampling/jsoup/base/JsoupElementBasedSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.aem.JcrQuerySampler.java">io/wcm/qa/glnm/sampling/aem/JcrQuerySampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.base.SingleElementSampler.java">io/wcm/qa/glnm/sampling/element/base/SingleElementSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.regex.RegexReplaceSampler.java">io/wcm/qa/glnm/sampling/transform/regex/RegexReplaceSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.Sampler.java">io/wcm/qa/glnm/sampling/Sampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.string.FixedStringSampler.java">io/wcm/qa/glnm/sampling/string/FixedStringSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.jsoup.JsoupCookieSampler.java">io/wcm/qa/glnm/sampling/jsoup/JsoupCookieSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.CountingSampler.java">io/wcm/qa/glnm/sampling/transform/CountingSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.regex.RegexMatchGroupSampler.java">io/wcm/qa/glnm/sampling/transform/regex/RegexMatchGroupSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.CanCache.java">io/wcm/qa/glnm/sampling/CanCache.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.browser.BrowserLogSampler.java">io/wcm/qa/glnm/sampling/browser/BrowserLogSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.jsoup.JsoupRawStringSampler.java">io/wcm/qa/glnm/sampling/jsoup/JsoupRawStringSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.util.SamplerFactory.java">io/wcm/qa/glnm/sampling/util/SamplerFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.browser.ScrollPositionSampler.java">io/wcm/qa/glnm/sampling/browser/ScrollPositionSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.LocationSampler.java">io/wcm/qa/glnm/sampling/element/LocationSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.regex.RegexGroupSampler.java">io/wcm/qa/glnm/sampling/transform/regex/RegexGroupSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.driver.CurrentUrlSampler.java">io/wcm/qa/glnm/sampling/driver/CurrentUrlSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.base.RegexGroupBasedSampler.java">io/wcm/qa/glnm/sampling/transform/base/RegexGroupBasedSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.transform.regex.RegexSingleGroupSampler.java">io/wcm/qa/glnm/sampling/transform/regex/RegexSingleGroupSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.element.base.SelectorBasedSampler.java">io/wcm/qa/glnm/sampling/element/base/SelectorBasedSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.sampling//checkstyle.html#io.wcm.qa.glnm.sampling.TransformingSampler.java">io/wcm/qa/glnm/sampling/TransformingSampler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+

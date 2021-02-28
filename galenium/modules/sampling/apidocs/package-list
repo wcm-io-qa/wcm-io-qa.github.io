@@ -1,0 +1,16 @@
+io.wcm.qa.glnm.sampling
+io.wcm.qa.glnm.sampling.aem
+io.wcm.qa.glnm.sampling.base
+io.wcm.qa.glnm.sampling.browser
+io.wcm.qa.glnm.sampling.driver
+io.wcm.qa.glnm.sampling.element
+io.wcm.qa.glnm.sampling.element.base
+io.wcm.qa.glnm.sampling.htmlcleaner
+io.wcm.qa.glnm.sampling.htmlcleaner.visitors
+io.wcm.qa.glnm.sampling.jsoup
+io.wcm.qa.glnm.sampling.jsoup.base
+io.wcm.qa.glnm.sampling.string
+io.wcm.qa.glnm.sampling.transform
+io.wcm.qa.glnm.sampling.transform.base
+io.wcm.qa.glnm.sampling.transform.regex
+io.wcm.qa.glnm.sampling.util
