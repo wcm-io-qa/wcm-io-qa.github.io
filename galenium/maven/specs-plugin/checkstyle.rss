@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>Galenium Galen Specs Maven Plugin - Checkstyle report</title>
+    <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin</link>
+    <description>Galenium Galen Specs Maven Plugin - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2017 - 2021 wcm.io QA</copyright>
+    <item>
+      <title>File: 20,
+             Errors: 0,
+             Warnings: 0,
+             Infos: 0
+      </title>
+            <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.FullSelectorClassNameFromSelectorMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/FullSelectorClassNameFromSelectorMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.pojo.InteractionPojo.java">io/wcm/qa/glnm/maven/freemarker/pojo/InteractionPojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.util.FreemarkerUtil.java">io/wcm/qa/glnm/maven/freemarker/util/FreemarkerUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.pojo.InteractionMethodPojo.java">io/wcm/qa/glnm/maven/freemarker/pojo/InteractionMethodPojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.ConstantNameMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/ConstantNameMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.FullWebElementClassNameFromSelectorMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/FullWebElementClassNameFromSelectorMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.pojo.SelectorPojo.java">io/wcm/qa/glnm/maven/freemarker/pojo/SelectorPojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.galen.specs.ParsingUtil.java">io/wcm/qa/glnm/galen/specs/ParsingUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.pojo.SpecPojo.java">io/wcm/qa/glnm/maven/freemarker/pojo/SpecPojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.ClassNameFromStringMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/ClassNameFromStringMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.AbstractTemplateMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/AbstractTemplateMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.EscapeJavaMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/EscapeJavaMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.util.FormatUtil.java">io/wcm/qa/glnm/maven/freemarker/util/FormatUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.ClassNameFromSelectorMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/ClassNameFromSelectorMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.HelpMojo.java">io/wcm/qa/glnm/maven/freemarker/HelpMojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.ClassNameFromSpecMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/ClassNameFromSpecMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.PackageNameMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/PackageNameMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.methods.EscapeJavaDocMethod.java">io/wcm/qa/glnm/maven/freemarker/methods/EscapeJavaDocMethod.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.GalenSpecsMojo.java">io/wcm/qa/glnm/maven/freemarker/GalenSpecsMojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.specs-maven-plugin/checkstyle.html#io.wcm.qa.glnm.maven.freemarker.util.ReflectionUtil.java">io/wcm/qa/glnm/maven/freemarker/util/ReflectionUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+

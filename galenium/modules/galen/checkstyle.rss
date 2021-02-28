@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>Galenium Galen - Checkstyle report</title>
+    <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen/</link>
+    <description>Galenium Galen - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2017 - 2021 wcm.io QA</copyright>
+    <item>
+      <title>File: 26,
+             Errors: 0,
+             Warnings: 1,
+             Infos: 0
+      </title>
+            <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.validation.GalenValidation.java">io/wcm/qa/glnm/galen/validation/GalenValidation.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.page.GalenCorrection.java">io/wcm/qa/glnm/galen/specs/page/GalenCorrection.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.page.GalenCorrectionRect.java">io/wcm/qa/glnm/galen/specs/page/GalenCorrectionRect.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.util.GalenHelperUtil.java">io/wcm/qa/glnm/galen/util/GalenHelperUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.GalenLayout.java">io/wcm/qa/glnm/galen/specs/GalenLayout.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.validation.AllureValidationListener.java">io/wcm/qa/glnm/galen/validation/AllureValidationListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.GalenSpec.java">io/wcm/qa/glnm/galen/specs/GalenSpec.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.mock.MockPage.java">io/wcm/qa/glnm/galen/mock/MockPage.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.validation.NoOpValidationListener.java">io/wcm/qa/glnm/galen/validation/NoOpValidationListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.imagecomparison.IcsFactory.java">io/wcm/qa/glnm/galen/specs/imagecomparison/IcsFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.reports.GalenReports.java">io/wcm/qa/glnm/galen/reports/GalenReports.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.GalenParsing.java">io/wcm/qa/glnm/galen/specs/GalenParsing.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.imagecomparison.ImageComparisonSpec.java">io/wcm/qa/glnm/galen/specs/imagecomparison/ImageComparisonSpec.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.imagecomparison.ImageComparisonProvider.java">io/wcm/qa/glnm/galen/specs/imagecomparison/ImageComparisonProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.GalenPageSpecProvider.java">io/wcm/qa/glnm/galen/specs/GalenPageSpecProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.imagecomparison.IcUtil.java">io/wcm/qa/glnm/galen/specs/imagecomparison/IcUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.mock.MockPageElement.java">io/wcm/qa/glnm/galen/mock/MockPageElement.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.validation.TracingValidationListener.java">io/wcm/qa/glnm/galen/validation/TracingValidationListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.validation.FileBasedGalenSpec.java">io/wcm/qa/glnm/galen/validation/FileBasedGalenSpec.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.imagecomparison.ImageComparisonSpecDefinition.java">io/wcm/qa/glnm/galen/specs/imagecomparison/ImageComparisonSpecDefinition.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.imagecomparison.IcsDefinition.java">io/wcm/qa/glnm/galen/specs/imagecomparison/IcsDefinition.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.AbstractGalenSpec.java">io/wcm/qa/glnm/galen/specs/AbstractGalenSpec.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.GalenSpecUtil.java">io/wcm/qa/glnm/galen/specs/GalenSpecUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.imagecomparison.IcValidationListener.java">io/wcm/qa/glnm/galen/specs/imagecomparison/IcValidationListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.GalenSpecParsingProvider.java">io/wcm/qa/glnm/galen/specs/GalenSpecParsingProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.galen//checkstyle.html#io.wcm.qa.glnm.galen.specs.GalenSpecRun.java">io/wcm/qa/glnm/galen/specs/GalenSpecRun.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+
