@@ -110,7 +110,7 @@
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>   @Override
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>   <strong class="jxr_keyword">public</strong> Map&lt;String, String&gt; freshSample() {
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>     String url = buildUrl();
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <a name="JsoupRawStringSampler" href="../../../../../../io/wcm/qa/glnm/sampling<a name="JsoupRawStringSampler" href="../../../../../../io/wcm/qa/glnm/sampling/jsoup/JsoupRawStringSampler.html#JsoupRawStringSampler">JsoupRawStringSampler</a>Sampler.html#JsoupRawStringSampler">JsoupRawStringSampler</a> stringSampler = <strong class="jxr_keyword">new</strong> <a name="JsoupRawStringSampler" href="../../../../../../io/wcm/qa/glnm/sampling/jsoup/JsoupRawStringSampler.html#JsoupRawStringSampler">JsoupRawStringSampler</a>(url);
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <a name="JsoupRawStringSampler" href="../../../../../../io/wcm/qa/glnm/sampling/jsoup/JsoupRawStringSampler.html#JsoupRawStringSampler">JsoupRawStringSampler</a> stringSampler = <strong class="jxr_keyword">new</strong> <a name="JsoupRawStringSampler" href="../../../../../../io/wcm/qa/glnm/sampling/jsoup/JsoupRawStringSampler.html#JsoupRawStringSampler">JsoupRawStringSampler</a>(url);
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>     stringSampler.setCookieSampler(getCookieSampler());
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     stringSampler.setBodyOnly(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>     setInput(stringSampler);
@@ -319,7 +319,7 @@
 <a class="jxr_linenumber" name="L311" href="#L311">311</a> 
 <a class="jxr_linenumber" name="L312" href="#L312">312</a>   <strong class="jxr_keyword">protected</strong> Sampler&lt;Map&lt;String, String&gt;&gt; getCookieSampler() {
 <a class="jxr_linenumber" name="L313" href="#L313">313</a>     String url = getProtocol() + <span class="jxr_string">"://"</span> + getHostName();
-<a class="jxr_linenumber" name="L314" href="#L314">314</a>     <a name="AemAuthorLoginSampler" href="../../../../../../io/wcm/qa/glnm/samplin<a name="AemAuthorLoginSampler" href="../../../../../../io/wcm/qa/glnm/sampling/aem/AemAuthorLoginSampler.html#AemAuthorLoginSampler">AemAuthorLoginSampler</a>ampler.html#AemAuthorLoginSampler">AemAuthorLoginSampler</a> loginSampler = <strong class="jxr_keyword">new</strong> <a name="AemAuthorLoginSampler" href="../../../../../../io/wcm/qa/glnm/sampling/aem/AemAuthorLoginSampler.html#AemAuthorLoginSampler">AemAuthorLoginSampler</a>(url, getPort());
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>     <a name="AemAuthorLoginSampler" href="../../../../../../io/wcm/qa/glnm/sampling/aem/AemAuthorLoginSampler.html#AemAuthorLoginSampler">AemAuthorLoginSampler</a> loginSampler = <strong class="jxr_keyword">new</strong> <a name="AemAuthorLoginSampler" href="../../../../../../io/wcm/qa/glnm/sampling/aem/AemAuthorLoginSampler.html#AemAuthorLoginSampler">AemAuthorLoginSampler</a>(url, getPort());
 <a class="jxr_linenumber" name="L315" href="#L315">315</a>     loginSampler.setUsername(getUserName());
 <a class="jxr_linenumber" name="L316" href="#L316">316</a>     loginSampler.setPassword(getPassword());
 <a class="jxr_linenumber" name="L317" href="#L317">317</a>     <strong class="jxr_keyword">return</strong> loginSampler;
@@ -345,6 +345,6 @@
 <a class="jxr_linenumber" name="L337" href="#L337">337</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2017&#x2013;2021 <a href="https://qa.wcm.io">wcm.io QA</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2017&#x2013;2022 <a href="https://qa.wcm.io">wcm.io QA</a>. All rights reserved.</div>
 </body>
 </html>
