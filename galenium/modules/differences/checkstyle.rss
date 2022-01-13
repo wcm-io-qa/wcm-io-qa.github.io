@@ -23,7 +23,7 @@ under the License.
     <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences/</link>
     <description>Galenium Differences - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2017 - 2021 wcm.io QA</copyright>
+    <copyright>&#169;2017 - 2022 wcm.io QA</copyright>
     <item>
       <title>File: 20,
              Errors: 0,
@@ -172,20 +172,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.generic.DifferenceNameAndValueComparator.java">io/wcm/qa/glnm/differences/generic/DifferenceNameAndValueComparator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.EnumDifference.java">io/wcm/qa/glnm/differences/difference/EnumDifference.java</a>
                 </td>
                 <td>
@@ -200,7 +186,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.generic.DifferenceNameComparator.java">io/wcm/qa/glnm/differences/generic/DifferenceNameComparator.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.generic.DifferenceNameAndValueComparator.java">io/wcm/qa/glnm/differences/generic/DifferenceNameAndValueComparator.java</a>
                 </td>
                 <td>
                   0
@@ -215,6 +201,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.difference.sut.RelativeUrlWithQueryDifference.java">io/wcm/qa/glnm/differences/difference/sut/RelativeUrlWithQueryDifference.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.differences//checkstyle.html#io.wcm.qa.glnm.differences.generic.DifferenceNameComparator.java">io/wcm/qa/glnm/differences/generic/DifferenceNameComparator.java</a>
                 </td>
                 <td>
                   0

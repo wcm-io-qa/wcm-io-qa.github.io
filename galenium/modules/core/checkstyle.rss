@@ -23,7 +23,7 @@ under the License.
     <link>https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core/</link>
     <description>Galenium Core - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2017 - 2021 wcm.io QA</copyright>
+    <copyright>&#169;2017 - 2022 wcm.io QA</copyright>
     <item>
       <title>File: 43,
              Errors: 0,
@@ -130,7 +130,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CartesianProductProvider.java">io/wcm/qa/glnm/junit/combinatorial/CartesianProductProvider.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.Combination.java">io/wcm/qa/glnm/junit/combinatorial/Combination.java</a>
                 </td>
                 <td>
                   0
@@ -144,7 +144,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.Combination.java">io/wcm/qa/glnm/junit/combinatorial/Combination.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CartesianProductProvider.java">io/wcm/qa/glnm/junit/combinatorial/CartesianProductProvider.java</a>
                 </td>
                 <td>
                   0
@@ -172,20 +172,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.logging.util.GaleniumLoggingUtil.java">io/wcm/qa/glnm/logging/util/GaleniumLoggingUtil.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.webdriver.WebDriverManagement.java">io/wcm/qa/glnm/webdriver/WebDriverManagement.java</a>
                 </td>
                 <td>
@@ -200,7 +186,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.aem.AemComponentUrlBuilder.java">io/wcm/qa/glnm/aem/AemComponentUrlBuilder.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.logging.util.GaleniumLoggingUtil.java">io/wcm/qa/glnm/logging/util/GaleniumLoggingUtil.java</a>
                 </td>
                 <td>
                   0
@@ -215,6 +201,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.exceptions.GaleniumException.java">io/wcm/qa/glnm/exceptions/GaleniumException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.aem.AemComponentUrlBuilder.java">io/wcm/qa/glnm/aem/AemComponentUrlBuilder.java</a>
                 </td>
                 <td>
                   0
@@ -270,7 +270,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinatorialUtil.java">io/wcm/qa/glnm/junit/combinatorial/CombinatorialUtil.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinableSource.java">io/wcm/qa/glnm/junit/combinatorial/CombinableSource.java</a>
                 </td>
                 <td>
                   0
@@ -284,7 +284,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinableSource.java">io/wcm/qa/glnm/junit/combinatorial/CombinableSource.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.core//checkstyle.html#io.wcm.qa.glnm.junit.combinatorial.CombinatorialUtil.java">io/wcm/qa/glnm/junit/combinatorial/CombinatorialUtil.java</a>
                 </td>
                 <td>
                   0
