@@ -1,0 +1,21 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker,GalenSpecsMojo,552,0,22,0,115,0,34,0,23,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker,HelpMojo,893,0,110,0,159,0,71,0,16,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.galen.specs,ParsingUtil,74,0,10,0,15,0,7,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.pojo,SpecPojo,108,0,8,0,26,0,16,0,12,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.pojo,InteractionMethodPojo,211,0,10,0,48,0,17,0,12,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.pojo,SelectorPojo,93,0,2,0,25,0,17,0,16,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.pojo,InteractionPojo,90,0,14,0,19,0,13,0,6,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.util,ReflectionUtil,12,0,0,0,3,0,3,0,3,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.util,FormatUtil,169,0,4,0,36,0,16,0,14,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.util,FreemarkerUtil,268,0,4,0,59,0,13,0,11,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,PackageNameMethod,11,0,0,0,3,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,ClassNameFromSelectorMethod,6,0,0,0,2,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,EscapeJavaMethod,6,0,0,0,2,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,ClassNameFromSpecMethod,6,0,0,0,2,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,EscapeJavaDocMethod,18,0,0,0,6,0,3,0,3,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,FullSelectorClassNameFromSelectorMethod,14,0,0,0,3,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,ClassNameFromStringMethod,6,0,0,0,2,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,FullWebElementClassNameFromSelectorMethod,14,0,0,0,3,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,AbstractTemplateMethod,67,0,6,0,13,0,7,0,4,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,ConstantNameMethod,6,0,0,0,2,0,2,0,2,0

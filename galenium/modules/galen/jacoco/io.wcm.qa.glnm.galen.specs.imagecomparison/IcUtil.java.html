@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IcUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.galen.specs.imagecomparison</a> &gt; <span class="el_source">IcUtil.java</span></div><h1>IcUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.galen.specs.imagecomparison;
+
+import static io.wcm.qa.glnm.configuration.GaleniumConfiguration.getActualImagesDirectory;
+import static io.wcm.qa.glnm.configuration.GaleniumConfiguration.getExpectedImagesDirectory;
+import static io.wcm.qa.glnm.util.FileHandlingUtil.constructRelativePath;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.galenframework.parser.SyntaxException;
+import com.galenframework.speclang2.specs.SpecReader;
+import com.galenframework.specs.Spec;
+import com.galenframework.validation.ImageComparison;
+import com.galenframework.validation.ValidationError;
+import com.galenframework.validation.ValidationResult;
+
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+import io.wcm.qa.glnm.selectors.base.Selector;
+import io.wcm.qa.glnm.util.FileHandlingUtil;
+
+/**
+ * Utility methods for Galenium image comparison via Galen.
+ */
+final class IcUtil {
+
+<span class="nc" id="L59">  private static final BufferedImage DUMMY_IMAGE = new BufferedImage(20, 20, BufferedImage.TYPE_3BYTE_BGR);</span>
+
+  private static final String DUMMY_IMAGE_FORMAT = &quot;png&quot;;
+
+<span class="nc" id="L63">  private static final Logger LOG = LoggerFactory.getLogger(IcUtil.class);</span>
+
+  private static final String REGEX_IMAGE_FILENAME = &quot;.*image file ([^,]*\\.png).*&quot;;
+<span class="nc" id="L66">  static final Pattern REGEX_PATTERN_IMAGE_FILENAME = Pattern.compile(REGEX_IMAGE_FILENAME);</span>
+
+  private IcUtil() {
+    // do not instantiate
+  }
+
+  private static String getImageComparisonSpecText(String folder, String fileName, String error, int offset, List&lt;Selector&gt; toIgnore) {
+<span class="nc" id="L73">    StringBuilder specText = new StringBuilder()</span>
+    // boiler plate
+<span class="nc" id="L75">        .append(&quot;image file &quot;)</span>
+    // image file
+<span class="nc" id="L77">        .append(getImageOrDummySamplePath(folder, fileName));</span>
+
+    // tolerance
+<span class="nc bnc" id="L80" title="All 2 branches missed.">    if (StringUtils.isNotBlank(error)) {</span>
+<span class="nc" id="L81">      specText.append(&quot;, error &quot;)</span>
+<span class="nc" id="L82">          .append(error);</span>
+    }
+<span class="nc bnc" id="L84" title="All 2 branches missed.">    if (offset &gt; 0) {</span>
+<span class="nc" id="L85">      specText.append(&quot;, analyze-offset &quot;);</span>
+<span class="nc" id="L86">      specText.append(offset);</span>
+    }
+<span class="nc bnc" id="L88" title="All 2 branches missed.">    if (!toIgnore.isEmpty()) {</span>
+<span class="nc" id="L89">      List&lt;Selector&gt; objects = toIgnore;</span>
+<span class="nc" id="L90">      specText.append(&quot;, ignore-objects &quot;);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">      if (objects.size() == 1) {</span>
+<span class="nc" id="L92">        specText.append(objects.get(0));</span>
+      }
+      else {
+<span class="nc" id="L95">        specText.append(&quot;[&quot;);</span>
+<span class="nc" id="L96">        Collection&lt;String&gt; elementNames = new HashSet&lt;String&gt;();</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        for (Selector object : objects) {</span>
+<span class="nc" id="L99">          elementNames.add(object.elementName());</span>
+<span class="nc" id="L100">        }</span>
+
+<span class="nc" id="L102">        specText.append(StringUtils.join(elementNames, &quot;, &quot;));</span>
+<span class="nc" id="L103">        specText.append(&quot;]&quot;);</span>
+      }
+    }
+
+<span class="nc" id="L107">    return specText.toString();</span>
+  }
+
+  private static String getImageOrDummySamplePath(String folder, String fileName) {
+    String fullFilePath;
+
+    // folder
+<span class="nc bnc" id="L114" title="All 2 branches missed.">    if (StringUtils.isNotBlank(folder)) {</span>
+<span class="nc" id="L115">      fullFilePath = FilenameUtils.concat(folder, fileName);</span>
+    }
+    else {
+      // no folder means fileName is all the path info we have
+<span class="nc" id="L119">      fullFilePath = fileName;</span>
+    }
+
+<span class="nc" id="L122">    createDummyIfSampleDoesNotExist(fullFilePath);</span>
+
+<span class="nc" id="L124">    return fullFilePath;</span>
+  }
+
+  private static File getOriginalFilteredImage(ValidationResult result) {
+<span class="nc" id="L128">    ImageComparison imageComparison = getImageComparison(result);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">    if (imageComparison == null) {</span>
+<span class="nc" id="L130">      return null;</span>
+    }
+<span class="nc" id="L132">    File actualImage = imageComparison.getOriginalFilteredImage();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">    if (actualImage == null) {</span>
+<span class="nc" id="L134">      LOG.debug(&quot;could not find sampled image in image comparison.&quot;);</span>
+    }
+
+<span class="nc" id="L137">    return actualImage;</span>
+  }
+
+  private static File getSampleTargetFile(Spec spec) {
+<span class="nc" id="L141">    String targetPath = getTargetPathFrom(spec);</span>
+<span class="nc" id="L142">    File imageFile = new File(targetPath);</span>
+<span class="nc" id="L143">    FileHandlingUtil.ensureParent(imageFile);</span>
+<span class="nc" id="L144">    return imageFile;</span>
+  }
+
+  private static String getTargetPathFrom(Spec spec) {
+<span class="nc" id="L148">    File rootDirectory = new File(getExpectedImagesDirectory());</span>
+<span class="nc" id="L149">    String imagePathFromSpec = getImagePathFrom(spec);</span>
+<span class="nc" id="L150">    String relativeImagePath = constructRelativePath(rootDirectory, new File(imagePathFromSpec));</span>
+<span class="nc" id="L151">    return getActualImagesDirectory() + File.separator + relativeImagePath;</span>
+  }
+
+  private static boolean isExpectedImageSampleMissing(String fullFilePath) {
+<span class="nc bnc" id="L155" title="All 2 branches missed.">    return !new File(fullFilePath).isFile();</span>
+  }
+
+  private static File writeDummySample(File targetFile) {
+    try {
+<span class="nc bnc" id="L160" title="All 2 branches missed.">      if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L161">        LOG.trace(&quot;begin writing dummy image '&quot; + targetFile);</span>
+      }
+<span class="nc" id="L163">      FileHandlingUtil.ensureParent(targetFile);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">      if (ImageIO.write(DUMMY_IMAGE, DUMMY_IMAGE_FORMAT, targetFile)) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L166">          LOG.debug(&quot;done writing dummy image '&quot; + targetFile);</span>
+        }
+      }
+<span class="nc bnc" id="L169" title="All 2 branches missed.">      else if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L170">        LOG.info(&quot;could not write dummy image '&quot; + targetFile);</span>
+      }
+<span class="nc" id="L172">      return targetFile;</span>
+    }
+<span class="nc" id="L174">    catch (IOException ex) {</span>
+<span class="nc" id="L175">      throw new GaleniumException(&quot;could not write dummy image.&quot;, ex);</span>
+    }
+  }
+
+  static void createDummyIfSampleDoesNotExist(String fullFilePath) {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">    if (IcUtil.isExpectedImageSampleMissing(fullFilePath)) {</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">      if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L182">        LOG.info(&quot;Cannot find sample. Substituting dummy for '&quot; + fullFilePath + &quot;'&quot;);</span>
+      }
+
+      // if image is missing, we'll substitute a dummy to force Galen to at least sample the page
+<span class="nc" id="L186">      File targetFile = new File(fullFilePath);</span>
+
+<span class="nc" id="L188">      writeDummySample(targetFile);</span>
+    }
+<span class="nc" id="L190">  }</span>
+
+  static ImageComparison getImageComparison(ValidationResult result) {
+<span class="nc" id="L193">    ValidationError error = result.getError();</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">    if (error == null) {</span>
+<span class="nc" id="L195">      LOG.debug(&quot;could not find error in validation result.&quot;);</span>
+<span class="nc" id="L196">      return null;</span>
+    }
+
+<span class="nc" id="L199">    ImageComparison imageComparison = error.getImageComparison();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">    if (imageComparison == null) {</span>
+<span class="nc" id="L201">      LOG.debug(&quot;could not find image comparison in validation error.&quot;);</span>
+<span class="nc" id="L202">      return null;</span>
+    }
+
+<span class="nc" id="L205">    return imageComparison;</span>
+  }
+
+  static String getImageComparisonSpecText(IcsDefinition def) {
+<span class="nc" id="L209">    return IcUtil.getImageComparisonSpecText(</span>
+<span class="nc" id="L210">        def.getFoldername(),</span>
+<span class="nc" id="L211">        def.getFilename(),</span>
+<span class="nc" id="L212">        def.getAllowedError(),</span>
+<span class="nc" id="L213">        def.getAllowedOffset(),</span>
+<span class="nc" id="L214">        def.getObjectsToIgnore());</span>
+  }
+
+  static String getImagePathFrom(Spec spec) {
+<span class="nc" id="L218">    Matcher matcher = REGEX_PATTERN_IMAGE_FILENAME.matcher(spec.toText());</span>
+<span class="nc bnc" id="L219" title="All 4 branches missed.">    if (matcher.matches() &amp;&amp; matcher.groupCount() &gt;= 1) {</span>
+<span class="nc" id="L220">      return matcher.group(1);</span>
+    }
+<span class="nc" id="L222">    return &quot;&quot;;</span>
+  }
+
+  static File getSampleSourceFile(Spec spec, ValidationResult result) {
+<span class="nc" id="L226">    File imageFile = getOriginalFilteredImage(result);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">    if (imageFile != null) {</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L229">        LOG.debug(&quot;sample source file: &quot; + imageFile.getPath());</span>
+      }
+<span class="nc" id="L231">      return imageFile;</span>
+    }
+<span class="nc" id="L233">    String imagePath = getImagePathFrom(spec);</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">    if (StringUtils.isBlank(imagePath)) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">      if (LOG.isWarnEnabled()) {</span>
+<span class="nc" id="L236">        LOG.warn(&quot;could not extract image name from: &quot; + spec.toText());</span>
+      }
+<span class="nc" id="L238">      return null;</span>
+    }
+<span class="nc bnc" id="L240" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L241">      LOG.debug(&quot;sample source path: &quot; + imagePath);</span>
+    }
+<span class="nc" id="L243">    return new File(imagePath);</span>
+  }
+
+  static Spec getSpecForText(String specText) {
+    try {
+<span class="nc" id="L248">      return new SpecReader().read(specText);</span>
+    }
+<span class="nc" id="L250">    catch (IllegalArgumentException | SyntaxException ex) {</span>
+<span class="nc" id="L251">      String msg = &quot;when parsing spec text: '&quot; + specText + &quot;'&quot;;</span>
+<span class="nc" id="L252">      LOG.error(msg);</span>
+<span class="nc" id="L253">      throw new GaleniumException(msg, ex);</span>
+    }
+  }
+
+  static String getZeroToleranceImageComparisonSpecText(IcsDefinition def) {
+<span class="nc" id="L258">    return getImageComparisonSpecText(</span>
+<span class="nc" id="L259">        def.getFoldername(),</span>
+<span class="nc" id="L260">        def.getFilename(),</span>
+        &quot;&quot;,
+        0,
+<span class="nc" id="L263">        def.getObjectsToIgnore());</span>
+  }
+
+  static boolean isImageComparisonSpec(Spec spec) {
+<span class="nc" id="L267">    return StringUtils.contains(spec.toText(), &quot;image file &quot;);</span>
+  }
+
+  static void saveSample(String objectName, Spec spec, ValidationResult result) {
+<span class="nc bnc" id="L271" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L272">      LOG.debug(&quot;checking for image file: &quot; + spec.toText() + &quot; (with regex: &quot; + REGEX_PATTERN_IMAGE_FILENAME.pattern() + &quot;)&quot;);</span>
+    }
+<span class="nc" id="L274">    File source = getSampleSourceFile(spec, result);</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">    if (source == null) {</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L277">        LOG.debug(&quot;did not find source file: &quot; + objectName);</span>
+      }
+<span class="nc" id="L279">      return;</span>
+    }
+
+<span class="nc" id="L282">    File target = getSampleTargetFile(spec);</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L284">      LOG.trace(&quot;begin copying image '&quot; + source + &quot;' -&gt; '&quot; + target + &quot;'&quot;);</span>
+    }
+    try {
+<span class="nc" id="L287">      FileUtils.copyFile(source, target);</span>
+    }
+<span class="nc" id="L289">    catch (GaleniumException | IOException ex) {</span>
+<span class="nc" id="L290">      String msg = &quot;could not write image: &quot; + target;</span>
+<span class="nc" id="L291">      LOG.error(msg, ex);</span>
+<span class="nc" id="L292">    }</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L294">      LOG.trace(&quot;done copying image '&quot; + source + &quot;' -&gt; '&quot; + target + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L296">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FormatUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen Specs Maven Plugin</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.maven.freemarker.util</a> &gt; <span class="el_source">FormatUtil.java</span></div><h1>FormatUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.maven.freemarker.util;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.CaseFormat;
+
+import io.wcm.qa.glnm.maven.freemarker.pojo.SelectorPojo;
+import io.wcm.qa.glnm.maven.freemarker.pojo.SpecPojo;
+
+/**
+ * Utility methods to convert between different casings.
+ *
+ * @since 1.0.0
+ */
+public final class FormatUtil {
+
+  private static final String FILE_ENDING_GSPEC = &quot;.gspec&quot;;
+  private static final String REGEX_NAME_CLEANING = &quot;\\.&quot;;
+
+  private FormatUtil() {
+    // do not instantiate
+  }
+
+  /**
+   * &lt;p&gt;getClassName.&lt;/p&gt;
+   *
+   * @param file to extract class name from
+   * @return class name build from file name
+   */
+  public static String getClassName(File file) {
+<span class="nc" id="L55">    return getClassName(FilenameUtils.getBaseName(file.getPath()));</span>
+  }
+
+  /**
+   * &lt;p&gt;getClassName.&lt;/p&gt;
+   *
+   * @param selector to extract class name from
+   * @return class name from selectors element name
+   */
+  public static String getClassName(SelectorPojo selector) {
+<span class="nc" id="L65">    String elementName = selector.elementName();</span>
+<span class="nc" id="L66">    String relativeElementName = getRelativeElementName(elementName);</span>
+<span class="nc" id="L67">    String cleanElementName = getCleanElementName(relativeElementName);</span>
+<span class="nc" id="L68">    return kebapToUpperCamel(cleanElementName);</span>
+  }
+
+  /**
+   * &lt;p&gt;getFullyQualifiedWebElementClassName.&lt;/p&gt;
+   *
+   * @param packageName name of package
+   * @param selector to extract class name from
+   * @return class name from selectors element name
+   */
+  public static String getFullyQualifiedWebElementClassName(String packageName, SelectorPojo selector) {
+<span class="nc" id="L79">    return getFullyQualifiedClassName(packageName, selector, &quot;Gwe&quot;);</span>
+  }
+
+  /**
+   * &lt;p&gt;getFullyQualifiedSelectorClassName.&lt;/p&gt;
+   *
+   * @param selector to extract class name from
+   * @return class name from selectors element name
+   * @param packageName a {@link java.lang.String} object.
+   */
+  public static String getFullyQualifiedSelectorClassName(String packageName, SelectorPojo selector) {
+<span class="nc" id="L90">    return getFullyQualifiedClassName(packageName, selector, &quot;&quot;);</span>
+  }
+
+  private static String getFullyQualifiedClassName(String packageName, SelectorPojo selector, String classNamePostfix) {
+<span class="nc" id="L94">    List&lt;String&gt; classNames = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L95">    String[] elementNameParts = selector.elementName().split(&quot;\\.&quot;);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    for (String namePart : elementNameParts) {</span>
+<span class="nc" id="L97">      String cleanName = getCleanElementName(namePart);</span>
+<span class="nc" id="L98">      String className = kebapToUpperCamel(cleanName);</span>
+<span class="nc" id="L99">      classNames.add(className);</span>
+    }
+<span class="nc" id="L101">    String joinedClassNames = StringUtils.join(classNames, classNamePostfix</span>
+        + &quot;.&quot;);
+<span class="nc" id="L103">    return packageName + &quot;.&quot; + joinedClassNames + classNamePostfix;</span>
+  }
+
+  /**
+   * &lt;p&gt;getClassName.&lt;/p&gt;
+   *
+   * @param specPojo to extract name from
+   * @return class name from spec file
+   */
+  public static String getClassName(SpecPojo specPojo) {
+<span class="nc" id="L113">    return kebapToUpperCamel(specPojo.getBaseName());</span>
+  }
+
+  /**
+   * &lt;p&gt;getClassName.&lt;/p&gt;
+   *
+   * @param string kebap cased string
+   * @return class name formatted string from kebap string
+   */
+  public static String getClassName(String string) {
+<span class="nc" id="L123">    return kebapToUpperCamel(string);</span>
+  }
+
+  /**
+   * &lt;p&gt;getConstantName.&lt;/p&gt;
+   *
+   * @param selector to extract name from
+   * @return selectors element name formatted for use as constant name
+   */
+  public static String getConstantName(SelectorPojo selector) {
+<span class="nc" id="L133">    String elementName = selector.elementName();</span>
+<span class="nc" id="L134">    String relativeElementName = getRelativeElementName(elementName);</span>
+<span class="nc" id="L135">    String cleanElementName = getCleanElementName(relativeElementName);</span>
+<span class="nc" id="L136">    return kebapToConstant(cleanElementName);</span>
+  }
+
+  /**
+   * &lt;p&gt;getSelectorsPackageName.&lt;/p&gt;
+   *
+   * @param packageRoot root package to prepend
+   * @param spec to extract package name from
+   * @return absolute package name built from package root and spec
+   */
+  public static String getSelectorsPackageName(String packageRoot, SpecPojo spec) {
+<span class="nc" id="L147">    StringBuilder stringBuilder = new StringBuilder();</span>
+<span class="nc" id="L148">    stringBuilder.append(packageRoot);</span>
+<span class="nc" id="L149">    String relativePackageName = getPackageName(spec);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">    if (!StringUtils.startsWith(relativePackageName, &quot;.&quot;)) {</span>
+<span class="nc" id="L151">      stringBuilder.append(&quot;.&quot;);</span>
+    }
+<span class="nc" id="L153">    stringBuilder.append(relativePackageName);</span>
+<span class="nc" id="L154">    return stringBuilder.toString();</span>
+  }
+
+  private static String getCleanElementName(String elementName) {
+<span class="nc" id="L158">    return elementName.replaceAll(REGEX_NAME_CLEANING, &quot;__&quot;);</span>
+  }
+
+  private static String getPackageName(SpecPojo spec) {
+<span class="nc" id="L162">    String relativePath = spec.getRelativeFilePath();</span>
+<span class="nc" id="L163">    String relativePathWithoutExtension = StringUtils.removeEnd(relativePath, FILE_ENDING_GSPEC);</span>
+<span class="nc" id="L164">    String lowerCasePath = relativePathWithoutExtension.toLowerCase().replaceAll(&quot;[^a-z0-9/]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L165">    return lowerCasePath.replaceAll(&quot;/&quot;, &quot;.&quot;);</span>
+  }
+
+  /**
+   * Format as constant name.
+   * @param input lower hyphen formatted string
+   * @return upper case with underscores version of input string
+   */
+  private static String kebapToConstant(String input) {
+<span class="nc" id="L174">    return CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_UNDERSCORE, input);</span>
+  }
+
+  /**
+   * Format as class name.
+   * @param input lower hyphen formatted string
+   * @return upper camel case version of input string
+   */
+  private static String kebapToUpperCamel(String input) {
+<span class="nc" id="L183">    return CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_CAMEL, input);</span>
+  }
+
+  protected static String getRelativeElementName(String elementName) {
+<span class="nc" id="L187">    return elementName.replaceFirst(&quot;^.*\\.&quot;, &quot;&quot;);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

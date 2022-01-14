@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GalenSpecRun.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.galen.specs</a> &gt; <span class="el_source">GalenSpecRun.java</span></div><h1>GalenSpecRun.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2019 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.galen.specs;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
+
+import com.galenframework.reports.model.LayoutReport;
+import com.galenframework.validation.ValidationError;
+import com.galenframework.validation.ValidationResult;
+
+/**
+ * Represents an execution of a Galen spec.
+ *
+ * @since 4.0.0
+ */
+public class GalenSpecRun {
+
+  private LayoutReport report;
+  private GalenSpec spec;
+
+  /**
+   * &lt;p&gt;Constructor for GalenSpecRun.&lt;/p&gt;
+   *
+   * @param spec a {@link io.wcm.qa.glnm.galen.specs.GalenSpec} object.
+   * @param report a {@link com.galenframework.reports.model.LayoutReport} object.
+   * @since 4.0.0
+   */
+<span class="nc" id="L49">  public GalenSpecRun(GalenSpec spec, LayoutReport report) {</span>
+<span class="nc" id="L50">    setSpec(spec);</span>
+<span class="nc" id="L51">    setReport(report);</span>
+<span class="nc" id="L52">  }</span>
+
+  /**
+   * Get all messages from all errors of this run.
+   *
+   * @return all messages of run
+   * @since 4.0.0
+   */
+  public Collection&lt;String&gt; getMessages() {
+<span class="nc" id="L61">    Collection&lt;String&gt; messages = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L62">    List&lt;ValidationResult&gt; validationErrors = getValidationErrors();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">    for (ValidationResult validationResult : validationErrors) {</span>
+<span class="nc" id="L64">      messages.addAll(getMessages(validationResult));</span>
+<span class="nc" id="L65">    }</span>
+<span class="nc" id="L66">    return messages;</span>
+  }
+
+  /**
+   * When there are no errors or warnings the spec is considered clean.
+   *
+   * @return whether spec is clean
+   * @since 4.0.0
+   */
+  public boolean isClean() {
+<span class="nc" id="L76">    return getValidationErrors().isEmpty();</span>
+  }
+
+  /**
+   * When there are errors that are not marked as warning level only.
+   *
+   * @return whether spec has failed
+   * @since 4.0.0
+   */
+  public boolean isFailed() {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">    return getReport().errors() &gt; 0;</span>
+  }
+
+  /**
+   * When there are errors that are not marked as warning level only.
+   *
+   * @return whether spec has failed
+   * @since 4.0.0
+   */
+  public boolean isWarning() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    return getReport().warnings() &gt; 0;</span>
+  }
+
+  private Collection&lt;String&gt; getMessages(ValidationResult validationResult) {
+<span class="nc" id="L100">    Collection&lt;String&gt; messages = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L101">    ValidationError error = validationResult.getError();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">    if (error != null) {</span>
+<span class="nc" id="L103">      List&lt;String&gt; errorMessages = error.getMessages();</span>
+<span class="nc" id="L104">      CollectionUtils.addAll(messages, errorMessages);</span>
+    }
+<span class="nc" id="L106">    List&lt;ValidationResult&gt; childValidationResults = validationResult.getChildValidationResults();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">    if (childValidationResults != null) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">      for (ValidationResult childResult : childValidationResults) {</span>
+<span class="nc" id="L109">        messages.addAll(getMessages(childResult));</span>
+<span class="nc" id="L110">      }</span>
+    }
+<span class="nc" id="L112">    return messages;</span>
+  }
+
+  protected LayoutReport getReport() {
+<span class="nc" id="L116">    return report;</span>
+  }
+
+  protected GalenSpec getSpec() {
+<span class="nc" id="L120">    return spec;</span>
+  }
+
+  /**
+   * &lt;p&gt;getValidationErrors.&lt;/p&gt;
+   *
+   * @return a {@link java.util.List} object.
+   * @since 4.0.0
+   */
+  protected List&lt;ValidationResult&gt; getValidationErrors() {
+<span class="nc" id="L130">    return getReport().getValidationErrorResults();</span>
+  }
+
+  protected void setReport(LayoutReport report) {
+<span class="nc" id="L134">    this.report = report;</span>
+<span class="nc" id="L135">  }</span>
+
+  protected void setSpec(GalenSpec spec) {
+<span class="nc" id="L138">    this.spec = spec;</span>
+<span class="nc" id="L139">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

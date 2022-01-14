@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GalenParsing.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.galen.specs</a> &gt; <span class="el_source">GalenParsing.java</span></div><h1>GalenParsing.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2019 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.galen.specs;
+
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
+import static org.apache.commons.io.IOUtils.toInputStream;
+import static org.apache.commons.lang3.RegExUtils.replacePattern;
+import static org.apache.commons.lang3.StringUtils.join;
+import static org.apache.commons.lang3.StringUtils.removeEnd;
+import static org.apache.commons.lang3.StringUtils.startsWith;
+import static org.apache.commons.lang3.StringUtils.trim;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.galenframework.parser.SyntaxException;
+import com.galenframework.speclang2.pagespec.PageSpecReader;
+import com.galenframework.speclang2.pagespec.SectionFilter;
+import com.galenframework.specs.page.PageSpec;
+import com.galenframework.utils.GalenUtils;
+import com.google.common.collect.Lists;
+
+import io.wcm.qa.glnm.configuration.GaleniumConfiguration;
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+import io.wcm.qa.glnm.galen.mock.MockPage;
+
+/**
+ * Helper methods to parse specs from files or strings.
+ *
+ * @since 4.0.0
+ */
+final class GalenParsing {
+
+  // Galen uses deprecated method to read with JVM default charset. Using same behavior here.
+<span class="nc" id="L65">  private static final Charset GALEN_PARSING_CHARSET = Charset.defaultCharset();</span>
+<span class="nc" id="L66">  private static final Map&lt;String, Object&gt; EMPTY_JS_VARS = null;</span>
+<span class="nc" id="L67">  private static final Properties EMPTY_PROPERTIES = new Properties();</span>
+<span class="nc" id="L68">  private static final Logger LOG = LoggerFactory.getLogger(GalenParsing.class);</span>
+
+  private GalenParsing() {
+    // do not instantiate
+  }
+
+  private static List&lt;String&gt; getSourceFromResource(String specPath) {
+    try {
+<span class="nc" id="L76">      InputStream resource = getStream(specPath);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">      if (resource == null) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L79">          LOG.trace(&quot;no stream found when fetching: &quot; + specPath);</span>
+        }
+<span class="nc" id="L81">        return null;</span>
+      }
+<span class="nc" id="L83">      List&lt;String&gt; lines = IOUtils.readLines(resource, GALEN_PARSING_CHARSET);</span>
+<span class="nc" id="L84">      return rewriteImports(lines, specPath);</span>
+    }
+<span class="nc" id="L86">    catch (IOException | IllegalArgumentException ex) {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">      if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L88">        LOG.trace(&quot;when fetching: &quot; + specPath, ex);</span>
+      }
+<span class="nc" id="L90">      return null;</span>
+    }
+  }
+
+  private static List&lt;String&gt; rewriteImports(List&lt;String&gt; lines, String specPath) {
+<span class="nc" id="L95">    return emptyIfNull(lines)</span>
+<span class="nc" id="L96">        .stream()</span>
+<span class="nc" id="L97">        .map(s -&gt; rewriteImport(s, specPath))</span>
+<span class="nc" id="L98">        .collect(toList());</span>
+  }
+
+  private static String rewriteImport(String inputLine, String importingSpecPath) {
+<span class="nc" id="L102">    String trimmedInputLine = trim(inputLine);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">    if (startsWith(trimmedInputLine, &quot;@import &quot;)) {</span>
+<span class="nc" id="L104">      String importedPath = StringUtils.removeStart(trimmedInputLine, &quot;@import &quot;);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L106">        LOG.debug(&quot;rewriting import: &quot; + inputLine);</span>
+<span class="nc" id="L107">        LOG.debug(&quot;imported spec path: &quot; + importedPath);</span>
+<span class="nc" id="L108">        LOG.debug(&quot;importing spec path: &quot; + importingSpecPath);</span>
+      }
+<span class="nc" id="L110">      String importingFolder = FilenameUtils.getFullPath(importingSpecPath);</span>
+<span class="nc" id="L111">      String rewrittenImportedPath = separatorsToUnix(combine(importingFolder, importedPath));</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L113">        LOG.debug(&quot;rewritten imported spec path: &quot; + rewrittenImportedPath);</span>
+      }
+<span class="nc" id="L115">      String rewrittenLine = replacePattern(</span>
+          inputLine,
+          &quot;@import .*$&quot;,
+          &quot;@import &quot; + rewrittenImportedPath);
+<span class="nc bnc" id="L119" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L120">        LOG.debug(&quot;rewritten import: &quot; + rewrittenLine);</span>
+      }
+<span class="nc" id="L122">      return rewrittenLine;</span>
+    }
+<span class="nc" id="L124">    return inputLine;</span>
+  }
+
+  private static String prependSpecFolder(String specPath) {
+<span class="nc" id="L128">    String specFolder = GaleniumConfiguration.getGalenSpecPath();</span>
+<span class="nc" id="L129">    String relativePath = StringUtils.removeStart(specPath, &quot;/&quot;);</span>
+<span class="nc" id="L130">    return combine(specFolder, relativePath);</span>
+  }
+
+  private static String combine(String specFolder, String relativePath) {
+<span class="nc" id="L134">    String combined = removeEnd(specFolder, &quot;/&quot;) + &quot;/&quot; + relativePath;</span>
+<span class="nc" id="L135">    String normalized = FilenameUtils.normalize(combined, true);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L137">      LOG.debug(&quot;combining: '&quot; + specFolder + &quot;' + '&quot; + relativePath + &quot;' -&gt; '&quot; + normalized + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L139">    return normalized;</span>
+  }
+
+  /**
+   * Convenience method to read a Galen spec using current threads context. Basically a convenience mapping to
+   * {@link com.galenframework.speclang2.pagespec.PageSpecReader#read(String, com.galenframework.page.Page, SectionFilter, Properties, Map, Map)}.
+   * @param specPath path to spec file
+   * @param tags include tags to use with spec
+   * @return Galen page spec object
+   * @since 4.0.0
+   */
+  static PageSpec fromPath(String specPath, String... tags) {
+    try {
+<span class="nc" id="L152">      String source = getSource(specPath);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">      if (source == null) {</span>
+<span class="nc" id="L154">        throw new GaleniumException(&quot;Could not find spec at '&quot; + specPath + &quot;'&quot;);</span>
+      }
+<span class="nc bnc" id="L156" title="All 2 branches missed.">      if (StringUtils.isBlank(source)) {</span>
+<span class="nc" id="L157">        throw new GaleniumException(&quot;Found empty spec at '&quot; + specPath + &quot;'&quot;);</span>
+      }
+<span class="nc" id="L159">      InputStream stream = toInputStream(source, GALEN_PARSING_CHARSET);</span>
+      //      String contextPath = FilenameUtils.getPath(specPath);
+<span class="nc" id="L161">      SectionFilter filter = getFilter(tags);</span>
+<span class="nc" id="L162">      return new PageSpecReader().read(stream, source, null, new MockPage(), filter, EMPTY_PROPERTIES, EMPTY_JS_VARS, null);</span>
+    }
+<span class="nc" id="L164">    catch (IOException | SyntaxException ex) {</span>
+<span class="nc" id="L165">      throw new GaleniumException(&quot;Exception when parsing spec: '&quot; + specPath + &quot;'&quot;, ex);</span>
+    }
+  }
+
+  private static SectionFilter getFilter(String... tags) {
+<span class="nc" id="L170">    SectionFilter filter = GalenSpecUtil.getDefaultIncludeTags();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">    if (ArrayUtils.isNotEmpty(tags)) {</span>
+<span class="nc" id="L172">      filter.getIncludedTags().addAll(Lists.newArrayList(tags));</span>
+    }
+<span class="nc" id="L174">    return filter;</span>
+  }
+
+  static String getSource(String specPath) {
+<span class="nc" id="L178">    return join(getSourceLines(specPath), &quot;\n&quot;);</span>
+  }
+
+  static List&lt;String&gt; getSourceLines(String specPath) {
+<span class="nc" id="L182">    List&lt;String&gt; source = getSourceFromResource(specPath);</span>
+<span class="nc bnc" id="L183" title="All 4 branches missed.">    if (source != null &amp;&amp; !source.isEmpty()) {</span>
+<span class="nc" id="L184">      return source;</span>
+    }
+<span class="nc bnc" id="L186" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L187">      LOG.debug(&quot;did not find at path: '&quot; + specPath + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L189">    String withSpecFolder = prependSpecFolder(specPath);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L191">      LOG.debug(&quot;trying with prepended path: '&quot; + withSpecFolder + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L193">    return getSourceFromResource(withSpecFolder);</span>
+  }
+
+  static InputStream getStream(String specPath) {
+<span class="nc" id="L197">    return GalenUtils.findFileOrResourceAsStream(specPath);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

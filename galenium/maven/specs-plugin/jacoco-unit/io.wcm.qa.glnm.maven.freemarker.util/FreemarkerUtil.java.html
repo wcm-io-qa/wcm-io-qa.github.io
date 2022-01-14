@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FreemarkerUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen Specs Maven Plugin</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.maven.freemarker.util</a> &gt; <span class="el_source">FreemarkerUtil.java</span></div><h1>FreemarkerUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.maven.freemarker.util;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
+import io.wcm.qa.glnm.configuration.GaleniumConfiguration;
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+import io.wcm.qa.glnm.interaction.Element;
+import io.wcm.qa.glnm.interaction.FormElement;
+import io.wcm.qa.glnm.maven.freemarker.methods.ClassNameFromSelectorMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.ClassNameFromSpecMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.ClassNameFromStringMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.ConstantNameMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.EscapeJavaDocMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.EscapeJavaMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.FullSelectorClassNameFromSelectorMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.FullWebElementClassNameFromSelectorMethod;
+import io.wcm.qa.glnm.maven.freemarker.methods.PackageNameMethod;
+import io.wcm.qa.glnm.maven.freemarker.pojo.InteractionPojo;
+import io.wcm.qa.glnm.maven.freemarker.pojo.SpecPojo;
+import io.wcm.qa.glnm.selectors.base.NestedSelector;
+
+/**
+ * Utility methods to build data models for use in freemarker code generation.
+ *
+ * @since 1.0.0
+ */
+public final class FreemarkerUtil {
+
+<span class="nc" id="L59">  private static final Configuration CONFIGURATION = generateConfiguration();</span>
+
+<span class="nc" id="L61">  private static final Logger LOG = LoggerFactory.getLogger(FreemarkerUtil.class);</span>
+
+  private FreemarkerUtil() {
+    // do not instantiate
+  }
+
+  /**
+   * &lt;p&gt;getDataModelForInteractiveSelector.&lt;/p&gt;
+   *
+   * @param packageRoot package for interactive selector interface
+   * @param interfaceName name of interactive selector interface to implement
+   * @param className of interactive selector class
+   * @return data model for generating interactive selector interface
+   */
+  public static Map&lt;String, Object&gt; getDataModelForInteractiveSelector(String packageRoot, String interfaceName, String className) {
+<span class="nc" id="L76">    Map&lt;String, Object&gt; model = getCommonDataModel();</span>
+<span class="nc" id="L77">    model.put(&quot;elementInteraction&quot;, new InteractionPojo(Element.class));</span>
+<span class="nc" id="L78">    model.put(&quot;formElementInteraction&quot;, new InteractionPojo(FormElement.class));</span>
+<span class="nc" id="L79">    model.put(&quot;interactiveSelectorPackage&quot;, packageRoot);</span>
+<span class="nc" id="L80">    model.put(&quot;interactiveSelectorBaseClassName&quot;, className);</span>
+<span class="nc" id="L81">    model.put(&quot;interactiveSelectorInterfaceClassName&quot;, interfaceName);</span>
+
+<span class="nc" id="L83">    return model;</span>
+  }
+
+  /**
+   * &lt;p&gt;getDataModelForSelector.&lt;/p&gt;
+   *
+   * @param selector selector to build data model for
+   * @param spec selector is taken from
+   * @param packageName package of interactive selector interface
+   * @param interactiveClassName name of class
+   * @param interactiveInterfaceName name of interactive selector interface
+   * @return data model for use in generating selector class
+   */
+  public static Map&lt;String, Object&gt; getDataModelForSelector(
+      NestedSelector selector,
+      SpecPojo spec,
+      String packageName,
+      String interactiveClassName,
+      String interactiveInterfaceName) {
+<span class="nc" id="L102">    Map&lt;String, Object&gt; model = getDataModelForInteractiveSelector(packageName, interactiveInterfaceName, interactiveClassName);</span>
+<span class="nc" id="L103">    model.put(&quot;className&quot;, new ClassNameFromSelectorMethod());</span>
+<span class="nc" id="L104">    model.put(&quot;spec&quot;, spec);</span>
+<span class="nc" id="L105">    model.put(&quot;this&quot;, selector);</span>
+
+<span class="nc" id="L107">    return model;</span>
+  }
+
+  /**
+   * &lt;p&gt;getDataModelForSpec.&lt;/p&gt;
+   *
+   * @param spec to generate Java class for
+   * @param packagePrefixSpecs root package
+   * @return data model for generating spec class
+   */
+  public static Map&lt;String, Object&gt; getDataModelForSpec(SpecPojo spec, String packagePrefixSpecs) {
+<span class="nc" id="L118">    Map&lt;String, Object&gt; model = getCommonDataModel();</span>
+<span class="nc" id="L119">    model.put(&quot;className&quot;, new ClassNameFromSpecMethod());</span>
+<span class="nc" id="L120">    model.put(&quot;classNameFromString&quot;, new ClassNameFromStringMethod());</span>
+<span class="nc" id="L121">    model.put(&quot;specRootPackageName&quot;, packagePrefixSpecs);</span>
+<span class="nc" id="L122">    model.put(&quot;spec&quot;, spec);</span>
+<span class="nc" id="L123">    return model;</span>
+  }
+
+  /**
+   * &lt;p&gt;getDataModelForWebElement.&lt;/p&gt;
+   *
+   * @param selector selector to build data model for
+   * @param spec selector is taken from
+   * @param packageName package of interactive selector interface
+   * @param interactiveClassName name of interactive selector implementation
+   * @param interactiveInterfaceName name of interactive selector interface
+   * @return data model for use in generating selector class
+   */
+  public static Map&lt;String, Object&gt; getDataModelForWebElement(
+      NestedSelector selector,
+      SpecPojo spec,
+      String packageName,
+      String interactiveClassName,
+      String interactiveInterfaceName) {
+<span class="nc" id="L142">    Map&lt;String, Object&gt; model = getDataModelForSelector(selector, spec, packageName, interactiveClassName, interactiveInterfaceName);</span>
+<span class="nc" id="L143">    model.put(&quot;gweClassName&quot;, new FullWebElementClassNameFromSelectorMethod());</span>
+<span class="nc" id="L144">    model.put(&quot;selectorClassName&quot;, new FullSelectorClassNameFromSelectorMethod());</span>
+<span class="nc" id="L145">    return model;</span>
+  }
+
+  /**
+   * &lt;p&gt;getOutputFile.&lt;/p&gt;
+   *
+   * @param outputDir directory
+   * @param outputPackage package
+   * @param outputClassName class name
+   * @return file to write generated code to
+   */
+  public static File getOutputFile(File outputDir, String outputPackage, String outputClassName) {
+<span class="nc" id="L157">    File outputDirectoryPackage = new File(outputDir, outputPackage.replaceAll(&quot;\\.&quot;, &quot;/&quot;));</span>
+<span class="nc" id="L158">    outputDirectoryPackage.mkdirs();</span>
+<span class="nc" id="L159">    File outputFile = new File(outputDirectoryPackage, outputClassName + &quot;.java&quot;);</span>
+<span class="nc" id="L160">    return outputFile;</span>
+  }
+
+  /**
+   * &lt;p&gt;getTemplate.&lt;/p&gt;
+   *
+   * @param directory template root folder
+   * @param name name of template
+   * @return freemarker template
+   */
+  public static Template getTemplate(File directory, String name) {
+    try {
+<span class="nc" id="L172">      CONFIGURATION.setDirectoryForTemplateLoading(directory);</span>
+<span class="nc" id="L173">      Template template = CONFIGURATION.getTemplate(name);</span>
+<span class="nc" id="L174">      return template;</span>
+    }
+<span class="nc" id="L176">    catch (IOException ex) {</span>
+<span class="nc" id="L177">      throw new GaleniumException(&quot;exception when getting template.&quot;, ex);</span>
+    }
+  }
+
+  /**
+   * Actually process template to generate code.
+   *
+   * @param template to process
+   * @param dataModel to use
+   * @param outputFile to write to
+   */
+  public static void process(Template template, Map&lt;String, Object&gt; dataModel, File outputFile) {
+<span class="nc" id="L189">    FileWriter out = null;</span>
+    try {
+<span class="nc" id="L191">      out = new FileWriter(outputFile);</span>
+<span class="nc" id="L192">      LOG.debug(&quot;generating '&quot; + outputFile.getPath() + &quot;'&quot;);</span>
+<span class="nc" id="L193">      template.process(dataModel, out);</span>
+<span class="nc" id="L194">      LOG.info(&quot;generated '&quot; + outputFile.getPath() + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L196">    catch (IOException | TemplateException ex) {</span>
+<span class="nc" id="L197">      throw new GaleniumException(&quot;template exception&quot;, ex);</span>
+    }
+    finally {
+<span class="nc bnc" id="L200" title="All 2 branches missed.">      if (out != null) {</span>
+        try {
+<span class="nc" id="L202">          out.close();</span>
+        }
+<span class="nc" id="L204">        catch (IOException ex) {</span>
+<span class="nc" id="L205">          throw new GaleniumException(&quot;could not close writer when processing Freemarker template.&quot;, ex);</span>
+<span class="nc" id="L206">        }</span>
+      }
+    }
+<span class="nc" id="L209">  }</span>
+
+  private static Configuration generateConfiguration() {
+<span class="nc" id="L212">    Configuration cfg = new Configuration();</span>
+<span class="nc" id="L213">    cfg.setDefaultEncoding(&quot;UTF-8&quot;);</span>
+<span class="nc" id="L214">    cfg.setTemplateExceptionHandler(getExceptionHandler());</span>
+<span class="nc" id="L215">    return cfg;</span>
+  }
+
+  private static Map&lt;String, Object&gt; getCommonDataModel() {
+<span class="nc" id="L219">    Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L220">    model.put(&quot;escapeXml&quot;, new EscapeJavaDocMethod());</span>
+<span class="nc" id="L221">    model.put(&quot;escapeJava&quot;, new EscapeJavaMethod());</span>
+<span class="nc" id="L222">    model.put(&quot;constantName&quot;, new ConstantNameMethod());</span>
+<span class="nc" id="L223">    model.put(&quot;packageName&quot;, new PackageNameMethod());</span>
+<span class="nc" id="L224">    return model;</span>
+  }
+
+  private static TemplateExceptionHandler getExceptionHandler() {
+<span class="nc bnc" id="L228" title="All 2 branches missed.">    if (GaleniumConfiguration.isSparseReporting()) {</span>
+<span class="nc" id="L229">      return TemplateExceptionHandler.RETHROW_HANDLER;</span>
+    }
+    else {
+<span class="nc" id="L232">      return TemplateExceptionHandler.DEBUG_HANDLER;</span>
+    }
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

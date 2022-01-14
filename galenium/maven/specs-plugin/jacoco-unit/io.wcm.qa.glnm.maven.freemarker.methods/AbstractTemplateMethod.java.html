@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractTemplateMethod.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen Specs Maven Plugin</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.maven.freemarker.methods</a> &gt; <span class="el_source">AbstractTemplateMethod.java</span></div><h1>AbstractTemplateMethod.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.maven.freemarker.methods;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import freemarker.template.TemplateMethodModelEx;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
+import freemarker.template.utility.DeepUnwrap;
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+
+/**
+ * Abstract base class for implentations of template methods.
+ *
+ * @param &lt;S&gt; return type of method
+ * @since 1.0.0
+ */
+<span class="nc" id="L39">public abstract class AbstractTemplateMethod&lt;S&gt; implements TemplateMethodModelEx {</span>
+
+<span class="nc" id="L41">  private static final Logger LOG = LoggerFactory.getLogger(AbstractTemplateMethod.class);</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public Object exec(List arguments) throws TemplateModelException {
+<span class="nc bnc" id="L46" title="All 4 branches missed.">    if (arguments == null || arguments.isEmpty()) {</span>
+<span class="nc" id="L47">      throw new GaleniumException(this.getClass().getSimpleName() + &quot; needs selector.&quot;);</span>
+    }
+<span class="nc" id="L49">    TemplateModel model = (TemplateModel)arguments.get(0);</span>
+<span class="nc" id="L50">    Object unwrapped = DeepUnwrap.unwrap(model);</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">    if (unwrapped == null) {</span>
+<span class="nc" id="L52">      throw new GaleniumException(&quot;unwrapped object to null.&quot;);</span>
+    }
+    try {
+<span class="nc" id="L55">      return attemptExec(unwrapped);</span>
+    }
+<span class="nc" id="L57">    catch (ClassCastException ex) {</span>
+<span class="nc" id="L58">      LOG.warn(&quot;found class: &quot; + unwrapped.getClass());</span>
+<span class="nc" id="L59">      throw new GaleniumException(&quot;argument could not be unwrapped.&quot;, ex);</span>
+    }
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  protected Object attemptExec(Object unwrapped) {
+<span class="nc" id="L65">    return exec((S)unwrapped);</span>
+  }
+
+  protected abstract String exec(S input);
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

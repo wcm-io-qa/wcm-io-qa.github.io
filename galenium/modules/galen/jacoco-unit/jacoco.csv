@@ -1,0 +1,24 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Galenium Galen,io.wcm.qa.glnm.galen.util,GalenHelperUtil,37,0,0,0,10,0,5,0,5,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs,GalenLayout,26,0,0,0,7,0,1,0,1,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs,GalenSpecRun,113,0,12,0,31,0,17,0,11,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs,GalenSpecParsingProvider,29,0,0,0,11,0,6,0,6,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs,GalenSpecUtil,405,0,44,0,80,0,33,0,11,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs,AbstractGalenSpec,209,0,14,0,59,0,23,0,16,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs,GalenParsing,358,0,30,0,68,0,27,0,12,0
+Galenium Galen,io.wcm.qa.glnm.galen.mock,MockPageElement,31,0,0,0,10,0,10,0,10,0
+Galenium Galen,io.wcm.qa.glnm.galen.mock,MockPage,42,0,0,0,13,0,13,0,13,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.page,GalenCorrectionRect,51,0,0,0,18,0,6,0,6,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.page,GalenCorrection,47,0,2,0,12,0,8,0,7,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.imagecomparison,ImageComparisonSpec,11,0,0,0,3,0,2,0,2,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.imagecomparison,IcValidationListener,55,0,6,0,18,0,7,0,4,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.imagecomparison,IcUtil,518,0,58,0,123,0,46,0,17,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.imagecomparison,ImageComparisonSpecDefinition,284,0,14,0,84,0,41,0,34,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.imagecomparison,ImageComparisonProvider,17,0,0,0,7,0,4,0,4,0
+Galenium Galen,io.wcm.qa.glnm.galen.specs.imagecomparison,IcsFactory,127,0,16,0,35,0,10,0,2,0
+Galenium Galen,io.wcm.qa.glnm.galen.validation,TracingValidationListener,268,0,28,0,60,0,31,0,17,0
+Galenium Galen,io.wcm.qa.glnm.galen.validation,FileBasedGalenSpec,37,0,2,0,9,0,5,0,4,0
+Galenium Galen,io.wcm.qa.glnm.galen.validation,GalenValidation,24,0,0,0,6,0,3,0,3,0
+Galenium Galen,io.wcm.qa.glnm.galen.validation,NoOpValidationListener,19,0,0,0,16,0,16,0,16,0
+Galenium Galen,io.wcm.qa.glnm.galen.validation,AllureValidationListener,112,0,6,0,42,0,20,0,17,0
+Galenium Galen,io.wcm.qa.glnm.galen.reports,GalenReports,20,0,4,0,7,0,4,0,2,0

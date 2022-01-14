@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GalenSpecsMojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen Specs Maven Plugin</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.maven.freemarker</a> &gt; <span class="el_source">GalenSpecsMojo.java</span></div><h1>GalenSpecsMojo.java</h1><pre class="source lang-java linenums">/* #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.maven.freemarker;
+
+import static org.apache.commons.lang3.ArrayUtils.EMPTY_STRING_ARRAY;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
+/*
+ * Copyright 2001-2005 The Apache Software Foundation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.codehaus.plexus.util.DirectoryScanner;
+
+import freemarker.template.Template;
+import io.wcm.qa.glnm.configuration.ConfigurationUtil;
+import io.wcm.qa.glnm.configuration.GaleniumConfiguration;
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+import io.wcm.qa.glnm.maven.freemarker.pojo.SelectorPojo;
+import io.wcm.qa.glnm.maven.freemarker.pojo.SpecPojo;
+import io.wcm.qa.glnm.maven.freemarker.util.FormatUtil;
+import io.wcm.qa.glnm.maven.freemarker.util.FreemarkerUtil;
+import io.wcm.qa.glnm.selectors.base.Selector;
+
+/**
+ * Goal which finds Galen specs, extracts objects and generates Java code from it.
+ *
+ * @since 1.0.0
+ */
+@Mojo(name = &quot;specs&quot;, defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+<span class="nc" id="L67">public class GalenSpecsMojo extends AbstractMojo {</span>
+
+  /**
+   * Root directory for generated output.
+   */
+  @Parameter(defaultValue = &quot;${project.build.directory}/target/specs&quot;, property = &quot;inputDir&quot;, required = true)
+  private String inputDirectory;
+
+  /**
+   * Name of Freemarker template to use for abstract interactive selector base class.
+   */
+  @Parameter(defaultValue = &quot;interactive-selector-base.ftlh&quot;, property = &quot;interactiveSelectorBaseTemplate&quot;)
+  private String interactiveSelectorBaseTemplate;
+
+  /**
+   * Name of Freemarker template to use for interactive selector interface.
+   */
+  @Parameter(defaultValue = &quot;interactive-selector.ftlh&quot;, property = &quot;interactiveSelectorInterfaceTemplate&quot;)
+  private String interactiveSelectorInterfaceTemplate;
+
+  /**
+   * Root directory for generated output.
+   */
+  @Parameter(defaultValue = &quot;${project.build.directory}/generated-sources/java&quot;, property = &quot;outputDir&quot;, required = true)
+  private File outputDirectory;
+
+  /**
+   * Package name to generate {@link Selector} code into.
+   */
+  @Parameter(defaultValue = &quot;io.wcm.qa.glnm.selectors&quot;, property = &quot;packagePrefixSelectors&quot;, required = true)
+  private String packagePrefixSelectors;
+
+  /**
+   * Package name to generate {@link Selector} code into.
+   */
+  @Parameter(defaultValue = &quot;io.wcm.qa.glnm.specs&quot;, property = &quot;packagePrefixSpecs&quot;, required = true)
+  private String packagePrefixSpecs;
+
+  /**
+   * A set of file patterns to exclude from selector generation.
+   */
+  @Parameter(property = &quot;selectorExcludes&quot;)
+  private String[] selectorExcludes;
+
+  /**
+   * A set of file patterns to include in selector generation.
+   */
+  @Parameter(property = &quot;selectorIncludes&quot;)
+  private String[] selectorIncludes;
+
+  /**
+   * Name of Freemarker template to use for generating top level classes.
+   */
+  @Parameter(defaultValue = &quot;selector.ftlh&quot;, property = &quot;selectorTemplate&quot;)
+  private String selectorTemplate;
+
+  /**
+   * A set of file patterns to exclude from spec generation.
+   */
+  @Parameter(property = &quot;specExcludes&quot;)
+  private String[] specExcludes;
+
+  /**
+   * A set of file patterns to include in spec generation.
+   */
+  @Parameter(property = &quot;specIncludes&quot;)
+  private String[] specIncludes;
+
+<span class="nc" id="L135">  private final Collection&lt;SpecPojo&gt; specsForSelectors = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L136">  private final Collection&lt;SpecPojo&gt; specsForSpecs = new ArrayList&lt;&gt;();</span>
+
+  /**
+   * Name of Freemarker template to use for recursively generating static inner classes.
+   */
+  @Parameter(defaultValue = &quot;spec.ftlh&quot;, property = &quot;specTemplate&quot;)
+  private String specTemplate;
+
+  /**
+   * To be transferred to system properties when running plugin. Mostly used to manipulate
+   * {@link GaleniumConfiguration}.
+   */
+  @Parameter(property = &quot;systemPropertyVariables&quot;)
+  private Map&lt;String, String&gt; systemPropertyVariables;
+
+  /**
+   * Directory containing the Freemarker templates.
+   */
+  @Parameter(defaultValue = &quot;${project.basedir}/src/main/resources/freemarker&quot;, property = &quot;templateDir&quot;, required = true)
+  private File templateDirectory;
+
+  @Parameter(defaultValue = &quot;web-element.ftlh&quot;, property = &quot;webElementTemplate&quot;)
+  private String webElementTemplate;
+
+  /** {@inheritDoc} */
+  @Override
+  public void execute() throws MojoExecutionException {
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">    if (!initPlugin()) {</span>
+      // if initialization does not work, plugin does not work
+<span class="nc" id="L166">      throw new GaleniumException(&quot;Plugin initialization failed.&quot;);</span>
+    }
+
+    // handle spec files and collect objects
+<span class="nc" id="L170">    parseSpecs();</span>
+
+    // prepare Freemarker data model and process template
+<span class="nc" id="L173">    generateCode();</span>
+<span class="nc" id="L174">  }</span>
+
+  private boolean checkDirectory(File directory) {
+<span class="nc" id="L177">    getLog().info(&quot;checking directory: &quot; + directory.getPath());</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">    if (!directory.isDirectory()) {</span>
+<span class="nc" id="L179">      getLog().error(&quot;directory not found: &quot; + directory.getPath());</span>
+<span class="nc" id="L180">      return false;</span>
+    }
+
+<span class="nc" id="L183">    return true;</span>
+  }
+
+  private boolean checkInputParams() {
+<span class="nc" id="L187">    return checkDirectory(templateDirectory);</span>
+  }
+
+  private void generateCode() {
+<span class="nc" id="L191">    generateInteractiveSelectorInterfaceCode();</span>
+<span class="nc" id="L192">    generateInteractiveSelectorBaseCode();</span>
+<span class="nc" id="L193">    generateSelectorCode();</span>
+<span class="nc" id="L194">    generateWebElementCode();</span>
+<span class="nc" id="L195">    generateSpecCode();</span>
+<span class="nc" id="L196">  }</span>
+
+  private void generateInteractiveSelectorBaseCode() {
+<span class="nc" id="L199">    Template template = FreemarkerUtil.getTemplate(templateDirectory, interactiveSelectorBaseTemplate);</span>
+<span class="nc" id="L200">    String className = getInteractiveSelectorBaseClassName();</span>
+<span class="nc" id="L201">    String interfaceName = getInteractiveSelectorInterfaceClassName();</span>
+<span class="nc" id="L202">    String packageName = getInteractiveSelectorPackageName();</span>
+<span class="nc" id="L203">    Map&lt;String, Object&gt; model = FreemarkerUtil.getDataModelForInteractiveSelector(packageName, interfaceName, className);</span>
+<span class="nc" id="L204">    File outputFile = FreemarkerUtil.getOutputFile(outputDirectory, packageName, className);</span>
+<span class="nc" id="L205">    FreemarkerUtil.process(template, model, outputFile);</span>
+<span class="nc" id="L206">  }</span>
+
+  private void generateInteractiveSelectorInterfaceCode() {
+<span class="nc" id="L209">    Template template = FreemarkerUtil.getTemplate(templateDirectory, interactiveSelectorInterfaceTemplate);</span>
+<span class="nc" id="L210">    String className = getInteractiveSelectorBaseClassName();</span>
+<span class="nc" id="L211">    String interfaceName = getInteractiveSelectorInterfaceClassName();</span>
+<span class="nc" id="L212">    String packageName = getInteractiveSelectorPackageName();</span>
+<span class="nc" id="L213">    Map&lt;String, Object&gt; model = FreemarkerUtil.getDataModelForInteractiveSelector(packageName, interfaceName, className);</span>
+<span class="nc" id="L214">    File outputFile = FreemarkerUtil.getOutputFile(outputDirectory, packageName, interfaceName);</span>
+<span class="nc" id="L215">    FreemarkerUtil.process(template, model, outputFile);</span>
+<span class="nc" id="L216">  }</span>
+
+  private void generateSelectorCode() {
+    // same template for all selectors
+<span class="nc" id="L220">    getLog().info(&quot;fetching selector template&quot;);</span>
+<span class="nc" id="L221">    Template template = FreemarkerUtil.getTemplate(templateDirectory, selectorTemplate);</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">    for (SpecPojo specPojo : specsForSelectors) {</span>
+
+<span class="nc" id="L225">      getLog().info(&quot;generating data models for '&quot; + specPojo.getSpecPath() + &quot;'&quot;);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">      for (SelectorPojo selector : specPojo.getRootSelectors()) {</span>
+
+<span class="nc" id="L228">        getLog().info(&quot;generating data model for '&quot; + selector.elementName() + &quot;'&quot;);</span>
+<span class="nc" id="L229">        Map&lt;String, Object&gt; dataModelForSelector = FreemarkerUtil.getDataModelForSelector(</span>
+            selector,
+            specPojo,
+<span class="nc" id="L232">            getInteractiveSelectorPackageName(),</span>
+<span class="nc" id="L233">            getInteractiveSelectorBaseClassName(),</span>
+<span class="nc" id="L234">            getInteractiveSelectorInterfaceClassName());</span>
+
+<span class="nc" id="L236">        getLog().debug(&quot;processing template&quot;);</span>
+<span class="nc" id="L237">        FreemarkerUtil.process(template, dataModelForSelector, getSelectorOutputFile(selector, specPojo));</span>
+<span class="nc" id="L238">      }</span>
+<span class="nc" id="L239">    }</span>
+<span class="nc" id="L240">  }</span>
+
+  private void generateSpecCode() {
+    // same template for all specs
+<span class="nc" id="L244">    getLog().info(&quot;fetching spec template&quot;);</span>
+<span class="nc" id="L245">    Template template = FreemarkerUtil.getTemplate(templateDirectory, specTemplate);</span>
+
+<span class="nc bnc" id="L247" title="All 2 branches missed.">    for (SpecPojo specPojo : specsForSpecs) {</span>
+
+<span class="nc" id="L249">      getLog().info(&quot;generating data model for '&quot; + specPojo.getSpecPath() + &quot;'&quot;);</span>
+<span class="nc" id="L250">      Map&lt;String, Object&gt; dataModelForSpec = FreemarkerUtil.getDataModelForSpec(specPojo, packagePrefixSpecs);</span>
+
+<span class="nc" id="L252">      getLog().debug(&quot;processing template&quot;);</span>
+<span class="nc" id="L253">      FreemarkerUtil.process(template, dataModelForSpec, getSpecOutputFile(specPojo));</span>
+
+<span class="nc" id="L255">    }</span>
+<span class="nc" id="L256">  }</span>
+
+  private void generateWebElementCode() {
+    // same template for all webelements
+<span class="nc" id="L260">    getLog().info(&quot;fetching webelement template&quot;);</span>
+<span class="nc" id="L261">    Template template = FreemarkerUtil.getTemplate(templateDirectory, webElementTemplate);</span>
+
+<span class="nc bnc" id="L263" title="All 2 branches missed.">    for (SpecPojo specPojo : specsForSelectors) {</span>
+
+<span class="nc" id="L265">      getLog().info(&quot;generating data models for '&quot; + specPojo.getSpecPath() + &quot;'&quot;);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">      for (SelectorPojo selector : specPojo.getRootSelectors()) {</span>
+
+<span class="nc" id="L268">        getLog().info(&quot;generating data model for '&quot; + selector.elementName() + &quot;'&quot;);</span>
+<span class="nc" id="L269">        Map&lt;String, Object&gt; dataModelForSelector = FreemarkerUtil.getDataModelForWebElement(</span>
+            selector,
+            specPojo,
+<span class="nc" id="L272">            getInteractiveSelectorPackageName(),</span>
+<span class="nc" id="L273">            getInteractiveSelectorBaseClassName(),</span>
+<span class="nc" id="L274">            getInteractiveSelectorInterfaceClassName());</span>
+
+<span class="nc" id="L276">        getLog().debug(&quot;processing template&quot;);</span>
+<span class="nc" id="L277">        FreemarkerUtil.process(template, dataModelForSelector, getWebElementOutputFile(selector, specPojo));</span>
+<span class="nc" id="L278">      }</span>
+<span class="nc" id="L279">    }</span>
+
+<span class="nc" id="L281">  }</span>
+
+  private File getWebElementOutputFile(SelectorPojo selector, SpecPojo specPojo) {
+<span class="nc" id="L284">    String outputPackage = FormatUtil.getSelectorsPackageName(packagePrefixSelectors, specPojo);</span>
+<span class="nc" id="L285">    String className = FormatUtil.getClassName(selector) + &quot;Gwe&quot;;</span>
+<span class="nc" id="L286">    return FreemarkerUtil.getOutputFile(outputDirectory, outputPackage, className);</span>
+  }
+
+  private String[] getIncludedFiles(String baseDir, String[] includes, String[] excludes) {
+<span class="nc bnc" id="L290" title="All 2 branches missed.">    if (new File(baseDir).isDirectory()) {</span>
+<span class="nc" id="L291">      DirectoryScanner directoryScanner = new DirectoryScanner();</span>
+<span class="nc" id="L292">      directoryScanner.setIncludes(includes);</span>
+<span class="nc" id="L293">      directoryScanner.setExcludes(excludes);</span>
+<span class="nc" id="L294">      directoryScanner.setBasedir(baseDir);</span>
+<span class="nc" id="L295">      directoryScanner.scan();</span>
+<span class="nc" id="L296">      String[] includedFiles = directoryScanner.getIncludedFiles();</span>
+<span class="nc" id="L297">      return includedFiles;</span>
+    }
+
+<span class="nc" id="L300">    return EMPTY_STRING_ARRAY;</span>
+  }
+
+  private String[] getIncludedFilesForSelectors() {
+<span class="nc" id="L304">    return getIncludedFiles(inputDirectory, selectorIncludes, selectorExcludes);</span>
+  }
+
+  private String[] getIncludedFilesForSpecs() {
+<span class="nc" id="L308">    return getIncludedFiles(inputDirectory, specIncludes, specExcludes);</span>
+  }
+
+  private String getInteractiveSelectorBaseClassName() {
+<span class="nc" id="L312">    return FormatUtil.getClassName(new File(interactiveSelectorBaseTemplate));</span>
+  }
+
+  private String getInteractiveSelectorInterfaceClassName() {
+<span class="nc" id="L316">    return FormatUtil.getClassName(new File(interactiveSelectorInterfaceTemplate));</span>
+  }
+
+  private String getInteractiveSelectorPackageName() {
+<span class="nc" id="L320">    return packagePrefixSelectors;</span>
+  }
+
+  private File getSelectorOutputFile(SelectorPojo selector, SpecPojo spec) {
+<span class="nc" id="L324">    String outputPackage = FormatUtil.getSelectorsPackageName(packagePrefixSelectors, spec);</span>
+<span class="nc" id="L325">    String className = FormatUtil.getClassName(selector);</span>
+<span class="nc" id="L326">    return FreemarkerUtil.getOutputFile(outputDirectory, outputPackage, className);</span>
+  }
+
+  private File getSpecOutputFile(SpecPojo spec) {
+<span class="nc" id="L330">    String outputPackage = packagePrefixSpecs;</span>
+<span class="nc" id="L331">    String className = FormatUtil.getClassName(spec);</span>
+<span class="nc" id="L332">    return FreemarkerUtil.getOutputFile(outputDirectory, outputPackage, className);</span>
+  }
+
+  private void storeSpecForSelector(SpecPojo specPojo) {
+<span class="nc" id="L336">    specsForSelectors.add(specPojo);</span>
+<span class="nc" id="L337">  }</span>
+
+  private void storeSpecForSpec(SpecPojo specPojo) {
+<span class="nc" id="L340">    specsForSpecs.add(specPojo);</span>
+<span class="nc" id="L341">  }</span>
+
+  protected boolean initPlugin() {
+
+    // transfer system properties
+<span class="nc" id="L346">    ConfigurationUtil.addToSystemProperties(systemPropertyVariables);</span>
+<span class="nc" id="L347">    System.setProperty(&quot;packageRootName&quot;, packagePrefixSelectors);</span>
+<span class="nc" id="L348">    System.setProperty(&quot;galenium.specPath&quot;, inputDirectory);</span>
+
+    // check input parameters
+<span class="nc bnc" id="L351" title="All 2 branches missed.">    if (!checkInputParams()) {</span>
+<span class="nc" id="L352">      return false;</span>
+    }
+
+<span class="nc" id="L355">    return true;</span>
+  }
+
+  protected void parseSpecs() {
+<span class="nc" id="L359">    getLog().info(&quot;processing spec files for selectors&quot;);</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">    for (String specPath : getIncludedFilesForSelectors()) {</span>
+<span class="nc" id="L361">      storeSpecForSelector(new SpecPojo(specPath));</span>
+    }
+<span class="nc" id="L363">    getLog().info(&quot;processing spec files for specs&quot;);</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">    for (String specPath : getIncludedFilesForSpecs()) {</span>
+<span class="nc" id="L365">      storeSpecForSpec(new SpecPojo(specPath));</span>
+    }
+<span class="nc" id="L367">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

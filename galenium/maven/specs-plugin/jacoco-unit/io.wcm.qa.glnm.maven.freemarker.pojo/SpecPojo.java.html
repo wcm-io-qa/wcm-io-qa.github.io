@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpecPojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Galen Specs Maven Plugin</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.maven.freemarker.pojo</a> &gt; <span class="el_source">SpecPojo.java</span></div><h1>SpecPojo.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.maven.freemarker.pojo;
+
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.apache.commons.io.FilenameUtils;
+
+import io.wcm.qa.glnm.galen.specs.ParsingUtil;
+import io.wcm.qa.glnm.maven.freemarker.util.FormatUtil;
+import io.wcm.qa.glnm.selectors.base.NestedSelector;
+
+/**
+ * Holds data from Galen spec to use in generation.
+ *
+ * @since 1.0.0
+ */
+public class SpecPojo {
+
+  private Collection&lt;SelectorPojo&gt; selectors;
+  private String specPath;
+
+  /**
+   * &lt;p&gt;Constructor for SpecPojo.&lt;/p&gt;
+   *
+   * @param specPath to retrieve data from
+   */
+<span class="nc" id="L47">  public SpecPojo(String specPath) {</span>
+<span class="nc" id="L48">    setSpecPath(specPath);</span>
+<span class="nc" id="L49">  }</span>
+
+  /**
+   * &lt;p&gt;getBaseName.&lt;/p&gt;
+   *
+   * @return a {@link java.lang.String} object.
+   */
+  public String getBaseName() {
+<span class="nc" id="L57">    return FilenameUtils.getBaseName(getFilename());</span>
+  }
+
+  /**
+   * &lt;p&gt;getClassName.&lt;/p&gt;
+   *
+   * @return class name extracted from spec file
+   */
+  public String getClassName() {
+<span class="nc" id="L66">    return FormatUtil.getClassName(getFilename());</span>
+  }
+
+  /**
+   * &lt;p&gt;getFilename.&lt;/p&gt;
+   *
+   * @return spec file name
+   */
+  public String getFilename() {
+<span class="nc" id="L75">    return FilenameUtils.getBaseName(getSpecPath());</span>
+  }
+
+  /**
+   * &lt;p&gt;getPackageNamePart.&lt;/p&gt;
+   *
+   * @return package name from spec file path
+   */
+  public String getPackageNamePart() {
+<span class="nc" id="L84">    String baseName = getBaseName();</span>
+<span class="nc" id="L85">    return baseName.toLowerCase().replaceAll(&quot;[^a-z0-9]&quot;, &quot;&quot;);</span>
+  }
+
+  /**
+   * &lt;p&gt;getRelativeFilePath.&lt;/p&gt;
+   *
+   * @return relative path to Galen spec file
+   */
+  public String getRelativeFilePath() {
+<span class="nc" id="L94">    return getUnixStyleFilePath(getSpecPath());</span>
+  }
+
+  /**
+   * &lt;p&gt;getRootSelectors.&lt;/p&gt;
+   *
+   * @return root objects from Galen spec
+   */
+  public Collection&lt;SelectorPojo&gt; getRootSelectors() {
+<span class="nc" id="L103">    Collection&lt;SelectorPojo&gt; rootSelectors = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">    for (NestedSelector selector : getSelectors()) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">      if (!selector.hasParent()) {</span>
+<span class="nc" id="L106">        rootSelectors.add(new SelectorPojo(this, selector));</span>
+      }
+<span class="nc" id="L108">    }</span>
+<span class="nc" id="L109">    return rootSelectors;</span>
+  }
+
+  /**
+   * &lt;p&gt;Getter for the field &lt;code&gt;selectors&lt;/code&gt;.&lt;/p&gt;
+   *
+   * @return all selectors from spec
+   */
+  public Collection&lt;SelectorPojo&gt; getSelectors() {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">    if (selectors == null) {</span>
+<span class="nc" id="L119">      selectors = new ArrayList&lt;SelectorPojo&gt;();</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">      for (NestedSelector selector : ParsingUtil.getSelectorsFromSpec(getSpecPath())) {</span>
+<span class="nc" id="L121">        selectors.add(new SelectorPojo(this, selector));</span>
+<span class="nc" id="L122">      }</span>
+    }
+<span class="nc" id="L124">    return selectors;</span>
+  }
+
+  /**
+   * &lt;p&gt;Getter for the field &lt;code&gt;specFile&lt;/code&gt;.&lt;/p&gt;
+   *
+   * @return a {@link java.io.File} object.
+   */
+  public String getSpecPath() {
+<span class="nc" id="L133">    return specPath;</span>
+  }
+
+  /**
+   * &lt;p&gt;Getter for the field &lt;code&gt;tags&lt;/code&gt;.&lt;/p&gt;
+   *
+   * @return tags used in Galen spec
+   */
+  public Collection&lt;String&gt; getTags() {
+<span class="nc" id="L142">    return ParsingUtil.getTags(getSpecPath());</span>
+  }
+
+  private void setSpecPath(String specPath) {
+<span class="nc" id="L146">    this.specPath = specPath;</span>
+<span class="nc" id="L147">  }</span>
+
+  private static String getUnixStyleFilePath(String path) {
+<span class="nc" id="L150">    return FilenameUtils.normalize(path, true);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
