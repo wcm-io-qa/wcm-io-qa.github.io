@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthorLogin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.interaction.aem.author</a> &gt; <span class="el_source">AuthorLogin.java</span></div><h1>AuthorLogin.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2017 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.interaction.aem.author;
+
+import static io.wcm.qa.glnm.configuration.GaleniumConfiguration.getAuthorPass;
+import static io.wcm.qa.glnm.configuration.GaleniumConfiguration.getAuthorUser;
+import static io.wcm.qa.glnm.context.GaleniumContext.getDriver;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.wcm.qa.glnm.interaction.Browser;
+import io.wcm.qa.glnm.interaction.Element;
+import io.wcm.qa.glnm.interaction.FormElement;
+import io.wcm.qa.glnm.interaction.Wait;
+import io.wcm.qa.glnm.selectors.base.Selector;
+import io.wcm.qa.glnm.selectors.base.SelectorFactory;
+
+/**
+ * AEM specific utility methods.
+ *
+ * @since 1.0.0
+ */
+public final class AuthorLogin {
+
+<span class="nc" id="L45">  private static final Selector DIV_LOGIN_BOX = SelectorFactory.fromCss(&quot;div#login-box&quot;);</span>
+
+<span class="nc" id="L47">  private static final Logger LOG = LoggerFactory.getLogger(AuthorLogin.class);</span>
+
+<span class="nc" id="L49">  private static final Selector SELECTOR_AUTHOR_INPUT_PASSWORD = SelectorFactory.fromCss(&quot;#password&quot;);</span>
+<span class="nc" id="L50">  private static final Selector SELECTOR_AUTHOR_INPUT_USERNAME = SelectorFactory.fromCss(&quot;#username&quot;);</span>
+<span class="nc" id="L51">  private static final Selector SELECTOR_AUTHOR_LOGIN_BUTTON = SelectorFactory.fromCss(&quot;#submit-button&quot;);</span>
+
+  private AuthorLogin() {
+    // do not instantiate
+  }
+
+  /**
+   * &lt;p&gt;isAuthorLogin.&lt;/p&gt;
+   *
+   * @return whether current page is AEM author login page
+   * @since 5.0.0
+   */
+  public static boolean isAuthorLogin() {
+<span class="nc" id="L64">    return Element.isVisible(DIV_LOGIN_BOX);</span>
+  }
+
+  /**
+   * Login to author if on AEM author login page.
+   *
+   * @return successful login
+   * @since 5.0.0
+   */
+  public static boolean loginToAuthor() {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L75">      LOG.debug(&quot;using credentials from configuration.&quot;);</span>
+    }
+<span class="nc" id="L77">    return loginToAuthorViaBrowser(getAuthorUser(), getAuthorPass());</span>
+  }
+
+  /**
+   * Load URL and login to AEM author if landing on login page.
+   *
+   * @param targetUrl URL to load
+   * @return successful login
+   * @since 5.0.0
+   */
+  public static boolean loginToAuthor(String targetUrl) {
+<span class="nc bnc" id="L88" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L89">      LOG.debug(&quot;using credentials from configuration.&quot;);</span>
+    }
+<span class="nc" id="L91">    return loginToAuthor(targetUrl, getAuthorUser(), getAuthorPass());</span>
+  }
+
+  /**
+   * Load URL and login to AEM author with credentials if landing on login page.
+   *
+   * @param targetUrl URL to load
+   * @param authorUser user for author instance
+   * @param authorPass password for author instance
+   * @return whether login was necessary and successful
+   * @since 5.0.0
+   */
+  public static boolean loginToAuthor(String targetUrl, String authorUser, String authorPass) {
+<span class="nc" id="L104">    return loginToAuthor(targetUrl, targetUrl, authorUser, authorPass);</span>
+  }
+
+  /**
+   * &lt;p&gt;loginToAuthor.&lt;/p&gt;
+   *
+   * @param initialUrl URL to load
+   * @param finalUrl URL to check for
+   * @param authorUser user for author instance
+   * @param authorPass password for author instance
+   * @return whether login was necessary and successful
+   * @since 5.0.0
+   */
+  @SuppressWarnings(&quot;PMD.UseObjectForClearerAPI&quot;)
+  public static boolean loginToAuthor(String initialUrl, String finalUrl, String authorUser, String authorPass) {
+<span class="nc" id="L119">    Browser.load(initialUrl);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">    if (isAuthorLogin()) {</span>
+      try {
+<span class="nc" id="L122">        loginToAuthorViaBrowser(authorUser, authorPass);</span>
+<span class="nc" id="L123">        Wait.forUrl(finalUrl, 5);</span>
+<span class="nc" id="L124">        return true;</span>
+      }
+<span class="nc" id="L126">      catch (WebDriverException ex) {</span>
+<span class="nc" id="L127">        WebDriver driver = getDriver();</span>
+        String actualResult;
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (driver == null) {</span>
+<span class="nc" id="L130">          actualResult = &quot;driver is null in this context&quot;;</span>
+        }
+        else {
+<span class="nc" id="L133">          actualResult = driver.getCurrentUrl();</span>
+        }
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if (LOG.isWarnEnabled()) {</span>
+<span class="nc" id="L136">          LOG.warn(&quot;author login not successful, when waiting for '&quot; + finalUrl + &quot;' got '&quot; + actualResult + &quot;'&quot;);</span>
+        }
+<span class="nc" id="L138">      }</span>
+    }
+    else {
+<span class="nc" id="L141">      LOG.debug(&quot;skipping author login, because not on login page.&quot;);</span>
+    }
+
+<span class="nc" id="L144">    return false;</span>
+  }
+
+  private static boolean loginToAuthorViaBrowser(String authorUser, String authorPass) {
+<span class="nc bnc" id="L148" title="All 2 branches missed.">    if (isAuthorLogin()) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L150">        LOG.debug(&quot;Attempting login in to author instance&quot;);</span>
+      }
+<span class="nc" id="L152">      FormElement.clearAndEnterText(SELECTOR_AUTHOR_INPUT_USERNAME, authorUser);</span>
+<span class="nc" id="L153">      FormElement.clearAndEnterText(SELECTOR_AUTHOR_INPUT_PASSWORD, authorPass);</span>
+<span class="nc" id="L154">      Element.click(SELECTOR_AUTHOR_LOGIN_BUTTON);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">      if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L156">        LOG.info(&quot;Logging in to author instance.&quot;);</span>
+      }
+<span class="nc" id="L158">      return true;</span>
+    }
+<span class="nc" id="L160">    LOG.debug(&quot;Not logging in to author instance.&quot;);</span>
+<span class="nc" id="L161">    return false;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

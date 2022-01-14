@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LogEntryUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.interaction.logs</a> &gt; <span class="el_source">LogEntryUtil.java</span></div><h1>LogEntryUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.interaction.logs;
+
+import static io.wcm.qa.glnm.interaction.Browser.getPerformanceLog;
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.logging.LogEntry;
+
+import io.wcm.qa.glnm.sampling.transform.JsonSampler;
+
+/**
+ * Utility methods around webdriver logs.
+ *
+ * @since 5.0.0
+ */
+public final class LogEntryUtil {
+
+  private static final String MESSAGE_METHOD = &quot;message.method&quot;;
+  private static final String NETWORK_RESPONSE_RECEIVED = &quot;Network.responseReceived&quot;;
+
+  private LogEntryUtil() {
+    // do not instantiate
+  }
+
+  /**
+   * Get Message JSON as flat map.
+   *
+   * @param entry to parse
+   * @return map containing all keys and values in one flat map
+   * @since 5.0.0
+   */
+  public static Map&lt;String, String&gt; getFlatMessage(LogEntry entry) {
+<span class="nc" id="L55">    String message = entry.getMessage();</span>
+<span class="nc" id="L56">    return JsonSampler.flatten(message);</span>
+  }
+
+  /**
+   * &lt;p&gt;getResponseEntries.&lt;/p&gt;
+   *
+   * @return a {@link java.util.List} object.
+   * @since 5.0.0
+   */
+  public static List&lt;ResponseEntry&gt; getResponseEntries() {
+<span class="nc" id="L66">    return getPerformanceLog().stream()</span>
+<span class="nc" id="L67">        .filter(entry -&gt; isResponseReceivedEntry(entry))</span>
+<span class="nc" id="L68">        .map(entry -&gt; new ResponseEntry(entry))</span>
+<span class="nc" id="L69">        .collect(toList());</span>
+  }
+
+  /**
+   * Extracts value from message JSON.
+   *
+   * @param entry to extract from
+   * @param key to fetch value for
+   * @return value or null if not found
+   * @since 5.0.0
+   */
+  public static String getValue(LogEntry entry, String key) {
+<span class="nc" id="L81">    return getFlatMessage(entry).get(key);</span>
+  }
+
+  private static boolean isResponseReceivedEntry(LogEntry entry) {
+<span class="nc" id="L85">    return isResponseReceivedEntry(getFlatMessage(entry));</span>
+  }
+
+  private static boolean isResponseReceivedEntry(Map&lt;String, String&gt; entry) {
+<span class="nc" id="L89">    return StringUtils.equals(entry.get(MESSAGE_METHOD), NETWORK_RESPONSE_RECEIVED);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

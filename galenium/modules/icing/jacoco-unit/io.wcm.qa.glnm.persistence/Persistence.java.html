@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Persistence.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.persistence</a> &gt; <span class="el_source">Persistence.java</span></div><h1>Persistence.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2019 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.persistence;
+
+import java.util.List;
+
+/**
+ * Factory methods for persistence implementations.
+ *
+ * @since 5.0.0
+ */
+public final class Persistence {
+
+  private Persistence() {
+    // do not instantiate
+  }
+
+  /**
+   * &lt;p&gt;
+   * Persistence implementation for Boolean samples.
+   * &lt;/p&gt;
+   *
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} for boolean samples
+   * @since 5.0.0
+   */
+  public static SamplePersistence&lt;Boolean&gt; forBoolean() {
+<span class="nc" id="L44">    return new BooleanPersistence();</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * Persistence implementation for Integer samples.
+   * &lt;/p&gt;
+   *
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} for integer samples
+   * @since 5.0.0
+   */
+  public static SamplePersistence&lt;Integer&gt; forInteger() {
+<span class="nc" id="L56">    return new IntegerPersistence();</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * Persistence implementation for Integer samples.
+   * &lt;/p&gt;
+   *
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} for integer samples
+   * @since 5.0.0
+   */
+  public static SamplePersistence&lt;Integer&gt; forIntegerWithDefault() {
+<span class="nc" id="L68">    return new IntegerPersistence() {</span>
+
+      @Override
+      protected Integer handleNotFound() {
+<span class="nc" id="L72">        return -1;</span>
+      }
+    };
+  }
+
+  /**
+   * Persistence implementation for samples just using their toString method.
+   *
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} object.
+   * @since 5.0.0
+   */
+  public static SamplePersistence&lt;Object&gt; forObject() {
+<span class="nc" id="L84">    return new ObjectPersistence();</span>
+  }
+
+  /**
+   * Persistence implementation for String samples.
+   *
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} object.
+   * @since 5.0.0
+   */
+  public static SamplePersistence&lt;String&gt; forString() {
+<span class="nc" id="L94">    return new StringPersistence();</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * Persistence implementation for String array samples.
+   * &lt;/p&gt;
+   *
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} for sampled arrays of strings
+   * @since 5.0.0
+   */
+  public static SamplePersistence&lt;String[]&gt; forStringArray() {
+<span class="nc" id="L106">    return new StringArrayPersistence();</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * Persistence implementation for String list samples.
+   * &lt;/p&gt;
+   *
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} for sampled lists of strings
+   * @since 5.0.0
+   */
+  public static SamplePersistence&lt;List&lt;String&gt;&gt; forStringList() {
+<span class="nc" id="L118">    return new StringListPersistence();</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * Persistence implementation for samples of dynamic type.
+   * &lt;/p&gt;
+   *
+   * @param sampleType to fetch and persist resource for
+   * @return a {@link io.wcm.qa.glnm.persistence.SamplePersistence} for any
+   *         type of object which can be stored in Apache Common PropertiesConfiguration
+   * @since 5.0.0
+   * @param resourceClass a {@link java.lang.Class} object.
+   * @param &lt;T&gt; a T object.
+   */
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public static &lt;T&gt; SamplePersistence&lt;T&gt; forType(Class resourceClass, Class&lt;? extends T&gt; sampleType) {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">    if (String.class.isAssignableFrom(sampleType)) {</span>
+<span class="nc" id="L136">      return (SamplePersistence&lt;T&gt;)forString();</span>
+    }
+<span class="nc bnc" id="L138" title="All 2 branches missed.">    if (Boolean.class.isAssignableFrom(sampleType)) {</span>
+<span class="nc" id="L139">      return (SamplePersistence&lt;T&gt;)forBoolean();</span>
+    }
+<span class="nc bnc" id="L141" title="All 2 branches missed.">    if (Integer.class.isAssignableFrom(sampleType)) {</span>
+<span class="nc" id="L142">      return (SamplePersistence&lt;T&gt;)forInteger();</span>
+    }
+<span class="nc bnc" id="L144" title="All 2 branches missed.">    if (String[].class.isAssignableFrom(sampleType)) {</span>
+<span class="nc" id="L145">      return (SamplePersistence&lt;T&gt;)forStringArray();</span>
+    }
+
+<span class="nc" id="L148">    return (SamplePersistence&lt;T&gt;)forObject();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

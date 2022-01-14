@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectorSamplerBaselineMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.baseline</a> &gt; <span class="el_source">SelectorSamplerBaselineMatcher.java</span></div><h1>SelectorSamplerBaselineMatcher.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.baseline;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.function.Supplier;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+
+import io.wcm.qa.glnm.differences.base.Difference;
+import io.wcm.qa.glnm.differences.difference.sut.SelectorDifference;
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+import io.wcm.qa.glnm.persistence.SamplePersistence;
+import io.wcm.qa.glnm.sampling.element.base.SelectorBasedSampler;
+import io.wcm.qa.glnm.selectors.base.Selector;
+
+class SelectorSamplerBaselineMatcher&lt;S&gt;
+    extends BaselineMatcher&lt;Selector, S&gt; {
+
+  private SelectorBasedSampler&lt;S&gt; sampler;
+  private final Class&lt;? extends SelectorBasedSampler&lt;S&gt;&gt; samplerClass;
+  private Selector selector;
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  SelectorSamplerBaselineMatcher(
+      Supplier&lt;SamplePersistence&lt;S&gt;&gt; persistenceSupplier,
+      Class&lt;? extends SelectorBasedSampler&lt;S&gt;&gt; baselineSamplerClass) {
+<span class="nc" id="L49">    super(</span>
+        persistenceSupplier,
+<span class="nc" id="L51">        item -&gt; ((S)constructSampler(baselineSamplerClass, item).sampleValue()));</span>
+<span class="nc" id="L52">    samplerClass = baselineSamplerClass;</span>
+<span class="nc" id="L53">  }</span>
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private SelectorBasedSampler&lt;S&gt; getSampler(Selector item) {
+<span class="nc bnc" id="L57" title="All 4 branches missed.">    if (sampler == null || !item.equals(selector)) {</span>
+<span class="nc" id="L58">      sampler = constructSampler(samplerClass, item);</span>
+<span class="nc" id="L59">      selector = item;</span>
+    }
+<span class="nc" id="L61">    return sampler;</span>
+  }
+
+  private Matcher&lt;S&gt; internalMatcher() {
+<span class="nc" id="L65">    return Matchers.is(baseline());</span>
+  }
+
+  private S sampleFrom(Selector item) {
+<span class="nc" id="L69">    return getSampler(item).sampleValue();</span>
+  }
+
+  @Override
+  protected void describeMismatchSafely(Selector item, Description mismatchDescription) {
+<span class="nc" id="L74">    internalMatcher().describeMismatch(sampleFrom(item), mismatchDescription);</span>
+<span class="nc" id="L75">  }</span>
+
+  @Override
+  protected Collection&lt;? extends Difference&gt; differencesFor(Selector item) {
+<span class="nc" id="L79">    Collection&lt;Difference&gt; differences = new ArrayList&lt;Difference&gt;();</span>
+<span class="nc" id="L80">    differences.add(new SelectorDifference(item));</span>
+<span class="nc" id="L81">    return differences;</span>
+  }
+
+  @Override
+  protected boolean matchesBaseline(Selector item) {
+<span class="nc" id="L86">    return internalMatcher().matches(sampleFrom(item));</span>
+  }
+
+  private static SelectorBasedSampler constructSampler(
+      Class&lt;? extends SelectorBasedSampler&gt; baselineSamplerClass,
+      Selector item) {
+    try {
+<span class="nc" id="L93">      return baselineSamplerClass</span>
+<span class="nc" id="L94">          .getConstructor(Selector.class)</span>
+<span class="nc" id="L95">          .newInstance(item);</span>
+    }
+<span class="nc" id="L97">    catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException</span>
+        | SecurityException ex) {
+<span class="nc" id="L99">      throw new GaleniumException(&quot;When constructing sampler for baselining.&quot;, ex);</span>
+    }
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaselineMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.baseline</a> &gt; <span class="el_source">BaselineMatcher.java</span></div><h1>BaselineMatcher.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.baseline;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import org.hamcrest.Description;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.wcm.qa.glnm.differences.base.Differences;
+import io.wcm.qa.glnm.differences.generic.MutableDifferences;
+import io.wcm.qa.glnm.persistence.SamplePersistence;
+
+abstract class BaselineMatcher&lt;M, S&gt; extends DifferentiatingMatcherBase&lt;M&gt; {
+
+<span class="nc" id="L35">  private static final Logger LOG = LoggerFactory.getLogger(BaselineMatcher.class);</span>
+  private Function&lt;M, S&gt; baselineTransformer;
+  private Supplier&lt;SamplePersistence&lt;S&gt;&gt; persistenceSupplier;
+
+  BaselineMatcher(
+      Differences differences,
+      Supplier&lt;SamplePersistence&lt;S&gt;&gt; persistenceSupplier,
+<span class="nc" id="L42">      Function&lt;M, S&gt; baselineTransformer) {</span>
+<span class="nc" id="L43">    getDifferences().addAll(differences);</span>
+<span class="nc" id="L44">    setPersistenceSupplier(persistenceSupplier);</span>
+<span class="nc" id="L45">    setBaselineTransformer(baselineTransformer);</span>
+<span class="nc" id="L46">  }</span>
+
+  BaselineMatcher(
+      Supplier&lt;SamplePersistence&lt;S&gt;&gt; persistenceSupplier,
+      Function&lt;M, S&gt; transformer) {
+<span class="nc" id="L51">    this(new MutableDifferences(), persistenceSupplier, transformer);</span>
+<span class="nc" id="L52">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeTo(Description description) {
+<span class="nc" id="L57">    describeBaseline(description);</span>
+<span class="nc" id="L58">  }</span>
+
+  protected void describeBaseline(Description description) {
+<span class="nc" id="L61">    description.appendText(&quot;baseline with key '&quot;);</span>
+<span class="nc" id="L62">    description.appendText(getDifferences().getKey());</span>
+<span class="nc" id="L63">    description.appendText(&quot;': &quot;);</span>
+<span class="nc" id="L64">    description.appendValue(baseline());</span>
+<span class="nc" id="L65">  }</span>
+
+  private void persist(S item) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L69">      LOG.trace(&quot;persisting: &quot; + item);</span>
+    }
+<span class="nc" id="L71">    getPersistence().storeToBaseline(getDifferences(), item);</span>
+<span class="nc" id="L72">  }</span>
+
+  protected S baseline() {
+<span class="nc" id="L75">    return getPersistence().loadFromBaseline(getDifferences());</span>
+  }
+
+  protected Function&lt;M, S&gt; getBaselineTransformer() {
+<span class="nc" id="L79">    return baselineTransformer;</span>
+  }
+
+  protected SamplePersistence&lt;S&gt; getPersistence() {
+<span class="nc" id="L83">    return getPersistenceSupplier().get();</span>
+  }
+
+  protected Supplier&lt;SamplePersistence&lt;S&gt;&gt; getPersistenceSupplier() {
+<span class="nc" id="L87">    return persistenceSupplier;</span>
+  }
+
+  protected abstract boolean matchesBaseline(M item);
+
+  @Override
+  protected boolean matchesDifferentiated(M item) {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">    if (matchesBaseline(item)) {</span>
+<span class="nc" id="L95">      return true;</span>
+    }
+<span class="nc" id="L97">    persist(toBaselineType(item));</span>
+<span class="nc" id="L98">    return false;</span>
+  }
+
+  protected void setBaselineTransformer(Function&lt;M, S&gt; baselineTransformer) {
+<span class="nc" id="L102">    this.baselineTransformer = baselineTransformer;</span>
+<span class="nc" id="L103">  }</span>
+
+  protected void setPersistenceSupplier(Supplier&lt;SamplePersistence&lt;S&gt;&gt; persistenceSupplier) {
+<span class="nc" id="L106">    this.persistenceSupplier = persistenceSupplier;</span>
+<span class="nc" id="L107">  }</span>
+
+  protected S toBaselineType(M item) {
+<span class="nc" id="L110">    return getBaselineTransformer().apply(item);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaselineUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.baseline</a> &gt; <span class="el_source">BaselineUtil.java</span></div><h1>BaselineUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.baseline;
+
+import org.hamcrest.Matcher;
+
+import io.wcm.qa.glnm.differences.base.Difference;
+import io.wcm.qa.glnm.differences.base.Differences;
+import io.wcm.qa.glnm.differences.generic.MutableDifferences;
+
+final class BaselineUtil {
+
+  private BaselineUtil() {
+    // do not instantiate
+  }
+
+  static &lt;T&gt; DifferentiatingMatcher&lt;T&gt; differentiate(Matcher&lt;T&gt; matcher) {
+<span class="nc" id="L35">    return differentiate(matcher, new MutableDifferences());</span>
+  }
+
+  static &lt;T&gt; DifferentiatingMatcher&lt;T&gt; differentiate(Matcher&lt;T&gt; matcher, Differences differences) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">    if (matcher instanceof DifferentiatingMatcher) {</span>
+<span class="nc" id="L40">      DifferentiatingMatcher&lt;T&gt; differentiatingMatcher = (DifferentiatingMatcher&lt;T&gt;)matcher;</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">      for (Difference difference : differences) {</span>
+<span class="nc" id="L42">        differentiatingMatcher.add(difference);</span>
+<span class="nc" id="L43">      }</span>
+<span class="nc" id="L44">      return differentiatingMatcher;</span>
+    }
+<span class="nc" id="L46">    return new DifferentiatingMatcherWrapper&lt;T&gt;(matcher, differences);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

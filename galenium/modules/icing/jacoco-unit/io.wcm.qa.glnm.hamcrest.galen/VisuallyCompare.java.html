@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisuallyCompare.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.galen</a> &gt; <span class="el_source">VisuallyCompare.java</span></div><h1>VisuallyCompare.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.galen;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+import io.wcm.qa.glnm.differences.base.Difference;
+import io.wcm.qa.glnm.differences.generic.MutableDifferences;
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+import io.wcm.qa.glnm.galen.specs.GalenSpecRun;
+import io.wcm.qa.glnm.galen.specs.imagecomparison.ImageComparisonSpecDefinition;
+import io.wcm.qa.glnm.galen.specs.page.GalenCorrectionRect;
+import io.wcm.qa.glnm.galen.validation.GalenValidation;
+import io.wcm.qa.glnm.hamcrest.baseline.DifferentiatingMatcher;
+import io.wcm.qa.glnm.hamcrest.selector.SelectorMatcher;
+import io.wcm.qa.glnm.selectors.base.Selector;
+
+/**
+ * Matcher doing visual comparison on element defined by Selector.
+ *
+ * @since 5.0.0
+ */
+public class VisuallyCompare
+    extends SelectorMatcher&lt;GalenSpecRun&gt;
+    implements DifferentiatingMatcher&lt;Selector&gt; {
+
+<span class="nc" id="L50">  private final ImageComparisonSpecDefinition specDefinition = new ImageComparisonSpecDefinition();</span>
+
+<span class="nc" id="L52">  private final LoadingCache&lt;Selector, GalenSpecRun&gt; visualComparisons = CacheBuilder.newBuilder().build(</span>
+<span class="nc" id="L53">      new CacheLoader&lt;Selector, GalenSpecRun&gt;() {</span>
+
+        @Override
+        public GalenSpecRun load(Selector key) throws Exception {
+<span class="nc" id="L57">          ImageComparisonSpecDefinition def = new ImageComparisonSpecDefinition(specDefinition);</span>
+<span class="nc" id="L58">          def.setSelector(key);</span>
+<span class="nc" id="L59">          return GalenValidation.imageComparison(def);</span>
+        }
+      });
+
+  protected VisuallyCompare() {
+<span class="nc" id="L64">    super(GalenSpecRunMatcher.successfulRun());</span>
+<span class="nc" id="L65">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void add(Difference difference) {
+<span class="nc" id="L70">    specDefinition.addDifference(difference);</span>
+<span class="nc" id="L71">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public String getKey() {
+<span class="nc" id="L76">    return getDifferences().getKey();</span>
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Iterator&lt;Difference&gt; iterator() {
+<span class="nc" id="L82">    return getDifferences().iterator();</span>
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void prepend(Difference difference) {
+<span class="nc" id="L88">    MutableDifferences newDifferences = new MutableDifferences();</span>
+<span class="nc" id="L89">    newDifferences.add(difference);</span>
+<span class="nc" id="L90">    newDifferences.addAll(getDifferences());</span>
+<span class="nc" id="L91">    specDefinition.setDifferences(newDifferences);</span>
+<span class="nc" id="L92">  }</span>
+
+  /**
+   * &lt;p&gt;whileIgnoring.&lt;/p&gt;
+   *
+   * @param ignore a {@link io.wcm.qa.glnm.selectors.base.Selector} object.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare whileIgnoring(Selector... ignore) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">    if (ignore == null) {</span>
+<span class="nc" id="L102">      return this;</span>
+    }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">    for (Selector selectorToIgnore : ignore) {</span>
+<span class="nc" id="L105">      specDefinition.addObjectToIgnore(selectorToIgnore);</span>
+    }
+<span class="nc" id="L107">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withAllowedErrorPercent.&lt;/p&gt;
+   *
+   * @param error a double.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withAllowedErrorPercent(double error) {
+<span class="nc" id="L117">    specDefinition.setAllowedErrorPercent(error);</span>
+<span class="nc" id="L118">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withAllowedErrorPixel.&lt;/p&gt;
+   *
+   * @param error a int.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withAllowedErrorPixel(int error) {
+<span class="nc" id="L128">    specDefinition.setAllowedErrorPixel(error);</span>
+<span class="nc" id="L129">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withAllowedOffset.&lt;/p&gt;
+   *
+   * @param offset a int.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withAllowedOffset(int offset) {
+<span class="nc" id="L139">    specDefinition.setAllowedOffset(offset);</span>
+<span class="nc" id="L140">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withCorrections.&lt;/p&gt;
+   *
+   * @param corrections a {@link io.wcm.qa.glnm.galen.specs.page.GalenCorrectionRect} object.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withCorrections(GalenCorrectionRect corrections) {
+<span class="nc" id="L150">    specDefinition.setCorrections(corrections);</span>
+<span class="nc" id="L151">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withCropIfOutside.&lt;/p&gt;
+   *
+   * @param crop a boolean.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withCropIfOutside(boolean crop) {
+<span class="nc" id="L161">    specDefinition.setCropIfOutside(crop);</span>
+<span class="nc" id="L162">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withDifferences.&lt;/p&gt;
+   *
+   * @param differences a {@link java.util.Collection} object.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withDifferences(Collection&lt;Difference&gt; differences) {
+<span class="nc" id="L172">    specDefinition.addAll(differences);</span>
+<span class="nc" id="L173">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withElementName.&lt;/p&gt;
+   *
+   * @param name a {@link java.lang.String} object.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withElementName(String name) {
+<span class="nc" id="L183">    specDefinition.setElementName(name);</span>
+<span class="nc" id="L184">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withSectionName.&lt;/p&gt;
+   *
+   * @param name a {@link java.lang.String} object.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withSectionName(String name) {
+<span class="nc" id="L194">    specDefinition.setSectionName(name);</span>
+<span class="nc" id="L195">    return this;</span>
+  }
+
+  /**
+   * &lt;p&gt;withZeroToleranceWarning.&lt;/p&gt;
+   *
+   * @param warning a boolean.
+   * @return a {@link io.wcm.qa.glnm.hamcrest.galen.VisuallyCompare} object.
+   */
+  public VisuallyCompare withZeroToleranceWarning(boolean warning) {
+<span class="nc" id="L205">    specDefinition.setZeroToleranceWarning(warning);</span>
+<span class="nc" id="L206">    return this;</span>
+  }
+
+  protected MutableDifferences getDifferences() {
+<span class="nc" id="L210">    return specDefinition.getDifferences();</span>
+  }
+
+  @Override
+  protected GalenSpecRun map(Selector item) {
+    try {
+<span class="nc" id="L216">      return visualComparisons.get(item);</span>
+    }
+<span class="nc" id="L218">    catch (ExecutionException ex) {</span>
+<span class="nc" id="L219">      throw new GaleniumException(&quot;when executing visual comparison&quot;, ex);</span>
+    }
+  }
+
+  /**
+   * &lt;p&gt;
+   * visuallyCompare.
+   * &lt;/p&gt;
+   *
+   * @return visual comparison matcher
+   * @since 5.0.0
+   */
+  public static VisuallyCompare visuallyCompare() {
+<span class="nc" id="L232">    return new VisuallyCompare();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

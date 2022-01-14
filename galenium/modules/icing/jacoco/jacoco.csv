@@ -1,0 +1,65 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Galenium Icing,io.wcm.qa.glnm.hamcrest.selector,SelectorMatcher,28,0,2,0,11,0,6,0,5,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.selector,Location,20,0,0,0,6,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.selector,Visible,30,0,0,0,9,0,5,0,5,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.selector,SelectorSamplerMatcher,92,0,6,0,28,0,13,0,10,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.selector,HasAttribute,44,0,0,0,12,0,5,0,5,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.selector,ElementCount,20,0,0,0,6,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.selector,HasText,20,0,0,0,6,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,FunctionalWrappingMatcher,33,0,0,0,11,0,6,0,6,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,AfterWait,143,0,6,0,34,0,13,0,10,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,TypeSafeWrappingMatcher,65,0,4,0,18,0,9,0,7,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,Stable,57,0,0,0,19,0,10,0,10,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,AfterWait.MatcherFunction,30,0,0,0,10,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,TypeSafeWrappingMatcher.new CacheLoader() {...},12,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,ResponseCode,41,0,0,0,12,0,5,0,5,0
+Galenium Icing,org.junit.jupiter.engine.execution,GaleniumDriverParameterContext,41,0,2,0,7,0,4,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.browser,LogEntryMatchers,5,0,0,0,1,0,1,0,1,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.browser,LogEntryMatchers.new TypeSafeMatcher() {...},26,0,2,0,5,0,4,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.element,ElementAttribute,24,0,0,0,4,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.element,ElementCssProperty,24,0,0,0,4,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.element,WebElementMatcher,39,0,2,0,12,0,6,0,5,0
+Galenium Icing,io.wcm.qa.glnm.interaction,Wait,68,0,4,0,15,0,8,0,6,0
+Galenium Icing,io.wcm.qa.glnm.junit.seljup,BrowserInjectionExtension,221,0,42,0,72,0,35,0,14,0
+Galenium Icing,io.wcm.qa.glnm.junit.seljup,ViewportWidthProvider,17,0,0,0,6,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.junit.seljup,BrowserTypesProvider,8,0,0,0,3,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.junit.seljup,ViewportWidthExtension,10,0,0,0,5,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.junit.seljup,AbstractConsumingCombinableProvider,30,0,0,0,11,0,6,0,6,0
+Galenium Icing,io.wcm.qa.glnm.junit.seljup,SeleniumJupiterUtil,83,0,16,0,26,0,13,0,4,0
+Galenium Icing,io.wcm.qa.glnm.persistence,PersistenceUtil,153,0,12,0,40,0,13,0,7,0
+Galenium Icing,io.wcm.qa.glnm.persistence,SamplePersistenceBase,96,0,8,0,27,0,15,0,11,0
+Galenium Icing,io.wcm.qa.glnm.persistence,StringListPersistence,9,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.persistence,PersistingCacheUtil.SampleCacheLoader,23,0,2,0,5,0,2,0,1,0
+Galenium Icing,io.wcm.qa.glnm.persistence,BaselinePersistenceExtension,51,0,0,0,15,0,5,0,5,0
+Galenium Icing,io.wcm.qa.glnm.persistence,BooleanPersistence,14,0,0,0,4,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.persistence,StringPersistence,8,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.persistence,ObjectPersistence,8,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.persistence,Persistence.new IntegerPersistence() {...},6,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.persistence,PersistingCacheUtil.BaselineCacheLoader,16,0,2,0,3,0,2,0,1,0
+Galenium Icing,io.wcm.qa.glnm.persistence,Persistence,54,0,8,0,16,0,12,0,8,0
+Galenium Icing,io.wcm.qa.glnm.persistence,StringArrayPersistence,13,0,0,0,4,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.persistence,PersistingCacheUtil,129,0,8,0,25,0,9,0,5,0
+Galenium Icing,io.wcm.qa.glnm.persistence,IntegerPersistence,9,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.interaction.aem.author,AuthorLogin,124,0,16,0,39,0,15,0,7,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineInteger,8,0,0,0,3,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,SelectorSamplerBaselineMatcher,95,0,4,0,21,0,11,0,9,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineString,8,0,0,0,3,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineDirectMatcher,10,0,0,0,4,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,ArrayWithSize,14,0,0,0,4,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineBoolean,8,0,0,0,3,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,SelectorBaselineMatchers,12,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineStringList,4,0,0,0,2,0,1,0,1,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineMatchers,40,0,0,0,12,0,10,0,10,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,DifferentiatingMatcherBase,99,0,2,0,27,0,12,0,11,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,SelectorWebElementMatcher,42,0,0,0,12,0,6,0,6,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,DifferentiatingMatcherWrapper,94,0,0,0,28,0,12,0,12,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaseliningMatcher,48,0,2,0,15,0,9,0,8,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineUtil,34,0,4,0,8,0,4,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,AMapWithSize,14,0,0,0,4,0,3,0,3,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineMatcher,113,0,4,0,32,0,16,0,14,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.galen,VisuallyCompare.new CacheLoader() {...},19,0,0,0,4,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.galen,GalenSpecRunMatcher,35,0,2,0,11,0,6,0,5,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.galen,GalenSpecMatcher,71,0,2,0,19,0,8,0,7,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.galen,VisuallyCompare,152,0,4,0,41,0,20,0,18,0
+Galenium Icing,io.wcm.qa.glnm.interaction.logs,LogEntryUtil,41,0,0,0,9,0,7,0,7,0
+Galenium Icing,io.wcm.qa.glnm.interaction.logs,ResponseEntry,70,0,0,0,22,0,11,0,11,0

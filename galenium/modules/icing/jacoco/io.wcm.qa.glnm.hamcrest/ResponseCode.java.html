@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResponseCode.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest</a> &gt; <span class="el_source">ResponseCode.java</span></div><h1>ResponseCode.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+
+import io.wcm.qa.glnm.sampling.jsoup.JsoupResponseCodeSampler;
+
+
+/**
+ * &lt;p&gt;ResponseCode class.&lt;/p&gt;
+ *
+ * @since 5.0.0
+ */
+public class ResponseCode extends TypeSafeWrappingMatcher&lt;String, Integer&gt; {
+
+  protected ResponseCode(Matcher&lt;Integer&gt; matcher) {
+<span class="nc" id="L36">    super(matcher);</span>
+<span class="nc" id="L37">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeTo(Description description) {
+<span class="nc" id="L42">    description.appendText(&quot;response code &quot;);</span>
+<span class="nc" id="L43">    super.describeTo(description);</span>
+<span class="nc" id="L44">  }</span>
+
+  @Override
+  protected void describeMismatchSafely(String item, Description mismatchDescription) {
+<span class="nc" id="L48">    mismatchDescription.appendText(&quot;response code for &quot;);</span>
+<span class="nc" id="L49">    mismatchDescription.appendValue(item);</span>
+<span class="nc" id="L50">    mismatchDescription.appendText(&quot; &quot;);</span>
+<span class="nc" id="L51">    super.describeMismatchSafely(item, mismatchDescription);</span>
+<span class="nc" id="L52">  }</span>
+
+  @Override
+  protected Integer map(String item) {
+<span class="nc" id="L56">    return new JsoupResponseCodeSampler(item).sampleValue();</span>
+  }
+
+  /**
+   * &lt;p&gt;responseCode.&lt;/p&gt;
+   *
+   * @param matcher a {@link org.hamcrest.Matcher} object.
+   * @return a {@link org.hamcrest.Matcher} object.
+   * @since 5.0.0
+   */
+  public static Matcher&lt;String&gt; responseCode(Matcher&lt;Integer&gt; matcher) {
+<span class="nc" id="L67">    return new ResponseCode(matcher);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

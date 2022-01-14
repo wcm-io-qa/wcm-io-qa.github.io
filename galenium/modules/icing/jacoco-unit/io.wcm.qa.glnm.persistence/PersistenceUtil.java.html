@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersistenceUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.persistence</a> &gt; <span class="el_source">PersistenceUtil.java</span></div><h1>PersistenceUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2019 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.persistence;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.Writer;
+
+import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ClassPathUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.wcm.qa.glnm.configuration.GaleniumConfiguration;
+
+final class PersistenceUtil {
+
+<span class="nc" id="L42">  private static final Logger LOG = LoggerFactory.getLogger(PersistenceUtil.class);</span>
+
+  private static final String POSTFIX_PROPERTIES = &quot;properties&quot;;
+
+  private PersistenceUtil() {
+    // do not instantiate
+  }
+
+  private static File getOutputFile(Class clazz) {
+<span class="nc" id="L51">    String resourceName = getPropertiesResourceName(clazz);</span>
+<span class="nc" id="L52">    File outputFile = getOutputFile(clazz, resourceName);</span>
+<span class="nc" id="L53">    return outputFile;</span>
+  }
+
+  private static File getOutputFile(Class clazz, String resourceName) {
+<span class="nc" id="L57">    String relativePath = ClassPathUtils.toFullyQualifiedPath(clazz, resourceName);</span>
+<span class="nc" id="L58">    String textOutputDirectory = GaleniumConfiguration.getTextComparisonOutputDirectory();</span>
+<span class="nc" id="L59">    File outputFile = FileUtils.getFile(textOutputDirectory, relativePath);</span>
+<span class="nc" id="L60">    return outputFile;</span>
+  }
+
+  private static String getPropertiesResourceName(Class clazz) {
+<span class="nc" id="L64">    String resourceName = clazz.getSimpleName() + &quot;.&quot; + POSTFIX_PROPERTIES;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L66">      LOG.debug(&quot;properties resource name: &quot; + resourceName);</span>
+    }
+<span class="nc" id="L68">    return resourceName;</span>
+  }
+
+  private static Reader getReaderForProperties(Class clazz) {
+<span class="nc" id="L72">    InputStream in = clazz.getResourceAsStream(getPropertiesResourceName(clazz));</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">    if (in == null) {</span>
+<span class="nc" id="L74">      return null;</span>
+    }
+<span class="nc" id="L76">    return new InputStreamReader(in);</span>
+  }
+
+  @SuppressWarnings(&quot;PMD.AvoidCatchingNPE&quot;)
+  static PropertiesConfiguration getPropertiesFor(Class clazz) {
+
+    try {
+<span class="nc" id="L83">      PropertiesConfiguration configuration = new Configurations().propertiesBuilder().getConfiguration();</span>
+<span class="nc" id="L84">      Reader readerForProperties = getReaderForProperties(clazz);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">      if (readerForProperties != null) {</span>
+<span class="nc" id="L86">        configuration.read(readerForProperties);</span>
+      }
+<span class="nc" id="L88">      return configuration;</span>
+    }
+<span class="nc" id="L90">    catch (ConfigurationException | IOException ex) {</span>
+      // notify, but still return empty properties
+<span class="nc bnc" id="L92" title="All 2 branches missed.">      if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L93">        LOG.info(&quot;Could not load properties for: &quot; + clazz, ex);</span>
+      }
+<span class="nc" id="L95">      return new PropertiesConfiguration();</span>
+    }
+  }
+
+  static void writeSamplesForClass(PropertiesConfiguration samples, Class clazz) {
+<span class="nc" id="L100">    Writer writer = null;</span>
+    try {
+<span class="nc" id="L102">      File outputFile = getOutputFile(clazz);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">      if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L104">        LOG.info(&quot;writing {} properties to '{}'&quot;, samples.size(), outputFile.getPath());</span>
+      }
+<span class="nc" id="L106">      FileUtils.forceMkdirParent(outputFile);</span>
+<span class="nc" id="L107">      writer = new FileWriter(outputFile, false);</span>
+      // TODO: refactor to use FileHandler
+<span class="nc" id="L109">      samples.write(writer);</span>
+    }
+<span class="nc" id="L111">    catch (IOException | ConfigurationException ex) {</span>
+<span class="nc" id="L112">      LOG.error(&quot;could not persist samples.&quot;, ex);</span>
+    }
+    finally {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">      if (writer != null) {</span>
+        try {
+<span class="nc" id="L117">          writer.close();</span>
+        }
+<span class="nc" id="L119">        catch (IOException ex) {</span>
+<span class="nc" id="L120">          LOG.error(&quot;when closing writer while persisting samples.&quot;, ex);</span>
+<span class="nc" id="L121">        }</span>
+      }
+    }
+<span class="nc" id="L124">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

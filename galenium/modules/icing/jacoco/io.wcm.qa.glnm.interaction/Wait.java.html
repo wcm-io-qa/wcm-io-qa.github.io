@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Wait.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.interaction</a> &gt; <span class="el_source">Wait.java</span></div><h1>Wait.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.interaction;
+
+import static io.wcm.qa.glnm.webdriver.WebDriverManagement.getWait;
+
+import java.util.function.Function;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Wraps WebDriverWait functionalities.
+ *
+ * @since 1.0.0
+ */
+public final class Wait {
+
+  private static final int DEFAULT_TIMEOUT = 1;
+
+<span class="nc" id="L42">  private static final Logger LOG = LoggerFactory.getLogger(Wait.class);</span>
+
+  private Wait() {
+    // do not instantiate
+  }
+
+  /**
+   * Wait for domReady for a maximum of one second.
+   *
+   * @since 1.0.0
+   */
+  public static void forDomReady() {
+<span class="nc" id="L54">    forDomReady(DEFAULT_TIMEOUT);</span>
+<span class="nc" id="L55">  }</span>
+
+  /**
+   * Wait for &quot;DOM ready&quot; for a maximum of seconds specified by parameter.
+   *
+   * @param timeOutInSeconds how long to wait for &quot;DOM ready&quot;
+   * @since 1.0.0
+   */
+  public static void forDomReady(int timeOutInSeconds) {
+<span class="nc" id="L64">    WebDriverWait wait = getWait(timeOutInSeconds);</span>
+<span class="nc" id="L65">    wait.until(driver -&gt; ((JavascriptExecutor)driver).executeScript(&quot;return document.readyState&quot;).equals(&quot;complete&quot;));</span>
+<span class="nc" id="L66">  }</span>
+
+  /**
+   * Load URL and wait for it to be loaded.
+   *
+   * @param url to load
+   * @since 1.0.0
+   */
+  public static void forUrl(String url) {
+<span class="nc" id="L75">    forUrl(url, DEFAULT_TIMEOUT);</span>
+<span class="nc" id="L76">  }</span>
+
+  /**
+   * Load URL and wait passed number of seconds for it to be loaded.
+   *
+   * @param url to load
+   * @param timeOutInSeconds how long to wait for URL to be current
+   * @since 1.0.0
+   */
+  public static void forUrl(String url, int timeOutInSeconds) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L87">      LOG.trace(&quot;waiting for URL: '&quot; + url + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L89">    WebDriverWait wait = getWait(timeOutInSeconds);</span>
+<span class="nc" id="L90">    wait.until((Function&lt;? super WebDriver, Boolean&gt;)ExpectedConditions.urlToBe(url));</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L92">      LOG.trace(&quot;found URL: '&quot; + url + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L94">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

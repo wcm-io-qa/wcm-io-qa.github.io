@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DifferentiatingMatcherWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.baseline</a> &gt; <span class="el_source">DifferentiatingMatcherWrapper.java</span></div><h1>DifferentiatingMatcherWrapper.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.baseline;
+
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+
+import io.wcm.qa.glnm.differences.base.Difference;
+import io.wcm.qa.glnm.differences.base.Differences;
+import io.wcm.qa.glnm.differences.generic.MutableDifferences;
+
+/**
+ * Wrapper to differentiate any {@link org.hamcrest.Matcher}.
+ *
+ * @param &lt;T&gt; type to match
+ * @since 5.0.0
+ */
+public class DifferentiatingMatcherWrapper&lt;T&gt; extends TypeSafeMatcher&lt;T&gt; implements DifferentiatingMatcher&lt;T&gt; {
+
+<span class="nc" id="L43">  private MutableDifferences differences = new MutableDifferences();</span>
+
+  private final Matcher&lt;T&gt; matcher;
+
+<span class="nc" id="L47">  DifferentiatingMatcherWrapper(Matcher&lt;T&gt; matcher, Differences differences) {</span>
+<span class="nc" id="L48">    this.matcher = matcher;</span>
+<span class="nc" id="L49">    this.getDifferences().addAll(differences);</span>
+<span class="nc" id="L50">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void add(Difference difference) {
+<span class="nc" id="L55">    getDifferences().add(difference);</span>
+<span class="nc" id="L56">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeMismatchSafely(T actual, Description mismatchDescription) {
+<span class="nc" id="L61">    matcher.describeMismatch(actual, mismatchDescription);</span>
+<span class="nc" id="L62">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeTo(Description description) {
+<span class="nc" id="L67">    description.appendText(&quot;on &quot;);</span>
+<span class="nc" id="L68">    description.appendText(StringUtils.join(getDifferences(), &quot; and &quot;));</span>
+<span class="nc" id="L69">    description.appendText(&quot; &quot;);</span>
+<span class="nc" id="L70">    matcher.describeTo(description);</span>
+<span class="nc" id="L71">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void forEach(Consumer&lt;? super Difference&gt; action) {
+<span class="nc" id="L76">    getDifferences().forEach(action);</span>
+<span class="nc" id="L77">  }</span>
+
+  /**
+   * &lt;p&gt;Getter for the field &lt;code&gt;differences&lt;/code&gt;.&lt;/p&gt;
+   *
+   * @return a {@link io.wcm.qa.glnm.differences.generic.MutableDifferences} object.
+   * @since 5.0.0
+   */
+  public MutableDifferences getDifferences() {
+<span class="nc" id="L86">    return differences;</span>
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getKey() {
+<span class="nc" id="L92">    return getDifferences().getKey();</span>
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Iterator&lt;Difference&gt; iterator() {
+<span class="nc" id="L98">    return getDifferences().iterator();</span>
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean matchesSafely(T actual) {
+<span class="nc" id="L104">    return matcher.matches(actual);</span>
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void prepend(Difference difference) {
+<span class="nc" id="L110">    MutableDifferences newDifferences = new MutableDifferences();</span>
+<span class="nc" id="L111">    newDifferences.add(difference);</span>
+<span class="nc" id="L112">    newDifferences.addAll(getDifferences());</span>
+<span class="nc" id="L113">    setDifferences(newDifferences);</span>
+<span class="nc" id="L114">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public Spliterator&lt;Difference&gt; spliterator() {
+<span class="nc" id="L119">    return getDifferences().spliterator();</span>
+  }
+
+  private void setDifferences(MutableDifferences differences) {
+<span class="nc" id="L123">    this.differences = differences;</span>
+<span class="nc" id="L124">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

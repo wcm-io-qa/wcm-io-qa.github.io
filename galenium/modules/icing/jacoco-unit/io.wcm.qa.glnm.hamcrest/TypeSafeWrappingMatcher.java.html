@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeSafeWrappingMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest</a> &gt; <span class="el_source">TypeSafeWrappingMatcher.java</span></div><h1>TypeSafeWrappingMatcher.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+
+import com.google.common.base.Optional;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+
+/**
+ * &lt;p&gt;Abstract TypeSafeWrappingMatcher class.&lt;/p&gt;
+ *
+ * @since 5.0.0
+ */
+public abstract class TypeSafeWrappingMatcher&lt;T, M&gt; extends TypeSafeMatcher&lt;T&gt; {
+
+  private Matcher&lt;M&gt; internalMatcher;
+<span class="nc" id="L40">  private final CacheLoader&lt;T, Optional&lt;M&gt;&gt; loader = new CacheLoader&lt;T, Optional&lt;M&gt;&gt;() {</span>
+    @Override
+    public Optional&lt;M&gt; load(T key) throws Exception {
+<span class="nc" id="L43">      return Optional.fromNullable(map(key));</span>
+    };
+  };
+<span class="nc" id="L46">  private final LoadingCache&lt;T, Optional&lt;M&gt;&gt; mappedItems = CacheBuilder.newBuilder().build(loader);</span>
+
+<span class="nc" id="L48">  protected TypeSafeWrappingMatcher(Matcher&lt;M&gt; matcher) {</span>
+<span class="nc" id="L49">    setInternalMatcher(matcher);</span>
+<span class="nc" id="L50">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeTo(Description description) {
+<span class="nc" id="L55">    getInternalMatcher().describeTo(description);</span>
+<span class="nc" id="L56">  }</span>
+
+  private M mapped(T item) {
+<span class="nc" id="L59">    Optional&lt;M&gt; optional = mappedItems.getIfPresent(item);</span>
+<span class="nc bnc" id="L60" title="All 4 branches missed.">    if (optional != null &amp;&amp; optional.isPresent()) {</span>
+<span class="nc" id="L61">      return optional.get();</span>
+    }
+<span class="nc" id="L63">    return null;</span>
+  }
+
+  @Override
+  protected void describeMismatchSafely(T item, Description mismatchDescription) {
+<span class="nc" id="L68">    getInternalMatcher().describeMismatch(mapped(item), mismatchDescription);</span>
+<span class="nc" id="L69">  }</span>
+
+  protected Matcher&lt;M&gt; getInternalMatcher() {
+<span class="nc" id="L72">    return internalMatcher;</span>
+  }
+
+  protected abstract M map(T item);
+
+  @Override
+  protected boolean matchesSafely(T item) {
+<span class="nc" id="L79">    mappedItems.refresh(item);</span>
+<span class="nc" id="L80">    return getInternalMatcher().matches(mapped(item));</span>
+  }
+
+  protected void setInternalMatcher(Matcher&lt;M&gt; internalMatcher) {
+<span class="nc" id="L84">    this.internalMatcher = internalMatcher;</span>
+<span class="nc" id="L85">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

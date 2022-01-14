@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GalenSpecRunMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.galen</a> &gt; <span class="el_source">GalenSpecRunMatcher.java</span></div><h1>GalenSpecRunMatcher.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.galen;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+
+import io.wcm.qa.glnm.galen.specs.GalenSpecRun;
+
+/**
+ * Wraps {@link io.wcm.qa.glnm.galen.specs.GalenSpecRun} into Allure aware matcher.
+ *
+ * @since 5.0.0
+ */
+<span class="nc" id="L34">public class GalenSpecRunMatcher extends TypeSafeMatcher&lt;GalenSpecRun&gt; {</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeTo(Description description) {
+<span class="nc" id="L39">    description.appendText(&quot;run is clean&quot;);</span>
+<span class="nc" id="L40">  }</span>
+
+  @Override
+  protected void describeMismatchSafely(GalenSpecRun item, Description mismatchDescription) {
+<span class="nc" id="L44">    mismatchDescription.appendText(&quot;[&quot;);</span>
+<span class="nc" id="L45">    mismatchDescription.appendText(StringUtils.join(item.getMessages(), &quot;][&quot;));</span>
+<span class="nc" id="L46">    mismatchDescription.appendText(&quot;]&quot;);</span>
+<span class="nc" id="L47">  }</span>
+
+  @Override
+  protected boolean matchesSafely(GalenSpecRun item) {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">    if (item.isClean()) {</span>
+<span class="nc" id="L52">      return true;</span>
+    }
+<span class="nc" id="L54">    return false;</span>
+  }
+
+  /**
+   * &lt;p&gt;specRun.&lt;/p&gt;
+   *
+   * @return matcher for {@link io.wcm.qa.glnm.galen.specs.GalenSpecRun}
+   * @since 5.0.0
+   */
+  public static Matcher&lt;GalenSpecRun&gt; successfulRun() {
+<span class="nc" id="L64">    return new GalenSpecRunMatcher();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

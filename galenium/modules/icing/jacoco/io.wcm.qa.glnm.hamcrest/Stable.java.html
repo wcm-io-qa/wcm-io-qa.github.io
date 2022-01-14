@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Stable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest</a> &gt; <span class="el_source">Stable.java</span></div><h1>Stable.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest;
+
+import java.util.Objects;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+
+/**
+ * Matches when called twice in a row with the equal arguments.
+ *
+ * @param &lt;T&gt; type of argument
+ * @since 5.0.0
+ */
+<span class="nc" id="L34">public class Stable&lt;T&gt; extends TypeSafeMatcher&lt;T&gt; {</span>
+
+  private T currentValue;
+  private T oldValue;
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeTo(Description description) {
+<span class="nc" id="L42">    description.appendText(&quot;stable&quot;);</span>
+<span class="nc" id="L43">  }</span>
+
+  private void updateValues(T item) {
+<span class="nc" id="L46">    setOldValue(getCurrentValue());</span>
+<span class="nc" id="L47">    setCurrentValue(item);</span>
+<span class="nc" id="L48">  }</span>
+
+  @Override
+  protected void describeMismatchSafely(T item, Description mismatchDescription) {
+<span class="nc" id="L52">    mismatchDescription.appendValue(item);</span>
+<span class="nc" id="L53">    mismatchDescription.appendText(&quot; was not &quot;);</span>
+<span class="nc" id="L54">    mismatchDescription.appendValue(getOldValue());</span>
+<span class="nc" id="L55">  }</span>
+
+  protected T getCurrentValue() {
+<span class="nc" id="L58">    return currentValue;</span>
+  }
+
+  protected T getOldValue() {
+<span class="nc" id="L62">    return oldValue;</span>
+  }
+
+  @Override
+  protected boolean matchesSafely(T item) {
+<span class="nc" id="L67">    updateValues(item);</span>
+<span class="nc" id="L68">    return Objects.equals(getCurrentValue(), getOldValue());</span>
+  }
+
+  protected void setCurrentValue(T currentValue) {
+<span class="nc" id="L72">    this.currentValue = currentValue;</span>
+<span class="nc" id="L73">  }</span>
+
+  protected void setOldValue(T oldValue) {
+<span class="nc" id="L76">    this.oldValue = oldValue;</span>
+<span class="nc" id="L77">  }</span>
+
+  /**
+   * &lt;p&gt;
+   * Stability matcher.
+   * &lt;/p&gt;
+   *
+   * @param &lt;T&gt; type to match
+   * @return a matcher matching same value twice in a row
+   * @since 5.0.0
+   */
+  public static &lt;T&gt; Matcher&lt;T&gt; stable() {
+<span class="nc" id="L89">    return new Stable&lt;T&gt;();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectorMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.selector</a> &gt; <span class="el_source">SelectorMatcher.java</span></div><h1>SelectorMatcher.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.selector;
+
+
+import org.hamcrest.Matcher;
+
+import io.wcm.qa.glnm.hamcrest.TypeSafeWrappingMatcher;
+import io.wcm.qa.glnm.selectors.base.Selector;
+
+/**
+ * Base class for matching based on {@link io.wcm.qa.glnm.selectors.base.Selector}.
+ *
+ * @param &lt;T&gt; type to match
+ * @since 5.0.0
+ */
+public abstract class SelectorMatcher&lt;T&gt; extends TypeSafeWrappingMatcher&lt;Selector, T&gt; {
+
+  private Selector selector;
+
+  protected SelectorMatcher(Matcher&lt;T&gt; matcher) {
+<span class="nc" id="L39">    super(matcher);</span>
+<span class="nc" id="L40">  }</span>
+
+  protected Selector getSelector() {
+<span class="nc" id="L43">    return selector;</span>
+  }
+
+  protected String getSelectorName() {
+<span class="nc" id="L47">    Selector s = getSelector();</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">    if (s != null) {</span>
+<span class="nc" id="L49">      return s.elementName();</span>
+    }
+<span class="nc" id="L51">    return &quot;NULL&quot;;</span>
+  }
+
+  @Override
+  protected boolean matchesSafely(Selector item) {
+<span class="nc" id="L56">    setSelector(item);</span>
+<span class="nc" id="L57">    return super.matchesSafely(item);</span>
+  }
+
+  protected void setSelector(Selector selector) {
+<span class="nc" id="L61">    this.selector = selector;</span>
+<span class="nc" id="L62">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

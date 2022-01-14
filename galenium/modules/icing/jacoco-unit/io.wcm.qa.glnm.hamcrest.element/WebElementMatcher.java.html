@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebElementMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Icing</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.hamcrest.element</a> &gt; <span class="el_source">WebElementMatcher.java</span></div><h1>WebElementMatcher.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.hamcrest.element;
+
+import java.util.function.Function;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.openqa.selenium.WebElement;
+
+import io.wcm.qa.glnm.hamcrest.FunctionalWrappingMatcher;
+
+
+class WebElementMatcher&lt;T&gt; extends FunctionalWrappingMatcher&lt;WebElement, T&gt; {
+
+  private String mappingDescription;
+
+  protected WebElementMatcher(
+      String description,
+      Function&lt;WebElement, T&gt; mapping,
+      Matcher&lt;T&gt; matcher) {
+<span class="nc" id="L40">    super(mapping, matcher);</span>
+<span class="nc" id="L41">    setMappingDescription(description);</span>
+<span class="nc" id="L42">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public void describeTo(Description description) {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">    if (StringUtils.isNotEmpty(getMappingDescription())) {</span>
+<span class="nc" id="L48">      description.appendText(getMappingDescription());</span>
+<span class="nc" id="L49">      description.appendText(&quot; &quot;);</span>
+    }
+<span class="nc" id="L51">    super.describeTo(description);</span>
+<span class="nc" id="L52">  }</span>
+
+  protected String getMappingDescription() {
+<span class="nc" id="L55">    return mappingDescription;</span>
+  }
+
+  protected void setMappingDescription(String mappingDescription) {
+<span class="nc" id="L59">    this.mappingDescription = mappingDescription;</span>
+<span class="nc" id="L60">  }</span>
+
+  /**
+   * &lt;p&gt;elementMapped.&lt;/p&gt;
+   *
+   * @param &lt;T&gt; type of mapped value
+   * @param mapping extracting value from element
+   * @param matcher matches mapped value
+   * @return matcher doing mapping and matching
+   * @since 5.0.0
+   */
+  public static &lt;T&gt; Matcher&lt;WebElement&gt; elementMapped(Function&lt;WebElement, T&gt; mapping, Matcher&lt;T&gt; matcher) {
+<span class="nc" id="L72">    return new WebElementMatcher&lt;T&gt;(&quot;&quot;, mapping, matcher);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
