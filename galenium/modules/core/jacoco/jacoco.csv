@@ -1,0 +1,44 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Galenium Core,io.wcm.qa.glnm.pairwise,TupelDefinition,51,0,4,0,15,0,8,0,6,0
+Galenium Core,io.wcm.qa.glnm.pairwise,Tupel,166,0,26,0,31,0,25,0,12,0
+Galenium Core,io.wcm.qa.glnm.pairwise,DomainDefinition,51,0,2,0,13,0,7,0,6,0
+Galenium Core,io.wcm.qa.glnm.pairwise,Value,81,0,6,0,23,0,11,0,8,0
+Galenium Core,io.wcm.qa.glnm.pairwise,PairwiseDefinition,288,0,30,0,55,0,24,0,9,0
+Galenium Core,io.wcm.qa.glnm.pairwise,Requirement,49,0,2,0,13,0,7,0,6,0
+Galenium Core,io.wcm.qa.glnm.mediaquery,MediaQueryUtil,414,0,42,0,80,0,33,0,12,0
+Galenium Core,io.wcm.qa.glnm.mediaquery,MediaQueryUtil.MediaQueryInstance,41,0,0,0,9,0,5,0,5,0
+Galenium Core,io.wcm.qa.glnm.webdriver,WebDriverManagement,43,0,0,0,10,0,6,0,6,0
+Galenium Core,io.wcm.qa.glnm.logging.util,GaleniumLoggingUtil,205,0,14,0,48,0,17,0,10,0
+Galenium Core,io.wcm.qa.glnm.reporting,GaleniumReportUtil.new Consumer() {...},12,0,0,0,3,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.reporting,GaleniumReportUtil.FailStep,5,0,0,0,2,0,1,0,1,0
+Galenium Core,io.wcm.qa.glnm.reporting,AllureNestedStepping,57,0,0,0,20,0,9,0,9,0
+Galenium Core,io.wcm.qa.glnm.reporting,GaleniumReportUtil,611,0,60,0,169,0,62,0,32,0
+Galenium Core,io.wcm.qa.glnm.reporting,GaleniumReportUtil.PassStep,8,0,2,0,3,0,2,0,1,0
+Galenium Core,io.wcm.qa.glnm.junit,ChromeOptionsUtil,22,0,0,0,6,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.aem,AemComponentUtil,12,0,0,0,2,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.aem,AemComponentUrlBuilder,153,0,2,0,52,0,18,0,17,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,ReAnnotationUtils,475,0,68,0,93,0,51,0,17,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,Combinable,9,0,0,0,4,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,CartesianProductProvider,35,0,0,0,11,0,5,0,5,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,CombinatorialUtil.new Supplier() {...},18,0,0,0,2,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,CombinatorialTestExtension,195,0,6,0,44,0,17,0,14,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,PairwiseProvider,97,0,2,0,22,0,11,0,10,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,CombinatorialUtil,299,0,22,0,66,0,35,0,24,0
+Galenium Core,io.wcm.qa.glnm.junit.combinatorial,Combination,20,0,0,0,7,0,4,0,4,0
+Galenium Core,io.wcm.qa.glnm.util,FileHandlingUtil,121,0,10,0,25,0,11,0,6,0
+Galenium Core,io.wcm.qa.glnm.context,GaleniumContext,70,0,4,0,15,0,9,0,7,0
+Galenium Core,io.wcm.qa.glnm.context,GaleniumContext.new MatcherAspect.ajcMightHaveAspect() {...},7,0,0,0,2,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.format,Md5Util,27,0,0,0,7,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.format,NameUtil,119,0,14,0,24,0,12,0,5,0
+Galenium Core,io.wcm.qa.glnm.aspectj,AssertAspect,197,0,16,0,48,0,18,0,10,0
+Galenium Core,io.wcm.qa.glnm.aspectj,MatcherAspect,181,0,24,0,50,0,23,0,11,0
+Galenium Core,io.wcm.qa.glnm.configuration,ConfigurationUtil,92,0,10,0,19,0,9,0,4,0
+Galenium Core,io.wcm.qa.glnm.configuration,CsvUtil,161,0,6,0,28,0,8,0,5,0
+Galenium Core,io.wcm.qa.glnm.configuration,TextFileUtil,17,0,0,0,4,0,2,0,2,0
+Galenium Core,io.wcm.qa.glnm.configuration,PropertiesUtil,236,0,30,0,49,0,22,0,7,0
+Galenium Core,io.wcm.qa.glnm.configuration,GaleniumConfiguration,146,0,2,0,41,0,40,0,39,0
+Galenium Core,io.wcm.qa.glnm.exceptions,GaleniumException,9,0,0,0,4,0,2,0,2,0
+Galenium Core,org.junit.jupiter.params,CombinatorialTestInvocationContext,30,0,0,0,8,0,3,0,3,0
+Galenium Core,org.junit.jupiter.params,CombinatorialTestNameFormatter,13,0,0,0,3,0,2,0,2,0
+Galenium Core,org.junit.jupiter.params,CombinatorialTestMethodContext,18,0,0,0,6,0,5,0,5,0
+Galenium Core,io.wcm.qa.glnm.logging.logback,MarkedLogger,520,0,0,0,121,0,64,0,64,0

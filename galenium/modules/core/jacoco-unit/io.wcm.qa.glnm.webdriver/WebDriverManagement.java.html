@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebDriverManagement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.webdriver</a> &gt; <span class="el_source">WebDriverManagement.java</span></div><h1>WebDriverManagement.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2014 - 2016 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.webdriver;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.wcm.qa.glnm.configuration.GaleniumConfiguration;
+import io.wcm.qa.glnm.context.GaleniumContext;
+
+/**
+ * Utility class to manage thread safe WebDriver instances.
+ *
+ * @since 1.0.0
+ */
+public final class WebDriverManagement {
+
+  private static final int DEFAULT_NUMBER_OF_POLLS_PER_CALL = 5;
+
+  private WebDriverManagement() {
+    // do not instantiate
+  }
+
+  /**
+   * Return the driver already in use. Does not instantiate it and returns
+   * null, if no driver is set.
+   * *
+   *
+   * @return driver from current thread's context
+   * @since 3.0.0
+   */
+  public static WebDriver getCurrentDriver() {
+<span class="nc" id="L52">    return GaleniumContext.getDriver();</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * Get a {@link org.openqa.selenium.support.ui.WebDriverWait} for the current driver..
+   * &lt;/p&gt;
+   *
+   * @param timeOutInSeconds how many seconds to wait until giving up
+   * @return a {@link org.openqa.selenium.support.ui.WebDriverWait} configured with custom timeouts
+   * @since 4.0.0
+   */
+  public static WebDriverWait getWait(int timeOutInSeconds) {
+<span class="nc" id="L65">    return getWait(timeOutInSeconds, getPollingIntervalForTimeout(timeOutInSeconds));</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * Get a {@link org.openqa.selenium.support.ui.WebDriverWait} for the current driver..
+   * &lt;/p&gt;
+   *
+   * @param timeOutInSeconds how many seconds to wait until giving up
+   * @param pollingInterval how many milliseconds between polls
+   * @return a {@link org.openqa.selenium.support.ui.WebDriverWait} configured with custom timeouts
+   * @since 4.0.0
+   */
+  public static WebDriverWait getWait(int timeOutInSeconds, int pollingInterval) {
+//    Duration polling = Duration.ofMillis(pollingInterval);
+//    Duration timeout = Duration.ofSeconds(timeOutInSeconds);
+<span class="nc" id="L81">    WebDriver driver = GaleniumContext.getDriver();</span>
+<span class="nc" id="L82">    return new WebDriverWait(driver, timeOutInSeconds, pollingInterval);</span>
+  }
+
+  /**
+   * Set implicit wait to configured default timeout.
+   *
+   * @since 3.0.0
+   */
+  public static void setDefaultTimeout() {
+<span class="nc" id="L91">    getCurrentDriver().manage().timeouts().implicitlyWait(GaleniumConfiguration.getDefaultWebdriverTimeout(), TimeUnit.SECONDS);</span>
+<span class="nc" id="L92">  }</span>
+
+  /**
+   * Set implicit wait to 0 seconds timeout.
+   *
+   * @since 3.0.0
+   */
+  public static void setZeroTimeout() {
+<span class="nc" id="L100">    getCurrentDriver().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);</span>
+<span class="nc" id="L101">  }</span>
+
+  private static int getPollingIntervalForTimeout(int timeoutInSeconds) {
+<span class="nc" id="L104">    int timeoutInMillis = timeoutInSeconds * 1000;</span>
+<span class="nc" id="L105">    return timeoutInMillis / DEFAULT_NUMBER_OF_POLLS_PER_CALL;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

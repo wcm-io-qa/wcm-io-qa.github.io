@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PairwiseDefinition.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.pairwise</a> &gt; <span class="el_source">PairwiseDefinition.java</span></div><h1>PairwiseDefinition.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2019 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.pairwise;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Helper to reduce test cases by applying pairwise approach.
+ * Scientific background in this paper:
+ * https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/160.pdf
+ *
+ * @since 5.0.0
+ */
+public final class PairwiseDefinition {
+
+<span class="nc" id="L38">  private static final Logger LOG = LoggerFactory.getLogger(PairwiseDefinition.class);</span>
+
+  private PairwiseDefinition() {
+    // do not instantiate
+  }
+
+  /**
+   * Returns pairwise selected tupels for the domain sizes
+   *
+   * @param domainSizes sizes of the individual domains
+   * @return all tupels in array form
+   * @since 5.0.0
+   */
+  public static int[][] getTupelsFor(Integer... domainSizes) {
+<span class="nc" id="L52">    TupelDefinition tupelDefinition = new TupelDefinition(domainDefinitions(domainSizes));</span>
+<span class="nc" id="L53">    Collection&lt;Tupel&gt; tupelCollection = getTupelsFor(tupelDefinition);</span>
+<span class="nc" id="L54">    int[][] tupelArray = new int[tupelCollection.size()][];</span>
+<span class="nc" id="L55">    Iterator&lt;Tupel&gt; tupels = tupelCollection.iterator();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">    for (int i = 0; i &lt; tupelArray.length; i++) {</span>
+<span class="nc" id="L57">      tupelArray[i] = tupels.next().toArray();</span>
+    }
+<span class="nc" id="L59">    return tupelArray;</span>
+  }
+
+  private static DomainDefinition[] domainDefinitions(Integer... domainSizes) {
+<span class="nc" id="L63">    ArrayList&lt;DomainDefinition&gt; domains = new ArrayList&lt;DomainDefinition&gt;();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">    for (int dimension : domainSizes) {</span>
+<span class="nc" id="L65">      domains.add(new DomainDefinition(Integer.toString(dimension), dimension));</span>
+    }
+<span class="nc" id="L67">    return domains.toArray(new DomainDefinition[0]);</span>
+  }
+
+  private static boolean ensureWithExistingTupels(Collection&lt;Tupel&gt; tupels, Requirement requirement) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">    for (Tupel tupel : tupels) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">      if (tupel.satisfy(requirement)) {</span>
+<span class="nc" id="L73">        return true;</span>
+      }
+    }
+<span class="nc" id="L76">    return false;</span>
+  }
+
+  private static void finish(Collection&lt;Tupel&gt; tupels) {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">    for (Tupel tupel : tupels) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">      if (!tupel.isFinished()) {</span>
+<span class="nc" id="L82">        tupel.finish();</span>
+      }
+    }
+<span class="nc" id="L85">  }</span>
+
+  private static Collection&lt;Requirement&gt; generateRequirements(int indexForDomainA, int sizeOfDomainA, int indexForDomainB, int sizeOfDomainB) {
+<span class="nc" id="L88">    Collection&lt;Requirement&gt; requirementsAB = new ArrayList&lt;Requirement&gt;();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">    for (int i = 0; i &lt; sizeOfDomainA; i++) {</span>
+<span class="nc" id="L90">      Value a = new Value(indexForDomainA, i);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">      for (int j = 0; j &lt; sizeOfDomainB; j++) {</span>
+<span class="nc" id="L92">        Value b = new Value(indexForDomainB, j);</span>
+<span class="nc" id="L93">        Requirement requirement = new Requirement(a, b);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L95">          LOG.trace(&quot;requirement: &quot; + requirement);</span>
+        }
+<span class="nc" id="L97">        requirementsAB.add(requirement);</span>
+      }
+    }
+<span class="nc" id="L100">    return requirementsAB;</span>
+  }
+
+  private static Collection&lt;Tupel&gt; generateTupels(TupelDefinition def, Collection&lt;Requirement&gt; requirements) {
+<span class="nc" id="L104">    Collection&lt;Tupel&gt; tupels = new ArrayList&lt;Tupel&gt;();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">    for (Requirement req : requirements) {</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">      if (!ensureWithExistingTupels(tupels, req)) {</span>
+<span class="nc" id="L107">        tupels.add(def.newTupelFor(req));</span>
+      }
+    }
+<span class="nc" id="L110">    finish(tupels);</span>
+<span class="nc" id="L111">    return tupels;</span>
+  }
+
+  static Collection&lt;Requirement&gt; generateRequirements(TupelDefinition def) {
+<span class="nc" id="L115">    Collection&lt;Requirement&gt; requirements = new ArrayList&lt;Requirement&gt;();</span>
+<span class="nc" id="L116">    DomainDefinition[] domains = def.getDomains();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">    for (int i = 0; i &lt; domains.length - 1; i++) {</span>
+<span class="nc" id="L118">      DomainDefinition domainA = domains[i];</span>
+<span class="nc" id="L119">      int indexA = def.getIndexFor(domainA);</span>
+<span class="nc" id="L120">      int sizeA = domainA.getSize();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">      if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L122">        LOG.trace(&quot;generate requirements for &quot; + domainA);</span>
+      }
+<span class="nc bnc" id="L124" title="All 2 branches missed.">      for (int j = i + 1; j &lt; domains.length; j++) {</span>
+<span class="nc" id="L125">        DomainDefinition domainB = domains[j];</span>
+<span class="nc" id="L126">        int indexB = def.getIndexFor(domainB);</span>
+<span class="nc" id="L127">        int sizeB = domainB.getSize();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L129">          LOG.trace(&quot;generate requirements for &quot; + domainA + &quot; combined with &quot; + domainB);</span>
+        }
+<span class="nc" id="L131">        requirements.addAll(generateRequirements(indexA, sizeA, indexB, sizeB));</span>
+      }
+    }
+<span class="nc" id="L134">    return requirements;</span>
+  }
+
+  /**
+   * &lt;p&gt;getTupelsFor.&lt;/p&gt;
+   *
+   * @param def a {@link io.wcm.qa.glnm.pairwise.TupelDefinition} object.
+   * @return a {@link java.util.Collection} object.
+   * @since 5.0.0
+   */
+  static Collection&lt;Tupel&gt; getTupelsFor(TupelDefinition def) {
+
+<span class="nc" id="L146">    Collection&lt;Requirement&gt; requirements = generateRequirements(def);</span>
+
+<span class="nc" id="L148">    Collection&lt;Tupel&gt; tupels = generateTupels(def, requirements);</span>
+
+<span class="nc" id="L150">    return tupels;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

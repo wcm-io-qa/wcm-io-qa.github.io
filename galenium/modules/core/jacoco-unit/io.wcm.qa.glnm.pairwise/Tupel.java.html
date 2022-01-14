@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tupel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.pairwise</a> &gt; <span class="el_source">Tupel.java</span></div><h1>Tupel.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2019 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.pairwise;
+
+import java.util.Arrays;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+
+class Tupel {
+
+  private static final int NOT_SET = -1;
+  private int[] indices;
+
+<span class="nc" id="L32">  Tupel(int size) {</span>
+<span class="nc" id="L33">    indices = new int[size];</span>
+<span class="nc" id="L34">    Arrays.fill(indices, NOT_SET);</span>
+<span class="nc" id="L35">  }</span>
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+<span class="nc" id="L40">    return &quot;(&quot; + StringUtils.join(indices, &quot;, &quot;) + &quot;)&quot;;</span>
+  }
+
+  private boolean matches(Value value) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">    return value.getValue() == getValueForDomain(value.getDomain());</span>
+  }
+
+  int getValueForDomain(int domain) {
+<span class="nc" id="L48">    return indices[domain];</span>
+  }
+
+  boolean hasValueForDomain(int domain) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">    return getValueForDomain(domain) != NOT_SET;</span>
+  }
+
+  boolean hasValueForDomainOf(Value value) {
+<span class="nc" id="L56">    return hasValueForDomain(value.getDomain());</span>
+  }
+
+  int[] toArray() {
+<span class="nc" id="L60">    return Arrays.copyOf(indices, indices.length);</span>
+  }
+
+  boolean isFinished() {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">    return !ArrayUtils.contains(indices, NOT_SET);</span>
+  }
+
+  boolean satisfies(Requirement req) {
+<span class="nc bnc" id="L68" title="All 4 branches missed.">    return matches(req.getValueA()) &amp;&amp; matches(req.getValueB());</span>
+  }
+
+  void set(Value value) {
+<span class="nc" id="L72">    indices[value.getDomain()] = value.getValue();</span>
+<span class="nc" id="L73">  }</span>
+
+  /**
+   * &lt;p&gt;satisfy.&lt;/p&gt;
+   *
+   * @param requirement a {@link io.wcm.qa.glnm.pairwise.Requirement} object.
+   * @return a boolean.
+   * @since 5.0.0
+   */
+  public boolean satisfy(Requirement requirement) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">    if (satisfies(requirement)) {</span>
+<span class="nc" id="L84">      return true;</span>
+    }
+<span class="nc bnc" id="L86" title="All 2 branches missed.">    if (isFinished()) {</span>
+<span class="nc" id="L87">      return false;</span>
+    }
+<span class="nc" id="L89">    Value valueA = requirement.getValueA();</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">    if (hasValueForDomainOf(valueA) &amp;&amp; !matches(valueA)) {</span>
+<span class="nc" id="L91">      return false;</span>
+    }
+<span class="nc" id="L93">    Value valueB = requirement.getValueB();</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">    if (hasValueForDomainOf(valueB) &amp;&amp; !matches(valueB)) {</span>
+<span class="nc" id="L95">      return false;</span>
+    }
+<span class="nc" id="L97">    set(valueA);</span>
+<span class="nc" id="L98">    set(valueB);</span>
+<span class="nc" id="L99">    return true;</span>
+  }
+
+  void finish() {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">    for (int i = 0; i &lt; indices.length; i++) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">      if (!hasValueForDomain(i)) {</span>
+<span class="nc" id="L105">        indices[i] = 0;</span>
+      }
+    }
+<span class="nc" id="L108">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

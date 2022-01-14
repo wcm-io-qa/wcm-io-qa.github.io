@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CsvUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.configuration</a> &gt; <span class="el_source">CsvUtil.java</span></div><h1>CsvUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.configuration;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+
+/**
+ * Utility methods to parse CSV files.
+ *
+ * @since 1.0.0
+ */
+public final class CsvUtil {
+
+<span class="nc" id="L47">  private static final Charset CHARSET_UTF8 = Charset.forName(&quot;utf-8&quot;);</span>
+<span class="nc" id="L48">  private static final CSVFormat FORMAT = CSVFormat.DEFAULT.withQuote(null).withHeader(new String[] {});</span>
+
+<span class="nc" id="L50">  private static final Logger LOG = LoggerFactory.getLogger(CsvUtil.class);</span>
+
+  private CsvUtil() {
+    // do not instantiate
+  }
+
+  /**
+   * Get a parser for CSV file.
+   *
+   * @param csvFile to get parser for
+   * @return parser to access data in CSV file
+   * @since 3.0.0
+   */
+  public static CSVParser parse(File csvFile) {
+<span class="nc" id="L64">    return parse(csvFile, false);</span>
+  }
+
+  /**
+   * Get a parser for CSV file.
+   *
+   * @param csvFile to get parser for
+   * @param skipHeaderRecord whether to skip header record while parsing
+   * @return parser to access data in CSV file
+   * @since 3.0.0
+   */
+  public static CSVParser parse(File csvFile, boolean skipHeaderRecord) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">    if (csvFile == null) {</span>
+<span class="nc" id="L77">      throw new GaleniumException(&quot;error when checking CSV input: file is null&quot;);</span>
+    }
+<span class="nc bnc" id="L79" title="All 2 branches missed.">    if (!csvFile.isFile()) {</span>
+<span class="nc" id="L80">      throw new GaleniumException(&quot;error when reading CSV file: '&quot; + csvFile.getPath() + &quot;'&quot;);</span>
+    }
+    try {
+<span class="nc" id="L83">      CSVFormat format = FORMAT.withSkipHeaderRecord(skipHeaderRecord);</span>
+<span class="nc" id="L84">      return CSVParser.parse(csvFile, CHARSET_UTF8, format);</span>
+    }
+<span class="nc" id="L86">    catch (IOException ex) {</span>
+<span class="nc" id="L87">      throw new GaleniumException(&quot;error when parsing CSV file: '&quot; + csvFile.getPath() + &quot;'&quot;, ex);</span>
+    }
+  }
+
+  /**
+   * Get a parser for CSV file.
+   *
+   * @param csvFilePath path to file to get parser for
+   * @return parser to access data in CSV file
+   * @since 3.0.0
+   */
+  public static CSVParser parse(String csvFilePath) {
+<span class="nc" id="L99">    return parse(new File(csvFilePath));</span>
+  }
+
+  /**
+   * Populate beans with CSV data.
+   *
+   * @param csvFile to get input data from
+   * @param beanClass type of bean to populate
+   * @param &lt;T&gt; type of bean as generic to create typed collection
+   * @return collection with one bean per row in CSV
+   * @since 3.0.0
+   */
+  public static &lt;T&gt; Collection&lt;T&gt; parseToBeans(File csvFile, Class&lt;T&gt; beanClass) {
+<span class="nc" id="L112">    Collection&lt;T&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L113">    CSVParser parse = parse(csvFile);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">    for (CSVRecord csvRecord : parse) {</span>
+<span class="nc" id="L115">      Map&lt;String, String&gt; map = csvRecord.toMap();</span>
+<span class="nc" id="L116">      LOG.debug(&quot;from csv: &quot; + csvRecord);</span>
+<span class="nc" id="L117">      LOG.debug(&quot;from csv: &quot; + ReflectionToStringBuilder.toString(csvRecord));</span>
+<span class="nc" id="L118">      LOG.debug(&quot;map from csv: &quot; + ReflectionToStringBuilder.toString(map));</span>
+      try {
+<span class="nc" id="L120">        T newInstance = beanClass.newInstance();</span>
+<span class="nc" id="L121">        BeanUtils.populate(newInstance, map);</span>
+<span class="nc" id="L122">        LOG.debug(&quot;populated: &quot; + newInstance);</span>
+<span class="nc" id="L123">        result.add(newInstance);</span>
+<span class="nc" id="L124">      }</span>
+<span class="nc" id="L125">      catch (IllegalAccessException | InvocationTargetException | InstantiationException ex) {</span>
+<span class="nc" id="L126">        throw new GaleniumException(&quot;error when constructing bean from CSV: '&quot; + csvFile.getPath() + &quot;'&quot;, ex);</span>
+      }
+    }
+<span class="nc" id="L129">    return result;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GaleniumContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.context</a> &gt; <span class="el_source">GaleniumContext.java</span></div><h1>GaleniumContext.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2017 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.context;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Keeps important data for each thread. Simplifies integration without need for rigid inheritance hierarchies. Takes a
+ * lot of hassle out of multi-threaded runs.
+ *
+ * @since 1.0.0
+ */
+<span class="nc" id="L35">public class GaleniumContext {</span>
+
+<span class="nc" id="L37">  private static final Logger LOG = LoggerFactory.getLogger(GaleniumContext.class);</span>
+<span class="nc" id="L38">  private static final ThreadLocal&lt;GaleniumContext&gt; THREAD_LOCAL_CONTEXT = new ThreadLocal&lt;GaleniumContext&gt;() {</span>
+    @Override
+    protected GaleniumContext initialValue() {
+<span class="nc" id="L41">      return new GaleniumContext();</span>
+    }
+<span class="nc" id="L43">  };</span>
+
+<span class="nc" id="L45">  private final Map&lt;String, Object&gt; additionalMappings = new HashMap&lt;String, Object&gt;();</span>
+  private WebDriver driver;
+
+  /**
+   * WebDriver to use for all things Galenium. This includes interaction with Galen and Selenium. Usually the WebDriver
+   * handling can be left to Galenium. Listeners should initialize the driver.
+   *
+   * @param driver WebDriver to use for everything
+   * @since 3.0.0
+   */
+  public void setDriver(WebDriver driver) {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L57">      LOG.debug(&quot;setting driver: &quot; + driver);</span>
+    }
+<span class="nc" id="L59">    this.driver = driver;</span>
+<span class="nc" id="L60">  }</span>
+
+  /**
+   * Get a custom object for the current thread.
+   *
+   * @param key used for retrieving custom object
+   * @return the value to which the specified key is mapped, or null if this thread context contains no mapping for the
+   *         key
+   * @since 3.0.0
+   */
+  public static Object get(String key) {
+<span class="nc" id="L71">    return THREAD_LOCAL_CONTEXT.get().additionalMappings.get(key);</span>
+  }
+
+  /**
+   * &lt;p&gt;
+   * getContext.
+   * &lt;/p&gt;
+   *
+   * @return {@link io.wcm.qa.glnm.context.GaleniumContext} object for this thread
+   * @since 4.0.0
+   */
+  public static GaleniumContext getContext() {
+<span class="nc" id="L83">    return THREAD_LOCAL_CONTEXT.get();</span>
+  }
+
+  /**
+   * &lt;p&gt;Getter for the field &lt;code&gt;driver&lt;/code&gt;.&lt;/p&gt;
+   *
+   * @return driver to use with Selenium and Galen
+   * @since 3.0.0
+   */
+  public static WebDriver getDriver() {
+<span class="nc" id="L93">    return THREAD_LOCAL_CONTEXT.get().driver;</span>
+  }
+
+  /**
+   * Store any object in the current threads context.
+   *
+   * @param key used to store and retrieve object
+   * @param customObject custom object
+   * @return the previous value associated with key in this thread, or null if there was no mapping for key
+   * @since 3.0.0
+   */
+  public static Object put(String key, Object customObject) {
+<span class="nc bnc" id="L105" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L106">      LOG.debug(&quot;setting additional context for '&quot; + key + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L108">    return THREAD_LOCAL_CONTEXT.get().additionalMappings.put(key, customObject);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AssertAspect.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.aspectj</a> &gt; <span class="el_source">AssertAspect.java</span></div><h1>AssertAspect.java</h1><pre class="source lang-java linenums"><span class="nc bnc" id="L1" title="All 4 branches missed.">/*</span>
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.aspectj;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.wcm.qa.glnm.configuration.GaleniumConfiguration;
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+import io.wcm.qa.glnm.reporting.GaleniumReportUtil;
+
+/**
+ * Facilitates soft asserts for Hamcrest. Adds assertion step to Allure Report.
+ *
+ * @since 5.0.0
+ */
+@Aspect
+<span class="nc" id="L43">public class AssertAspect {</span>
+
+<span class="nc" id="L45">  private static final Logger LOG = LoggerFactory.getLogger(AssertAspect.class);</span>
+
+  /**
+   * Ignores exceptions, when {@link io.wcm.qa.glnm.configuration.GaleniumConfiguration#isSamplingVerificationIgnore()} is
+   * true.
+   *
+   * @param jp join point to be handled
+   * @return null or proceed value (advised method returns void)
+   */
+  @Around(value = &quot;hamcrestMatcherAssert()&quot;)
+  public Object aroundAssert(final ProceedingJoinPoint jp) {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L57">      LOG.trace(&quot;assert aspect &lt;&quot; + jp + &quot;&gt;&quot;);</span>
+    }
+<span class="nc" id="L59">    String stepUuid = beginAssert(jp);</span>
+    try {
+<span class="nc" id="L61">      Object proceed = jp.proceed();</span>
+<span class="nc" id="L62">      doneAsserting(stepUuid, jp);</span>
+<span class="nc" id="L63">      return proceed;</span>
+    }
+<span class="nc" id="L65">    catch (Throwable ex) {</span>
+<span class="nc" id="L66">      failedAssert(stepUuid, jp, ex);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L68">        LOG.debug(&quot;when asserting.&quot;, ex);</span>
+      }
+<span class="nc bnc" id="L70" title="All 2 branches missed.">      if (GaleniumConfiguration.isSamplingVerificationIgnore()) {</span>
+<span class="nc" id="L71">        return null;</span>
+      }
+<span class="nc" id="L73">      throw new GaleniumException(&quot;assert: &quot; + ex.getMessage(), ex);</span>
+    }
+  }
+
+  /**
+   * Pointcut definition. No functionality.
+   */
+  @Pointcut(&quot;call(public static void org.hamcrest.MatcherAssert.assertThat(String, Object, org.hamcrest.Matcher))&quot;)
+  public void hamcrestMatcherAssert() {
+    // pointcut body, should be empty
+  }
+
+  /**
+   * Adds step to report.
+   * @param joinPoint only used for logging
+   * @return UUID for new report step
+   */
+  private static String beginAssert(final JoinPoint joinPoint) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L92">      LOG.trace(&quot;asserting: &quot; + joinPoint.getSignature().toLongString());</span>
+    }
+<span class="nc" id="L94">    return GaleniumReportUtil.startStep(&quot;assert&quot;);</span>
+  }
+
+  /**
+   * Passes step and updates description.
+   * @param stepUuid to pass and stop
+   * @param joinPoint to supply description
+   */
+  private static void doneAsserting(String stepUuid, final JoinPoint joinPoint) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L104">      LOG.trace(&quot;asserted: &quot; + joinPoint.getSignature().toLongString());</span>
+    }
+<span class="nc" id="L106">    String description = generateAssertDescription(joinPoint);</span>
+<span class="nc" id="L107">    GaleniumReportUtil.updateStepName(stepUuid, description);</span>
+<span class="nc" id="L108">    GaleniumReportUtil.passStep(stepUuid);</span>
+<span class="nc" id="L109">    GaleniumReportUtil.stopStep();</span>
+<span class="nc" id="L110">  }</span>
+
+  /**
+   * Fails step and updates description.
+   * @param stepUuid to pass and stop
+   * @param joinPoint to supply description
+   * @param e exception caught from MatcherAssert
+   */
+  private static void failedAssert(String stepUuid, final JoinPoint joinPoint, final Throwable e) {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L120">      LOG.trace(&quot;failed asserting: &quot; + joinPoint.getSignature().toLongString(), e);</span>
+    }
+<span class="nc" id="L122">    String assertDescription = generateAssertDescription(joinPoint);</span>
+<span class="nc" id="L123">    GaleniumReportUtil.updateStepName(stepUuid, assertDescription);</span>
+<span class="nc" id="L124">    GaleniumReportUtil.failStep(stepUuid);</span>
+<span class="nc" id="L125">    GaleniumReportUtil.stopStep();</span>
+<span class="nc" id="L126">  }</span>
+
+  /**
+   * Generates description from assert method call in join point.
+   * @param joinPoint to extract matcher from
+   * @return description from matcher and assert
+   */
+  private static String generateAssertDescription(final JoinPoint joinPoint) {
+<span class="nc" id="L134">    Object reason = joinPoint.getArgs()[0];</span>
+<span class="nc" id="L135">    Object actual = joinPoint.getArgs()[1];</span>
+<span class="nc" id="L136">    String matcherDescription = generateMatcherDescription(joinPoint);</span>
+<span class="nc" id="L137">    StringBuilder assertDescription = new StringBuilder()</span>
+<span class="nc" id="L138">        .append(&quot;assert: &quot;)</span>
+<span class="nc" id="L139">        .append(reason)</span>
+<span class="nc" id="L140">        .append(&quot; &quot;)</span>
+<span class="nc" id="L141">        .append(actual)</span>
+<span class="nc" id="L142">        .append(&quot; &quot;)</span>
+<span class="nc" id="L143">        .append(matcherDescription);</span>
+<span class="nc" id="L144">    return assertDescription.toString();</span>
+  }
+
+  /**
+   * Generates description from matcher in join point.
+   * @param joinPoint to extract matcher from
+   * @return description from matcher
+   */
+  private static String generateMatcherDescription(final JoinPoint joinPoint) {
+<span class="nc" id="L153">    Matcher matcher = (Matcher)joinPoint.getArgs()[2];</span>
+<span class="nc" id="L154">    Description matcherDescription = new StringDescription();</span>
+<span class="nc" id="L155">    matcher.describeTo(matcherDescription);</span>
+<span class="nc" id="L156">    return matcherDescription.toString();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CombinatorialUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.junit.combinatorial</a> &gt; <span class="el_source">CombinatorialUtil.java</span></div><h1>CombinatorialUtil.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">/*</span>
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.junit.combinatorial;
+
+import static com.google.common.collect.Lists.transform;
+import static io.wcm.qa.glnm.junit.combinatorial.ReAnnotationUtils.findRepeatableAnnotations;
+import static java.util.stream.Collectors.toList;
+import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.reflect.TypeUtils;
+import org.junit.jupiter.api.extension.Extension;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.CombinatorialTestMethodContext;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.support.AnnotationConsumer;
+import org.junit.platform.commons.util.ExceptionUtils;
+import org.junit.platform.commons.util.ReflectionUtils;
+
+import io.wcm.qa.glnm.exceptions.GaleniumException;
+
+final class CombinatorialUtil {
+
+  private CombinatorialUtil() {
+    // do not instantiate
+  }
+
+  /**
+   * &lt;p&gt;
+   * extractArgumentProviders.
+   * &lt;/p&gt;
+   *
+   * @param context a {@link org.junit.jupiter.api.extension.ExtensionContext} object.
+   * @return a list of {@link ArgumentsProvider ArgumentsProviders}
+   * @since 5.0.0
+   */
+  public static List&lt;ArgumentsProvider&gt; extractArgumentProviders(ExtensionContext context) {
+<span class="nc" id="L69">    return extractFromAnnotations(context, ArgumentsSource.class, t -&gt; s -&gt; providerFromSource(t, s));</span>
+  }
+
+  private static &lt;T, A extends Annotation&gt; List&lt;T&gt; collectFromAnnotations(
+      Class&lt;A&gt; annotationType,
+      Annotation[] declaredAnnotations,
+      Function&lt;Annotation, Function&lt;A, T&gt;&gt; mappingProducer) {
+
+<span class="nc" id="L77">    List&lt;T&gt; result = new ArrayList&lt;T&gt;();</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">    for (Annotation annotation : declaredAnnotations) {</span>
+<span class="nc" id="L80">      List&lt;T&gt; collectedFromAnnotation = findRepeatableAnnotations(annotation, annotationType)</span>
+<span class="nc" id="L81">          .stream()</span>
+<span class="nc" id="L82">          .map(mappingProducer.apply(annotation))</span>
+<span class="nc" id="L83">          .filter(ObjectUtils::allNotNull)</span>
+<span class="nc" id="L84">          .collect(toList());</span>
+<span class="nc" id="L85">      result.addAll(collectedFromAnnotation);</span>
+    }
+
+<span class="nc" id="L88">    return result;</span>
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private static CombinableProvider extensionFromSource(Annotation original, CombinableSource source) {
+<span class="nc" id="L93">    CombinableProvider providerInstance = ReflectionUtils.newInstance(source.value());</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">    if (providerInstance instanceof AnnotationConsumer&lt;?&gt;) {</span>
+<span class="nc" id="L95">      feedAnnotationConsumer(original, (AnnotationConsumer)providerInstance);</span>
+    }
+<span class="nc bnc" id="L97" title="All 2 branches missed.">    if (providerInstance.providedType().isAssignableFrom(Extension.class)) {</span>
+<span class="nc" id="L98">      return providerInstance;</span>
+    }
+<span class="nc" id="L100">    return null;</span>
+  }
+
+  private static &lt;T, A extends Annotation&gt; List&lt;T&gt; extractFromAnnotations(
+      ExtensionContext extensionContext,
+      Class&lt;A&gt; annotationType,
+      Function&lt;Annotation, Function&lt;A, T&gt;&gt; mappingProducer) {
+<span class="nc" id="L107">    Method testMethod = extensionContext.getRequiredTestMethod();</span>
+<span class="nc" id="L108">    Annotation[] declaredAnnotations = testMethod.getDeclaredAnnotations();</span>
+<span class="nc" id="L109">    return collectFromAnnotations(annotationType, declaredAnnotations, mappingProducer);</span>
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private static void feedAnnotationConsumer(Annotation annotation, AnnotationConsumer consumer) {
+<span class="nc" id="L114">    Class&lt;? extends Annotation&gt; consumedType = getConsumedAnnotationType(consumer);</span>
+<span class="nc" id="L115">    Class&lt;? extends Annotation&gt; originalType = annotation.annotationType();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">    if (consumedType.isAssignableFrom(originalType)) {</span>
+<span class="nc" id="L117">      consumer.accept(annotation);</span>
+<span class="nc" id="L118">    }</span>
+    else {
+<span class="nc" id="L120">      Optional&lt;? extends Annotation&gt; optionalAnnotation = findAnnotation(originalType, consumedType);</span>
+<span class="nc" id="L121">      consumer.accept(optionalAnnotation.orElseThrow(new Supplier&lt;GaleniumException&gt;() {</span>
+
+        @Override
+        public GaleniumException get() {
+<span class="nc" id="L125">          return new GaleniumException(&quot;No annotation found to consume for : &quot; + consumer);</span>
+        }
+      }));
+    }
+<span class="nc" id="L129">  }</span>
+
+  private static Class&lt;? extends Annotation&gt; getConsumedAnnotationType(AnnotationConsumer annotationConsumer) {
+<span class="nc" id="L132">    Class&lt;? extends AnnotationConsumer&gt; consumerClass = annotationConsumer.getClass();</span>
+<span class="nc" id="L133">    Type[] interfaces = consumerClass.getGenericInterfaces();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">    for (Type type : interfaces) {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">      if (type instanceof ParameterizedType</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">          &amp;&amp; TypeUtils.isAssignable(type, AnnotationConsumer.class)) {</span>
+<span class="nc" id="L137">        ParameterizedType consumerType = (ParameterizedType)type;</span>
+<span class="nc" id="L138">        Type consumedAnnotationType = consumerType.getActualTypeArguments()[0];</span>
+<span class="nc" id="L139">        return rawType(consumedAnnotationType);</span>
+      }
+    }
+<span class="nc" id="L142">    throw new GaleniumException(&quot;Did not find type of consumed annotation: &quot; + annotationConsumer);</span>
+  }
+
+  private static List&lt;List&lt;Combinable&gt;&gt; providersToArguments(
+      List&lt;ArgumentsProvider&gt; providers,
+      ExtensionContext context) {
+<span class="nc" id="L148">    return transform(</span>
+<span class="nc" id="L149">        providers,</span>
+<span class="nc" id="L150">        p -&gt; arguments(p, context));</span>
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private static Class&lt;? extends Annotation&gt; rawType(Type argumentType) {
+<span class="nc" id="L155">    return (Class&lt;? extends Annotation&gt;)TypeUtils.getRawType(argumentType, Annotation.class);</span>
+  }
+
+  static List&lt;Combinable&gt; arguments(
+      ArgumentsProvider provider,
+      ExtensionContext context) {
+    try {
+<span class="nc" id="L162">      return provider.provideArguments(context)</span>
+<span class="nc" id="L163">          .map(Combinable::new)</span>
+<span class="nc" id="L164">          .collect(toList());</span>
+    }
+<span class="nc" id="L166">    catch (Exception e) {</span>
+<span class="nc" id="L167">      throw ExceptionUtils.throwAsUncheckedException(e);</span>
+    }
+  }
+
+  static Object[] consumedArguments(
+      Object[] arguments,
+      CombinatorialTestMethodContext methodContext) {
+<span class="nc" id="L174">    int parameterCount = methodContext.getParameterCount();</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">    return methodContext.hasAggregator() ? arguments</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        : (arguments.length &gt; parameterCount ? Arrays.copyOf(arguments, parameterCount) : arguments);</span>
+  }
+
+  static List&lt;List&lt;Combinable&gt;&gt; extractArguments(ExtensionContext context) {
+<span class="nc" id="L180">    return providersToArguments(extractArgumentProviders(context), context);</span>
+  }
+
+  static List&lt;CombinableProvider&gt; extractExtensionSources(ExtensionContext context) {
+<span class="nc" id="L184">    return extractFromAnnotations(context, CombinableSource.class, t -&gt; s -&gt; extensionFromSource(t, s));</span>
+  }
+
+  static &lt;T&gt; List&lt;T&gt; filter(Class&lt;T&gt; type, List&lt;Combinable&gt; values) {
+<span class="nc" id="L188">    return values.stream()</span>
+<span class="nc" id="L189">        .map(Combinable::getValue)</span>
+<span class="nc" id="L190">        .filter(v -&gt; type.isInstance(v))</span>
+<span class="nc" id="L191">        .map(v -&gt; type.cast(v))</span>
+<span class="nc" id="L192">        .collect(toList());</span>
+  }
+
+  static Arguments flattenArgumentsList(List&lt;Arguments&gt; args) {
+<span class="nc" id="L196">    return Arguments.of(listToArray(args));</span>
+  }
+
+  static Object[] listToArray(List&lt;Arguments&gt; list) {
+<span class="nc" id="L200">    Object[] listAsSingleArray = new Object[] {};</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">    for (Arguments args : list) {</span>
+<span class="nc" id="L202">      listAsSingleArray = ArrayUtils.addAll(listAsSingleArray, args.get());</span>
+    }
+<span class="nc" id="L204">    return listAsSingleArray;</span>
+  }
+
+  static ArgumentsProvider providerFromSource(Annotation original, ArgumentsSource source) {
+<span class="nc" id="L208">    Class&lt;? extends ArgumentsProvider&gt; providerType = source.value();</span>
+<span class="nc" id="L209">    ArgumentsProvider providerInstance = ReflectionUtils.newInstance(providerType);</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">    if (providerInstance instanceof AnnotationConsumer&lt;?&gt;) {</span>
+<span class="nc" id="L211">      feedAnnotationConsumer(original, (AnnotationConsumer)providerInstance);</span>
+    }
+<span class="nc" id="L213">    return providerInstance;</span>
+  }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

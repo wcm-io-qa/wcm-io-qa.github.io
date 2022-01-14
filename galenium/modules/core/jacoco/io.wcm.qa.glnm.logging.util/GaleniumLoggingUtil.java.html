@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GaleniumLoggingUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.logging.util</a> &gt; <span class="el_source">GaleniumLoggingUtil.java</span></div><h1>GaleniumLoggingUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2019 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.logging.util;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
+import io.qameta.allure.Allure;
+import io.qameta.allure.model.Status;
+import io.wcm.qa.glnm.configuration.GaleniumConfiguration;
+import io.wcm.qa.glnm.logging.logback.MarkedLogger;
+
+/**
+ * Utility methods and constants around logging.
+ *
+ * @since 4.0.0
+ */
+public final class GaleniumLoggingUtil {
+
+  /**
+   * For special ERROR log status.
+   * @deprecated Use Allure compatible markers or use SLF4J log level {@link ch.qos.logback.core.status.Status#ERROR}.
+   */
+  @Deprecated
+<span class="nc" id="L54">  public static final Marker MARKER_ERROR = getMarker(&quot;ERROR&quot;);</span>
+
+  /**
+   * For all special ExtentReports events.
+   * @deprecated Use Allure compatible markers.
+   */
+  @Deprecated
+<span class="nc" id="L61">  public static final Marker MARKER_EXTENT_REPORT = MarkerFactory.getMarker(&quot;EXTENT_REPORT&quot;);</span>
+
+  /** For special FAIL log status. */
+<span class="nc" id="L64">  public static final Marker MARKER_FAIL = getMarker(Status.FAILED);</span>
+
+  /**
+   * For special FATAL log status.
+   * @deprecated Use Allure compatible markers or use SLF4J log levels.
+   */
+  @Deprecated
+<span class="nc" id="L71">  public static final Marker MARKER_FATAL = getMarker(&quot;FATAL&quot;);</span>
+
+  /**
+   * For special INFO log status.
+   * @deprecated Use Allure compatible markers or use SLF4J log level {@link ch.qos.logback.core.status.Status#INFO}.
+   */
+  @Deprecated
+<span class="nc" id="L78">  public static final Marker MARKER_INFO = getMarker(&quot;INFO&quot;);</span>
+
+  /** For special PASS log status. */
+<span class="nc" id="L81">  public static final Marker MARKER_PASS = getMarker(Status.PASSED);</span>
+
+  /** For special SKIP log status. */
+<span class="nc" id="L84">  public static final Marker MARKER_SKIP = getMarker(Status.SKIPPED);</span>
+
+  /**
+   * For special WARN log status.
+   * @deprecated Use Allure compatible markers or use SLF4J log level {@link ch.qos.logback.core.status.Status#WARN}.
+   */
+  @Deprecated
+<span class="nc" id="L91">  public static final Marker MARKER_WARN = getMarker(&quot;WARN&quot;);</span>
+
+  private static final String MDC_PARAM_GLNM_TESTNAME = &quot;glnm.testname&quot;;
+
+<span class="nc" id="L95">  private static final File TEST_LOG_ROOT = new File(GaleniumConfiguration.getTestLogDirectory());</span>
+
+<span class="nc" id="L97">  private static final IOFileFilter TRUE_FILE_FILTER = FileFilterUtils.trueFileFilter();</span>
+
+<span class="nc" id="L99">  private static final Logger LOG = LoggerFactory.getLogger(GaleniumLoggingUtil.class);</span>
+
+  private GaleniumLoggingUtil() {
+    // do not instantiate
+  }
+
+  /**
+   * Gets a logger which marks every entry with the passed {@link org.slf4j.Marker}.
+   *
+   * @param marker to use with this logger
+   * @param logger to wrap in marked logger
+   * @return a {@link io.wcm.qa.glnm.logging.logback.MarkedLogger} using the marker
+   * @since 5.0.0
+   */
+  public static Logger getMarkedLogger(Marker marker, Logger logger) {
+<span class="nc" id="L114">    return new MarkedLogger(logger, marker);</span>
+  }
+
+  /**
+   * Gets a logger which marks every entry with a {@link org.slf4j.Marker} using the passed string.
+   *
+   * @param marker to use with this logger
+   * @param logger to wrap in marked logger
+   * @return a {@link io.wcm.qa.glnm.logging.logback.MarkedLogger} using the marker
+   * @since 5.0.0
+   */
+  public static Logger getMarkedLogger(String marker, Logger logger) {
+<span class="nc" id="L126">    return getMarkedLogger(getMarker(marker), logger);</span>
+  }
+
+  /**
+   * &lt;p&gt;getMarker.&lt;/p&gt;
+   *
+   * @param name marker name
+   * @return marker for use with marked logger
+   * @since 5.0.0
+   */
+  public static Marker getMarker(String name) {
+<span class="nc" id="L137">    Marker marker = MarkerFactory.getMarker(name);</span>
+<span class="nc" id="L138">    return marker;</span>
+  }
+
+  /**
+   * Initializes logging per test.
+   *
+   * @since 5.0.0
+   */
+  public static void startTestLogging() {
+<span class="nc" id="L147">    String currentTestCaseId = Allure.getLifecycle().getCurrentTestCase().orElse(&quot;NO_TEST_ID&quot;);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">    if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L149">      LOG.info(&quot;Starting test specific logging for: &quot; + currentTestCaseId);</span>
+    }
+<span class="nc" id="L151">    MDC.put(MDC_PARAM_GLNM_TESTNAME, currentTestCaseId);</span>
+<span class="nc" id="L152">  }</span>
+
+  /**
+   * Stops test specific logging.
+   *
+   * @since 5.0.0
+   */
+  public static void stopTestLogging() {
+<span class="nc" id="L160">    String testIdOfFinishedTest = MDC.get(MDC_PARAM_GLNM_TESTNAME);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">    if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L162">      LOG.info(&quot;Stopping test specific logging for: &quot; + testIdOfFinishedTest);</span>
+    }
+<span class="nc" id="L164">    addLogsToAllure(testIdOfFinishedTest);</span>
+<span class="nc" id="L165">    MDC.remove(MDC_PARAM_GLNM_TESTNAME);</span>
+<span class="nc" id="L166">  }</span>
+
+  private static void addLogsToAllure(String testIdOfFinishedTest) {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">    if (StringUtils.isNotBlank(testIdOfFinishedTest)) {</span>
+<span class="nc" id="L170">      Collection&lt;File&gt; logFiles = getLogFiles(testIdOfFinishedTest);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">      for (File logFile : logFiles) {</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L173">          LOG.trace(&quot;Attaching &quot; + logFile + &quot; to Allure report.&quot;);</span>
+        }
+<span class="nc" id="L175">        Allure.addAttachment(logFile.getName(), asString(logFile));</span>
+      }
+    }
+<span class="nc" id="L178">  }</span>
+
+  private static String asString(File logFile) {
+    String logFileContentAsString;
+    try {
+<span class="nc" id="L183">      logFileContentAsString = FileUtils.readFileToString(logFile, StandardCharsets.UTF_8);</span>
+<span class="nc" id="L184">    }</span>
+<span class="nc" id="L185">    catch (IOException ex) {</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">      if (LOG.isInfoEnabled()) {</span>
+<span class="nc" id="L187">        LOG.info(&quot;could not read log file.&quot;, ex);</span>
+      }
+<span class="nc" id="L189">      logFileContentAsString = &quot;Could not read log file: '&quot; + logFile.getPath() + &quot;' (&quot; + ex.getMessage() + &quot;)&quot;;</span>
+    }
+<span class="nc" id="L191">    return logFileContentAsString;</span>
+  }
+
+  private static Collection&lt;File&gt; getLogFiles(String testIdOfFinishedTest) {
+
+    // starting with test ID and ending in 'log'
+<span class="nc" id="L197">    IOFileFilter logFileFilter = FileFilterUtils.and(</span>
+<span class="nc" id="L198">        FileFilterUtils.prefixFileFilter(testIdOfFinishedTest),</span>
+<span class="nc" id="L199">        FileFilterUtils.suffixFileFilter(&quot;log&quot;));</span>
+
+<span class="nc" id="L201">    Collection&lt;File&gt; logFiles = FileUtils.listFiles(TEST_LOG_ROOT, logFileFilter, TRUE_FILE_FILTER);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">    if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L203">      LOG.debug(&quot;Found &quot; + logFiles.size() + &quot; log files for test id: '&quot; + testIdOfFinishedTest + &quot;'&quot;);</span>
+    }
+<span class="nc" id="L205">    return logFiles;</span>
+  }
+
+  private static Marker getMarker(Status logStatus) {
+<span class="nc" id="L209">    return getMarker(logStatus.name());</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

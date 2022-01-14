@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatcherAspect.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.aspectj</a> &gt; <span class="el_source">MatcherAspect.java</span></div><h1>MatcherAspect.java</h1><pre class="source lang-java linenums"><span class="nc bnc" id="L1" title="All 8 branches missed.">package io.wcm.qa.glnm.aspectj;</span>
+
+import static org.apache.commons.lang3.StringUtils.abbreviateMiddle;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
+import org.openqa.selenium.TakesScreenshot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.wcm.qa.glnm.reporting.GaleniumReportUtil;
+
+/**
+ * &lt;p&gt;
+ * Adds matches to Allure Report with correct pass/fail status.
+ * &lt;/p&gt;
+ *
+ * @since 5.0.0
+ */
+@Aspect(&quot;perthis(execution(* *..*.matches(..)))&quot;)
+<span class="nc" id="L26">public class MatcherAspect {</span>
+
+<span class="nc" id="L28">  private static final Logger LOG = LoggerFactory.getLogger(MatcherAspect.class);</span>
+  private String startStepUuid;
+
+  /**
+   * &lt;p&gt;doneMatching.&lt;/p&gt;
+   *
+   * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object.
+   * @param result a boolean.
+   */
+  @AfterReturning(pointcut = &quot;execution(boolean org.hamcrest.Matcher.matches(..))&quot;, returning = &quot;result&quot;)
+  public void doneMatching(final JoinPoint joinPoint, boolean result) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L40">      LOG.trace(&quot;done: &quot; + joinPoint.getSignature().toLongString());</span>
+    }
+<span class="nc" id="L42">    Matcher matcher = (Matcher)joinPoint.getTarget();</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">    if (result) {</span>
+<span class="nc" id="L44">      passStep(matcher);</span>
+<span class="nc" id="L45">    }</span>
+    else {
+<span class="nc" id="L47">      failStep(joinPoint, matcher);</span>
+    }
+<span class="nc" id="L49">  }</span>
+
+  /**
+   * &lt;p&gt;
+   * hamcrestMatcherMatch.
+   * &lt;/p&gt;
+   */
+  @Pointcut(&quot;execution(boolean org.hamcrest.Matcher.matches(..))&quot;)
+  public void hamcrestMatcherMatch() {
+    // pointcut body, should be empty
+  }
+
+  /**
+   * &lt;p&gt;
+   * startMatch.
+   * &lt;/p&gt;
+   *
+   * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object.
+   */
+  @Before(&quot;execution(boolean org.hamcrest.Matcher.matches(..))&quot;)
+  public void startMatching(final JoinPoint joinPoint) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">    if (LOG.isTraceEnabled()) {</span>
+<span class="nc" id="L71">      LOG.trace(&quot;before: &quot; + joinPoint.getSignature().toLongString());</span>
+    }
+<span class="nc" id="L73">    startStepUuid = GaleniumReportUtil.startStep(&quot;matching&quot;);</span>
+<span class="nc" id="L74">  }</span>
+
+  private StringDescription descriptionFor(Matcher matcher) {
+<span class="nc" id="L77">    StringDescription description = new StringDescription();</span>
+<span class="nc" id="L78">    description</span>
+<span class="nc" id="L79">        .appendText(&quot;Expected: &quot;)</span>
+<span class="nc" id="L80">        .appendDescriptionOf(matcher);</span>
+<span class="nc" id="L81">    return description;</span>
+  }
+
+  private void failStep(final JoinPoint joinPoint, Matcher matcher) {
+<span class="nc" id="L85">    StringDescription description = descriptionFor(matcher);</span>
+<span class="nc" id="L86">    description</span>
+<span class="nc" id="L87">        .appendText(System.lineSeparator())</span>
+<span class="nc" id="L88">        .appendText(&quot;     but: &quot;);</span>
+<span class="nc" id="L89">    Object matchedItem = joinPoint.getArgs()[0];</span>
+<span class="nc" id="L90">    describeMismatch(matcher, description, matchedItem);</span>
+<span class="nc" id="L91">    GaleniumReportUtil.updateStepName(startStepUuid, description.toString());</span>
+<span class="nc" id="L92">    GaleniumReportUtil.failStep(startStepUuid);</span>
+<span class="nc" id="L93">    screenshot(matchedItem);</span>
+<span class="nc" id="L94">    GaleniumReportUtil.stopStep();</span>
+<span class="nc" id="L95">  }</span>
+
+  private void passStep(Matcher matcher) {
+<span class="nc" id="L98">    GaleniumReportUtil.updateStepName(startStepUuid, descriptionFor(matcher).toString());</span>
+<span class="nc" id="L99">    GaleniumReportUtil.passStep(startStepUuid);</span>
+<span class="nc" id="L100">    GaleniumReportUtil.stopStep();</span>
+<span class="nc" id="L101">  }</span>
+
+  private static void describeMismatch(Matcher matcher, StringDescription description, Object matchedItem) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">    if (matchedItem != null</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        &amp;&amp; matchedItem instanceof String) {</span>
+<span class="nc" id="L106">      String shortMessage = abbreviateMiddle((String)matchedItem, &quot;[...]&quot;, 200);</span>
+<span class="nc" id="L107">      matcher.describeMismatch(shortMessage, description);</span>
+<span class="nc" id="L108">      return;</span>
+    }
+
+<span class="nc" id="L111">    matcher.describeMismatch(matchedItem, description);</span>
+<span class="nc" id="L112">  }</span>
+
+  private static void screenshot(Object matchedItem) {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">    if (matchedItem == null) {</span>
+<span class="nc" id="L116">      return;</span>
+    }
+<span class="nc bnc" id="L118" title="All 2 branches missed.">    if (matchedItem instanceof TakesScreenshot) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">      if (LOG.isDebugEnabled()) {</span>
+<span class="nc" id="L120">        LOG.debug(&quot;taking screenshot of &quot; + matchedItem);</span>
+      }
+<span class="nc" id="L122">      GaleniumReportUtil.takeScreenshot(&quot;matcher-screenshot&quot;, (TakesScreenshot)matchedItem, false);</span>
+<span class="nc" id="L123">      return;</span>
+    }
+<span class="nc" id="L125">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

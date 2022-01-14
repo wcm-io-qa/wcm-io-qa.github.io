@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AllureNestedStepping.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.reporting</a> &gt; <span class="el_source">AllureNestedStepping.java</span></div><h1>AllureNestedStepping.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.reporting;
+
+
+import java.util.Stack;
+
+/**
+ * Allure step integration.
+ *
+ * @since 5.0.0
+ */
+public abstract class AllureNestedStepping {
+
+  private String parentStep;
+<span class="nc" id="L33">  protected final Stack&lt;String&gt; stepStack = new Stack&lt;String&gt;();</span>
+
+  /**
+   * Constructor.
+   *
+   * @param uuid used as root parent step
+   * @since 5.0.0
+   */
+<span class="nc" id="L41">  public AllureNestedStepping(String uuid) {</span>
+<span class="nc" id="L42">    setParentStep(uuid);</span>
+<span class="nc" id="L43">  }</span>
+
+  private String currentStep() {
+<span class="nc" id="L46">    return stepStack.peek();</span>
+  }
+
+  private String popStep() {
+<span class="nc" id="L50">    return stepStack.pop();</span>
+  }
+
+  private void pushStep(String uuid) {
+<span class="nc" id="L54">    stepStack.push(uuid);</span>
+<span class="nc" id="L55">  }</span>
+
+  protected String getParentStep() {
+<span class="nc" id="L58">    return parentStep;</span>
+  }
+
+  protected void nestedStep(String stepName) {
+<span class="nc" id="L62">    String uuid = GaleniumReportUtil.startStep(currentStep(), stepName);</span>
+<span class="nc" id="L63">    pushStep(uuid);</span>
+<span class="nc" id="L64">  }</span>
+
+  protected void rootStep(String stepName) {
+<span class="nc" id="L67">    String uuid = GaleniumReportUtil.startStep(getParentStep(), stepName);</span>
+<span class="nc" id="L68">    pushStep(uuid);</span>
+<span class="nc" id="L69">  }</span>
+
+  protected void setParentStep(String parentStep) {
+<span class="nc" id="L72">    this.parentStep = parentStep;</span>
+<span class="nc" id="L73">  }</span>
+
+  protected void stopStep() {
+<span class="nc" id="L76">    GaleniumReportUtil.stopStep();</span>
+<span class="nc" id="L77">    popStep();</span>
+<span class="nc" id="L78">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

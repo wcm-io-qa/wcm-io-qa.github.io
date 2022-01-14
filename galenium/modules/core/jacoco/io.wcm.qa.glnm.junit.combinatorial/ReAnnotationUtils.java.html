@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReAnnotationUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.junit.combinatorial</a> &gt; <span class="el_source">ReAnnotationUtils.java</span></div><h1>ReAnnotationUtils.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2020 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.junit.combinatorial;
+
+import static java.util.Arrays.asList;
+
+import java.lang.annotation.Annotation;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Repeatable;
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.junit.platform.commons.JUnitException;
+import org.junit.platform.commons.util.Preconditions;
+import org.junit.platform.commons.util.ReflectionUtils;
+
+import com.google.common.collect.Lists;
+
+
+final class ReAnnotationUtils {
+
+<span class="nc" id="L47">  private static final ConcurrentHashMap&lt;Class&lt;? extends Annotation&gt;, Boolean&gt; REPEATABLE_CONTAINER_CACHE = //</span>
+<span class="nc" id="L48">      new ConcurrentHashMap&lt;&gt;(16);</span>
+
+  private ReAnnotationUtils() {
+    // do not instantiate
+  }
+
+  private static &lt;A extends Annotation&gt; Optional&lt;A&gt; findAnnotation(AnnotatedElement element, Class&lt;A&gt; annotationType,
+      boolean inherited, Set&lt;Annotation&gt; visited) {
+
+<span class="nc" id="L57">    Preconditions.notNull(annotationType, &quot;annotationType must not be null&quot;);</span>
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">    if (element == null) {</span>
+<span class="nc" id="L60">      return Optional.empty();</span>
+    }
+
+    // Directly present?
+<span class="nc" id="L64">    A annotation = element.getDeclaredAnnotation(annotationType);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">    if (annotation != null) {</span>
+<span class="nc" id="L66">      return Optional.of(annotation);</span>
+    }
+
+    // Meta-present on directly present annotations?
+<span class="nc" id="L70">    Optional&lt;A&gt; directMetaAnnotation = findMetaAnnotation(annotationType, element.getDeclaredAnnotations(),</span>
+<span class="nc" id="L71">        inherited, visited);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">    if (directMetaAnnotation.isPresent()) {</span>
+<span class="nc" id="L73">      return directMetaAnnotation;</span>
+    }
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">    if (element instanceof Class) {</span>
+<span class="nc" id="L77">      Class&lt;?&gt; clazz = (Class&lt;?&gt;)element;</span>
+
+      // Search on interfaces
+<span class="nc bnc" id="L80" title="All 2 branches missed.">      for (Class&lt;?&gt; ifc : clazz.getInterfaces()) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (ifc != Annotation.class) {</span>
+<span class="nc" id="L82">          Optional&lt;A&gt; annotationOnInterface = findAnnotation(ifc, annotationType, inherited, visited);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">          if (annotationOnInterface.isPresent()) {</span>
+<span class="nc" id="L84">            return annotationOnInterface;</span>
+          }
+        }
+      }
+
+      // Indirectly present?
+      // Search in class hierarchy
+<span class="nc bnc" id="L91" title="All 2 branches missed.">      if (inherited) {</span>
+<span class="nc" id="L92">        Class&lt;?&gt; superclass = clazz.getSuperclass();</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">        if (superclass != null &amp;&amp; superclass != Object.class) {</span>
+<span class="nc" id="L94">          Optional&lt;A&gt; annotationOnSuperclass = findAnnotation(superclass, annotationType, inherited, visited);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">          if (annotationOnSuperclass.isPresent()) {</span>
+<span class="nc" id="L96">            return annotationOnSuperclass;</span>
+          }
+        }
+      }
+    }
+
+    // Meta-present on indirectly present annotations?
+<span class="nc" id="L103">    return findMetaAnnotation(annotationType, element.getAnnotations(), inherited, visited);</span>
+  }
+
+  private static &lt;A extends Annotation&gt; Optional&lt;A&gt; findMetaAnnotation(Class&lt;A&gt; annotationType,
+      Annotation[] candidates, boolean inherited, Set&lt;Annotation&gt; visited) {
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">    for (Annotation candidateAnnotation : candidates) {</span>
+<span class="nc" id="L110">      Class&lt;? extends Annotation&gt; candidateAnnotationType = candidateAnnotation.annotationType();</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">      if (!isInJavaLangAnnotationPackage(candidateAnnotationType) &amp;&amp; visited.add(candidateAnnotation)) {</span>
+<span class="nc" id="L112">        Optional&lt;A&gt; metaAnnotation = findAnnotation(candidateAnnotationType, annotationType, inherited,</span>
+<span class="nc" id="L113">            visited);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (metaAnnotation.isPresent()) {</span>
+<span class="nc" id="L115">          return metaAnnotation;</span>
+        }
+      }
+    }
+<span class="nc" id="L119">    return Optional.empty();</span>
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private static &lt;A extends Annotation&gt; void findRepeatableAnnotation(Annotation candidate, Class&lt;A&gt; annotationType, Class&lt;? extends Annotation&gt; containerType,
+      boolean inherited, Set&lt;A&gt; found, Set&lt;Annotation&gt; visited) {
+
+<span class="nc" id="L126">    Class&lt;? extends Annotation&gt; candidateAnnotationType = candidate.annotationType();</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">    if (!isInJavaLangAnnotationPackage(candidateAnnotationType) &amp;&amp; visited.add(candidate)) {</span>
+      // Exact match?
+<span class="nc bnc" id="L129" title="All 2 branches missed.">      if (candidateAnnotationType.equals(annotationType)) {</span>
+<span class="nc" id="L130">        found.add(annotationType.cast(candidate));</span>
+<span class="nc" id="L131">      }</span>
+      // Container?
+<span class="nc bnc" id="L133" title="All 2 branches missed.">      else if (candidateAnnotationType.equals(containerType)) {</span>
+        // Note: it's not a legitimate containing annotation type if it doesn't declare
+        // a 'value' attribute that returns an array of the contained annotation type.
+        // See https://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-9.6.3
+<span class="nc" id="L137">        Method method = ReflectionUtils.tryToGetMethod(containerType, &quot;value&quot;).getOrThrow(</span>
+<span class="nc" id="L138">            cause -&gt; new JUnitException(String.format(</span>
+<span class="nc" id="L139">                &quot;Container annotation type '%s' must declare a 'value' attribute of type %s[].&quot;,</span>
+<span class="nc" id="L140">                containerType, annotationType), cause));</span>
+
+<span class="nc" id="L142">        Annotation[] containedAnnotations = (Annotation[])ReflectionUtils.invokeMethod(method, candidate);</span>
+<span class="nc" id="L143">        found.addAll((Collection&lt;? extends A&gt;)asList(containedAnnotations));</span>
+<span class="nc" id="L144">      }</span>
+      // Nested container annotation?
+<span class="nc bnc" id="L146" title="All 2 branches missed.">      else if (isRepeatableAnnotationContainer(candidateAnnotationType)) {</span>
+<span class="nc" id="L147">        Method method = ReflectionUtils.tryToGetMethod(candidateAnnotationType, &quot;value&quot;).toOptional().get();</span>
+<span class="nc" id="L148">        Annotation[] containedAnnotations = (Annotation[])ReflectionUtils.invokeMethod(method, candidate);</span>
+
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        for (Annotation containedAnnotation : containedAnnotations) {</span>
+<span class="nc" id="L151">          findRepeatableAnnotations(containedAnnotation.getClass(), annotationType, containerType,</span>
+<span class="nc" id="L152">              inherited, found, visited);</span>
+        }
+<span class="nc" id="L154">      }</span>
+      // Otherwise search recursively through the meta-annotation hierarchy...
+      else {
+<span class="nc" id="L157">        findRepeatableAnnotations(candidateAnnotationType, annotationType, containerType, inherited, found,</span>
+<span class="nc" id="L158">            visited);</span>
+      }
+    }
+<span class="nc" id="L161">  }</span>
+
+  private static &lt;A extends Annotation&gt; void findRepeatableAnnotations(AnnotatedElement element,
+      Class&lt;A&gt; annotationType, Class&lt;? extends Annotation&gt; containerType, boolean inherited, Set&lt;A&gt; found,
+      Set&lt;Annotation&gt; visited) {
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">    if (element instanceof Class) {</span>
+<span class="nc" id="L168">      Class&lt;?&gt; clazz = (Class&lt;?&gt;)element;</span>
+
+      // Recurse first in order to support top-down semantics for inherited, repeatable annotations.
+<span class="nc bnc" id="L171" title="All 2 branches missed.">      if (inherited) {</span>
+<span class="nc" id="L172">        Class&lt;?&gt; superclass = clazz.getSuperclass();</span>
+<span class="nc bnc" id="L173" title="All 4 branches missed.">        if (superclass != null &amp;&amp; superclass != Object.class) {</span>
+<span class="nc" id="L174">          findRepeatableAnnotations(superclass, annotationType, containerType, inherited, found, visited);</span>
+        }
+      }
+
+      // Search on interfaces
+<span class="nc bnc" id="L179" title="All 2 branches missed.">      for (Class&lt;?&gt; ifc : clazz.getInterfaces()) {</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (ifc != Annotation.class) {</span>
+<span class="nc" id="L181">          findRepeatableAnnotations(ifc, annotationType, containerType, inherited, found, visited);</span>
+        }
+      }
+    }
+
+    // Find annotations that are directly present or meta-present on directly present annotations.
+<span class="nc" id="L187">    findRepeatableAnnotations(element.getDeclaredAnnotations(), annotationType, containerType, inherited, found,</span>
+<span class="nc" id="L188">        visited);</span>
+
+    // Find annotations that are indirectly present or meta-present on indirectly present annotations.
+<span class="nc" id="L191">    findRepeatableAnnotations(element.getAnnotations(), annotationType, containerType, inherited, found, visited);</span>
+<span class="nc" id="L192">  }</span>
+
+  private static &lt;A extends Annotation&gt; List&lt;A&gt; findRepeatableAnnotations(Annotation candidate, Class&lt;A&gt; annotationType,
+      Class&lt;? extends Annotation&gt; containerType,
+      boolean inherited) {
+<span class="nc" id="L197">    Set&lt;A&gt; found = new LinkedHashSet&lt;&gt;(16);</span>
+
+<span class="nc" id="L199">    findRepeatableAnnotation(candidate, annotationType, containerType, inherited, found, new HashSet&lt;&gt;(16));</span>
+<span class="nc" id="L200">    return Lists.newArrayList(found);</span>
+  }
+
+  private static &lt;A extends Annotation&gt; void findRepeatableAnnotations(Annotation[] candidates,
+      Class&lt;A&gt; annotationType, Class&lt;? extends Annotation&gt; containerType, boolean inherited, Set&lt;A&gt; found,
+      Set&lt;Annotation&gt; visited) {
+
+<span class="nc bnc" id="L207" title="All 2 branches missed.">    for (Annotation candidate : candidates) {</span>
+<span class="nc" id="L208">      findRepeatableAnnotation(candidate, annotationType, containerType, inherited, found, visited);</span>
+    }
+<span class="nc" id="L210">  }</span>
+
+  private static &lt;A extends Annotation&gt; Class&lt;? extends Annotation&gt; getContainerType(Class&lt;A&gt; annotationType) {
+<span class="nc" id="L213">    Preconditions.notNull(annotationType, &quot;annotationType must not be null&quot;);</span>
+<span class="nc" id="L214">    Repeatable repeatable = annotationType.getAnnotation(Repeatable.class);</span>
+<span class="nc" id="L215">    Preconditions.notNull(repeatable, () -&gt; annotationType.getName() + &quot; must be @Repeatable&quot;);</span>
+<span class="nc" id="L216">    Class&lt;? extends Annotation&gt; containerType = repeatable.value();</span>
+<span class="nc" id="L217">    return containerType;</span>
+  }
+
+  private static boolean isInherited(Class&lt;? extends Annotation&gt; containerType) {
+<span class="nc" id="L221">    return containerType.isAnnotationPresent(Inherited.class);</span>
+  }
+
+  private static boolean isInJavaLangAnnotationPackage(Class&lt;? extends Annotation&gt; annotationType) {
+<span class="nc bnc" id="L225" title="All 4 branches missed.">    return (annotationType != null &amp;&amp; annotationType.getName().startsWith(&quot;java.lang.annotation&quot;));</span>
+  }
+
+
+  /**
+   * Determine if the supplied annotation type is a container for a repeatable
+   * annotation.
+   */
+  private static boolean isRepeatableAnnotationContainer(Class&lt;? extends Annotation&gt; candidateContainerType) {
+<span class="nc" id="L234">    return REPEATABLE_CONTAINER_CACHE.computeIfAbsent(candidateContainerType, candidate -&gt; {</span>
+      // @formatter:off
+<span class="nc" id="L236">        Repeatable repeatable = Arrays.stream(candidate.getMethods())</span>
+<span class="nc bnc" id="L237" title="All 4 branches missed.">            .filter(attribute -&gt; attribute.getName().equals(&quot;value&quot;) &amp;&amp; attribute.getReturnType().isArray())</span>
+<span class="nc" id="L238">            .findFirst()</span>
+<span class="nc" id="L239">            .map(attribute -&gt; attribute.getReturnType().getComponentType().getAnnotation(Repeatable.class))</span>
+<span class="nc" id="L240">            .orElse(null);</span>
+        // @formatter:on
+
+<span class="nc bnc" id="L243" title="All 4 branches missed.">      return repeatable != null &amp;&amp; candidate.equals(repeatable.value());</span>
+    });
+  }
+
+  static &lt;A extends Annotation&gt; List&lt;A&gt; findRepeatableAnnotations(
+      Annotation candidate,
+      Class&lt;A&gt; annotationType) {
+<span class="nc" id="L250">    Class&lt;? extends Annotation&gt; containerType = getContainerType(annotationType);</span>
+<span class="nc" id="L251">    boolean inherited = isInherited(containerType);</span>
+<span class="nc" id="L252">    return findRepeatableAnnotations(candidate, annotationType, containerType, inherited);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

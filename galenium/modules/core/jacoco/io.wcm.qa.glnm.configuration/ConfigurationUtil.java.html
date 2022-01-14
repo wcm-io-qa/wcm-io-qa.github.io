@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Galenium Core</a> &gt; <a href="index.source.html" class="el_package">io.wcm.qa.glnm.configuration</a> &gt; <span class="el_source">ConfigurationUtil.java</span></div><h1>ConfigurationUtil.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.qa.glnm.configuration;
+
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Convenience methods to set system properties.
+ *
+ * @since 1.0.0
+ */
+public final class ConfigurationUtil {
+
+<span class="nc" id="L37">  private static final Logger LOG = LoggerFactory.getLogger(ConfigurationUtil.class);</span>
+
+  private ConfigurationUtil() {
+    // do not instantiate
+  }
+
+  /**
+   * Adds a system property.
+   *
+   * @param name of property
+   * @param value of property
+   * @since 3.0.0
+   */
+  public static void addProperty(Object name, Object value) {
+<span class="nc bnc" id="L51" title="All 4 branches missed.">    if (name == null || value == null) {</span>
+<span class="nc" id="L52">      LOG.debug(&quot;skipping entry: &quot; + name + &quot;-&gt;&quot; + value);</span>
+<span class="nc" id="L53">    }</span>
+    else {
+<span class="nc" id="L55">      LOG.debug(&quot;adding entry: &quot; + name + &quot;-&gt;&quot; + value);</span>
+<span class="nc" id="L56">      System.setProperty(name.toString(), value.toString());</span>
+    }
+<span class="nc" id="L58">  }</span>
+
+  /**
+   * Add properties from map to system properties.
+   *
+   * @param newProperties to add
+   * @since 3.0.0
+   */
+  public static void addToSystemProperties(Map&lt;String, String&gt; newProperties) {
+<span class="nc" id="L67">    Set&lt;Entry&lt;String, String&gt;&gt; entrySet = newProperties.entrySet();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">    for (Entry&lt;String, String&gt; entry : entrySet) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">      if (entry != null) {</span>
+<span class="nc" id="L70">        String name = entry.getKey();</span>
+<span class="nc" id="L71">        String value = entry.getValue();</span>
+<span class="nc" id="L72">        addProperty(name, value);</span>
+<span class="nc" id="L73">      }</span>
+      else {
+<span class="nc" id="L75">        LOG.warn(&quot;entry for system property was null.&quot;);</span>
+      }
+    }
+<span class="nc" id="L78">  }</span>
+
+  /**
+   * Add system properties.
+   *
+   * @param newProperties to add
+   * @since 3.0.0
+   */
+  public static void addToSystemProperties(Properties newProperties) {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">    for (String name : newProperties.stringPropertyNames()) {</span>
+<span class="nc" id="L88">      addProperty(name, newProperties.getProperty(name));</span>
+    }
+<span class="nc" id="L90">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
