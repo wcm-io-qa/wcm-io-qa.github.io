@@ -60,7 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.selectors//checkstyle.html#io.wcm.qa.glnm.selectors.SelectorFromString.java">io/wcm/qa/glnm/selectors/SelectorFromString.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.selectors//checkstyle.html#io.wcm.qa.glnm.selectors.base.SelectorFactory.java">io/wcm/qa/glnm/selectors/base/SelectorFactory.java</a>
                 </td>
                 <td>
                   0
@@ -74,7 +74,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.selectors//checkstyle.html#io.wcm.qa.glnm.selectors.base.SelectorFactory.java">io/wcm/qa/glnm/selectors/base/SelectorFactory.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.selectors//checkstyle.html#io.wcm.qa.glnm.selectors.SelectorFromString.java">io/wcm/qa/glnm/selectors/SelectorFromString.java</a>
                 </td>
                 <td>
                   0
