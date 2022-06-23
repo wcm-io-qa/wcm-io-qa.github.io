@@ -9,8 +9,8 @@ Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.pojo,Interacti
 Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.util,ReflectionUtil,12,0,0,0,3,0,3,0,3,0
 Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.util,FormatUtil,169,0,4,0,36,0,16,0,14,0
 Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.util,FreemarkerUtil,268,0,4,0,59,0,13,0,11,0
-Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,PackageNameMethod,11,0,0,0,3,0,2,0,2,0
 Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,ClassNameFromSelectorMethod,6,0,0,0,2,0,2,0,2,0
+Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,PackageNameMethod,11,0,0,0,3,0,2,0,2,0
 Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,EscapeJavaMethod,6,0,0,0,2,0,2,0,2,0
 Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,ClassNameFromSpecMethod,6,0,0,0,2,0,2,0,2,0
 Galenium Galen Specs Maven Plugin,io.wcm.qa.glnm.maven.freemarker.methods,EscapeJavaDocMethod,18,0,0,0,6,0,3,0,3,0
