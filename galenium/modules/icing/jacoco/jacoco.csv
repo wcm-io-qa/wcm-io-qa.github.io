@@ -11,8 +11,8 @@ Galenium Icing,io.wcm.qa.glnm.hamcrest,AfterWait,143,0,6,0,34,0,13,0,10,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest,TypeSafeWrappingMatcher,65,0,4,0,18,0,9,0,7,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest,Stable,57,0,0,0,19,0,10,0,10,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest,AfterWait.MatcherFunction,30,0,0,0,10,0,3,0,3,0
-Galenium Icing,io.wcm.qa.glnm.hamcrest,ResponseCode,41,0,0,0,12,0,5,0,5,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest,TypeSafeWrappingMatcher.new CacheLoader() {...},12,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest,ResponseCode,41,0,0,0,12,0,5,0,5,0
 Galenium Icing,org.junit.jupiter.engine.execution,GaleniumDriverParameterContext,41,0,2,0,7,0,4,0,3,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.browser,LogEntryMatchers,5,0,0,0,1,0,1,0,1,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.browser,LogEntryMatchers.new TypeSafeMatcher() {...},26,0,2,0,5,0,4,0,3,0
@@ -31,8 +31,8 @@ Galenium Icing,io.wcm.qa.glnm.persistence,SamplePersistenceBase,96,0,8,0,27,0,15
 Galenium Icing,io.wcm.qa.glnm.persistence,StringListPersistence,9,0,0,0,2,0,2,0,2,0
 Galenium Icing,io.wcm.qa.glnm.persistence,PersistingCacheUtil.SampleCacheLoader,23,0,2,0,5,0,2,0,1,0
 Galenium Icing,io.wcm.qa.glnm.persistence,BaselinePersistenceExtension,51,0,0,0,15,0,5,0,5,0
-Galenium Icing,io.wcm.qa.glnm.persistence,BooleanPersistence,14,0,0,0,4,0,3,0,3,0
 Galenium Icing,io.wcm.qa.glnm.persistence,StringPersistence,8,0,0,0,2,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.persistence,BooleanPersistence,14,0,0,0,4,0,3,0,3,0
 Galenium Icing,io.wcm.qa.glnm.persistence,ObjectPersistence,8,0,0,0,2,0,2,0,2,0
 Galenium Icing,io.wcm.qa.glnm.persistence,Persistence.new IntegerPersistence() {...},6,0,0,0,2,0,2,0,2,0
 Galenium Icing,io.wcm.qa.glnm.persistence,PersistingCacheUtil.BaselineCacheLoader,16,0,2,0,3,0,2,0,1,0
@@ -46,8 +46,8 @@ Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,SelectorSamplerBaselineMatcher,9
 Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineString,8,0,0,0,3,0,2,0,2,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineDirectMatcher,10,0,0,0,4,0,2,0,2,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,ArrayWithSize,14,0,0,0,4,0,3,0,3,0
-Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,SelectorBaselineMatchers,12,0,0,0,2,0,2,0,2,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineBoolean,8,0,0,0,3,0,2,0,2,0
+Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,SelectorBaselineMatchers,12,0,0,0,2,0,2,0,2,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineStringList,4,0,0,0,2,0,1,0,1,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,BaselineMatchers,40,0,0,0,12,0,10,0,10,0
 Galenium Icing,io.wcm.qa.glnm.hamcrest.baseline,DifferentiatingMatcherBase,99,0,2,0,27,0,12,0,11,0
