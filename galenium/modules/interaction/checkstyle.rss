@@ -88,7 +88,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.interaction//checkstyle.html#io.wcm.qa.glnm.interaction.FormElement.java">io/wcm/qa/glnm/interaction/FormElement.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.interaction//checkstyle.html#io.wcm.qa.glnm.interaction.webelement.GaleniumWebElementBase.java">io/wcm/qa/glnm/interaction/webelement/GaleniumWebElementBase.java</a>
                 </td>
                 <td>
                   0
@@ -102,7 +102,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.interaction//checkstyle.html#io.wcm.qa.glnm.interaction.webelement.GaleniumWebElementBase.java">io/wcm/qa/glnm/interaction/webelement/GaleniumWebElementBase.java</a>
+                  <a href="https://qa.wcm.io/galenium/io.wcm.qa.galenium.modules/io.wcm.qa.galenium.interaction//checkstyle.html#io.wcm.qa.glnm.interaction.FormElement.java">io/wcm/qa/glnm/interaction/FormElement.java</a>
                 </td>
                 <td>
                   0
